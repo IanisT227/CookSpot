@@ -1,0 +1,2 @@
+# CookSpot
+Bachelor Thesis application
