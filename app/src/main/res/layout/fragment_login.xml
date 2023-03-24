@@ -11,10 +11,10 @@
         style="@style/Button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="40dp"
-        android:drawableLeft="@drawable/ic_left_arrow"
-        android:text="Back"
+        android:drawableStart="@drawable/ic_left_arrow"
+        android:text="@string/back_button_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

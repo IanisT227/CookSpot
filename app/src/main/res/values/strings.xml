@@ -5,4 +5,5 @@
     <string name="emailText">Email</string>
     <string name="passwordText">Password</string>
     <string name="sign_up_text_underlined"><u>Sign up here</u></string>
+    <string name="back_button_text">Back</string>
 </resources>
