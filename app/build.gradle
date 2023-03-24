@@ -53,7 +53,8 @@ dependencies {
 
     //region Architecture libraries
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
-
+    implementation "io.insert-koin:koin-android:3.2.0"
+    implementation "io.insert-koin:koin-core:3.2.0"
     //endregion
 
     //region Navigation Libraries

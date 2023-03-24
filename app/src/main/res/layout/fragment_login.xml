@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/auth_background">
+
+    <Button
+        android:background="@null"
+        android:id="@+id/goBackLoginBtn"
+        style="@style/Button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/ic_left_arrow"
+        android:text="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/authenticationActionsCV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/bg_rounded_top_card_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/goBackLoginBtn">
+
+        <TextView
+            android:id="@+id/welcomeTV"
+            style="@style/Heading2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/loginText"
+            android:textAlignment="center"
+            android:textColor="@color/primary_orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/emailTV"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@string/emailText"
+            android:textAllCaps="true"
+            android:textColor="@color/dark_orange"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV"
+            app:layout_constraintTop_toBottomOf="@id/welcomeTV" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTIL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:boxBackgroundMode="none"
+            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV"
+            app:layout_constraintTop_toBottomOf="@id/emailTV">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailTIEE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_edit_text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/passwordTV"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@string/passwordText"
+            android:textAllCaps="true"
+            android:textColor="@color/dark_orange"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV"
+            app:layout_constraintTop_toBottomOf="@id/emailTIL" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTIL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:boxBackgroundMode="none"
+            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV"
+            app:layout_constraintTop_toBottomOf="@id/passwordTV">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordTIEE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_edit_text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginBtn"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="48dp"
+            android:text="Login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordTIL" />
+
+        <TextView
+            android:id="@+id/noAccountTV"
+            style="@style/SmallText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Don't have an account?"
+            app:layout_constraintEnd_toEndOf="@id/loginBtn"
+            app:layout_constraintStart_toStartOf="@id/loginBtn"
+            app:layout_constraintTop_toBottomOf="@id/loginBtn" />
+
+        <TextView
+            android:id="@+id/signUpTV"
+            style="@style/SmallText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sign_up_text_underlined"
+            app:layout_constraintEnd_toEndOf="@id/loginBtn"
+            app:layout_constraintStart_toStartOf="@id/loginBtn"
+            app:layout_constraintTop_toBottomOf="@id/noAccountTV" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

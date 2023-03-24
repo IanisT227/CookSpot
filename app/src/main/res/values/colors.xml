@@ -2,9 +2,11 @@
 <resources>
 
     <!--    application colors     -->
-    <color name="dark_orange">#FF5722</color>
+    <color name="dark_orange">#DD9223</color>
     <color name="primary_orange">#FF9800</color>
     <color name="light_orange">#FDA11A</color>
     <color name="neutral_white">#FFFFFF</color>
     <color name="neutral_black">#000000</color>
+    <color name="neutral_grey">#D9D9D9</color>
+    <color name="inputTextBox_color">#61763D00</color>
 </resources>

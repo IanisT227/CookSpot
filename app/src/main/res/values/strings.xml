@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CookSpot</string>
+    <string name="welcomeText">Welcome!</string>
+    <string name="loginText">Login</string>
+    <string name="emailText">Email</string>
+    <string name="passwordText">Password</string>
+    <string name="sign_up_text_underlined"><u>Sign up here</u></string>
 </resources>

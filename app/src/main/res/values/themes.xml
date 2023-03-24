@@ -12,5 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/dark_orange</item>
         <!-- Customize your theme here. -->
+        <item name="materialButtonStyle">@style/PrimaryButton</item>
+        <item name="materialButtonOutlinedStyle">@style/OutlinedButton</item>
+        <item name="editTextStyle">@style/TextInputEditTextStyle</item>
+        <item name="textInputStyle">@style/TextInputLayoutStyle</item>
     </style>
 </resources>
