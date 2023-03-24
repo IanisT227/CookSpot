@@ -6,7 +6,7 @@
     android:background="@drawable/auth_background">
 
     <Button
-        android:background="@null"
+        android:backgroundTint="@null"
         android:id="@+id/goBackLoginBtn"
         style="@style/Button2"
         android:layout_width="wrap_content"
