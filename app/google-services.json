@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810851279247",
+    "project_id": "cookspot-a1a8c",
+    "storage_bucket": "cookspot-a1a8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810851279247:android:8aeb0492c842c62e7cabfa",
+        "android_client_info": {
+          "package_name": "com.example.cookspot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810851279247-1ju530ness9algtf1ci07bnvii6voajl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJU2xCVICgquDaamo4QuZkOxJsk7IxJcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810851279247-1ju530ness9algtf1ci07bnvii6voajl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
