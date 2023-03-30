@@ -52,17 +52,22 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
 
         binding.signUpBtn.setOnClickListener {
-            if (!(checkMail(binding.emailTIEE) && checkUserOrPassword(binding.usernameTIEE) && checkUserOrPassword(
-                    binding.nameTIEE
-                ) && checkUserOrPassword(binding.passwordTIEE))
-            ) {
-                showAlerter("One or more fields are empty", requireActivity())
+            if (!(checkMail(binding.emailTIEE))) {
+                showAlerter("Invalid mail format", requireActivity())
             } else {
-                firebaseSignUp(
-                    binding.emailTIEE.text.toString(),
-                    binding.passwordTIEE.text.toString()
-                )
+                if (checkUserOrPassword(binding.usernameTIEE) && checkUserOrPassword(
+                        binding.nameTIEE
+                    ) && checkUserOrPassword(binding.passwordTIEE)
+                ) {
+                    showAlerter("All fields must have at least 8 characters", requireActivity())
+                } else {
+                    firebaseSignUp(
+                        binding.emailTIEE.text.toString(),
+                        binding.passwordTIEE.text.toString()
+                    )
+                }
             }
+
         }
     }
 }

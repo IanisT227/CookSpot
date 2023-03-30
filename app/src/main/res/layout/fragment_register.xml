@@ -27,23 +27,22 @@
         android:background="@drawable/bg_rounded_top_card_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:layout_marginVertical="24dp"
             android:id="@+id/welcomeTV"
             style="@style/Heading3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="60dp"
+            android:layout_marginVertical="24dp"
             android:text="Create new\nAccount"
             android:textAlignment="center"
             android:textColor="@color/primary_orange"
+            app:layout_constraintBottom_toTopOf="@id/usernameTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/usernameTV"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/usernameTV"
@@ -53,19 +52,19 @@
             android:text="Username"
             android:textAllCaps="true"
             android:textColor="@color/dark_orange"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
-            app:layout_constraintBottom_toTopOf="@id/usernameTIL" />
+            app:layout_constraintBottom_toTopOf="@id/usernameTIL"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/usernameTIL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="24dp"
             app:boxBackgroundMode="none"
-            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
             app:layout_constraintBottom_toTopOf="@id/nameTV"
-            android:layout_marginBottom="24dp">
+            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usernameTIEE"
@@ -82,19 +81,19 @@
             android:text="Name"
             android:textAllCaps="true"
             android:textColor="@color/dark_orange"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
-            app:layout_constraintBottom_toTopOf="@id/nameTIL" />
+            app:layout_constraintBottom_toTopOf="@id/nameTIL"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameTIL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="24dp"
             app:boxBackgroundMode="none"
-            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
             app:layout_constraintBottom_toTopOf="@id/emailTV"
-            android:layout_marginBottom="24dp">
+            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameTIEE"
@@ -112,25 +111,26 @@
             android:text="@string/emailText"
             android:textAllCaps="true"
             android:textColor="@color/dark_orange"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
-            app:layout_constraintBottom_toTopOf="@id/emailTIL" />
+            app:layout_constraintBottom_toTopOf="@id/emailTIL"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTIL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="24dp"
             app:boxBackgroundMode="none"
-            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
             app:layout_constraintBottom_toTopOf="@id/passwordTV"
-            android:layout_marginBottom="24dp">
+            app:layout_constraintEnd_toEndOf="@id/welcomeTV"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailTIEE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_rounded_edit_text" />
+                android:background="@drawable/bg_rounded_edit_text"
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -141,25 +141,26 @@
             android:text="@string/passwordText"
             android:textAllCaps="true"
             android:textColor="@color/dark_orange"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
-            app:layout_constraintBottom_toTopOf="@id/passwordTIL" />
+            app:layout_constraintBottom_toTopOf="@id/passwordTIL"
+            app:layout_constraintStart_toStartOf="@id/welcomeTV" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordTIL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="24dp"
             app:boxBackgroundMode="none"
+            app:layout_constraintBottom_toTopOf="@id/signUpBtn"
             app:layout_constraintEnd_toEndOf="@id/welcomeTV"
-            app:layout_constraintStart_toStartOf="@id/welcomeTV"
-           app:layout_constraintBottom_toTopOf="@id/signUpBtn"
-            android:layout_marginBottom="24dp">
+            app:layout_constraintStart_toStartOf="@id/welcomeTV">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordTIEE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_rounded_edit_text" />
+                android:background="@drawable/bg_rounded_edit_text"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -168,11 +169,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="60dp"
+            android:layout_marginBottom="12dp"
             android:text="Sign up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/forgotPasswordTV"
-            android:layout_marginBottom="12dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/forgotPasswordTV"
