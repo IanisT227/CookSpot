@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.cookspot.feature.splash.SplashFragment"
-        android:label="SplashFragment" >
+        android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_authenticationFragment"
             app:destination="@id/authenticationFragment"
@@ -15,5 +15,20 @@
     <fragment
         android:id="@+id/authenticationFragment"
         android:name="com.example.cookspot.feature.authentication.AuthenticationFragment"
-        android:label="AuthenticationFragment" />
+        android:label="AuthenticationFragment">
+        <action
+            android:id="@+id/action_authenticationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.cookspot.feature.authentication.LoginFragment"
+        android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.cookspot.feature.authentication.RegisterFragment"
+        android:label="RegisterFragment" />
 </navigation>

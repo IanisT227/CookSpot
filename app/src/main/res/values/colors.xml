@@ -9,4 +9,5 @@
     <color name="neutral_black">#000000</color>
     <color name="neutral_grey">#D9D9D9</color>
     <color name="inputTextBox_color">#61763D00</color>
+    <color name="smallText_color">@color/primary_orange</color>
 </resources>

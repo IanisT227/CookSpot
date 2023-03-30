@@ -6,4 +6,7 @@
     <string name="passwordText">Password</string>
     <string name="sign_up_text_underlined"><u>Sign up here</u></string>
     <string name="back_button_text">Back</string>
+    <string name="forgot_password"><u>Forgot password?</u></string>
+    <string name="sign_in_here_underlined"><u>Sign in here</u></string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>
