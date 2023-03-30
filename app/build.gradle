@@ -52,6 +52,11 @@ android {
 
 dependencies {
 
+    //region Components
+    implementation "com.github.tapadoo:alerter:7.2.4"
+    //endregion
+
+
     //region Architecture libraries
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
     implementation "io.insert-koin:koin-android:3.2.0"
@@ -65,7 +70,9 @@ dependencies {
 
     //region Firebase
     implementation platform('com.google.firebase:firebase-bom:31.3.0')
+    implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-database:20.1.0'
     //endregion
 
     //region Standard android libraries
@@ -74,6 +81,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'com.google.firebase:firebase-auth:21.0.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
