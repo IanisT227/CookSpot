@@ -34,10 +34,9 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private fun firebaseSignUp(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                showAlerter("Registration was successfull", requireActivity())
+                showAlerter("Registration was successful", requireActivity())
             } else {
                 showAlerter(task.exception?.message.toString(), requireActivity())
-
             }
         }
     }

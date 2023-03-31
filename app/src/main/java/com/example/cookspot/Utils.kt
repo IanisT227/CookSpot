@@ -5,6 +5,10 @@ import android.util.Patterns
 import com.google.android.material.textfield.TextInputEditText
 import com.tapadoo.alerter.Alerter
 
+fun logTag(tag: String, message: String = "") {
+    println("[$tag] $message")
+}
+
 fun checkMail(mailEditText: TextInputEditText): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(mailEditText.text.toString()).matches() && mailEditText.text?.length!! > 7
 }
