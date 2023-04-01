@@ -14,31 +14,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
     private val binding by viewBinding(FragmentRegisterBinding::bind)
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initFirebase()
+        authenticationViewModel.initFirebase()
         initButtons()
 
-    }
-
-    private fun initFirebase() {
-        firebaseAuth = Firebase.auth
-    }
-
-    private fun firebaseSignUp(email: String, password: String) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                showAlerter("Registration was successful", requireActivity())
-            } else {
-                showAlerter(task.exception?.message.toString(), requireActivity())
-            }
-        }
     }
 
     private fun initButtons() {
@@ -60,13 +47,16 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 ) {
                     showAlerter("All fields must have at least 8 characters", requireActivity())
                 } else {
-                    firebaseSignUp(
+                    authenticationViewModel.registerUser(
                         binding.emailTIEE.text.toString(),
                         binding.passwordTIEE.text.toString()
                     )
                 }
             }
-
+            binding.emailTIEE.text!!.clear()
+            binding.nameTIEE.text!!.clear()
+            binding.usernameTIEE.text!!.clear()
+            binding.passwordTIEE.text!!.clear()
         }
     }
 }

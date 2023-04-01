@@ -6,10 +6,8 @@ import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.cookspot.R
+import com.example.cookspot.*
 import com.example.cookspot.databinding.FragmentLoginBinding
-import com.example.cookspot.logTag
-import com.example.cookspot.showAlerter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -39,10 +37,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         binding.loginBtn.setOnClickListener {
-            authenticationViewModel.loginUser(
-                binding.emailTIEE.text.toString(),
-                binding.passwordTIEE.text.toString()
-            )
+            if (!(checkMail(binding.emailTIEE))) {
+                showAlerter("Invalid mail format", requireActivity())
+            } else {
+                if (!checkUserOrPassword(binding.passwordTIEE)) {
+                    showAlerter("Password must have at least 8 characters!", requireActivity())
+                } else {
+                    authenticationViewModel.loginUser(
+                        binding.emailTIEE.text.toString(),
+                        binding.passwordTIEE.text.toString()
+                    )
+                }
+            }
             binding.emailTIEE.text!!.clear()
             binding.passwordTIEE.text!!.clear()
         }

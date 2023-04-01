@@ -3,20 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/isLoadingCIP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:indicatorColor="@color/dark_orange"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -95,6 +83,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/emailTIEE"
+                        android:inputType="textEmailAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_rounded_edit_text" />
@@ -123,6 +112,7 @@
                     app:layout_constraintStart_toStartOf="@id/welcomeTV">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="textPassword"
                         android:id="@+id/passwordTIEE"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -163,6 +153,19 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/loginBtn"
                     app:layout_constraintStart_toStartOf="@id/loginBtn" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/isLoadingCIP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/dark_orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

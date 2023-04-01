@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cookspot.logTag
 import com.example.cookspot.service.AuthService
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -30,6 +31,20 @@ class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
             try {
                 _isLoading.value = true
                 _isError.value = authService.loginUser(email, password)
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun registerUser(email: String, password: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _isError.value = authService.registerUser(email, password)
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {
