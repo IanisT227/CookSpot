@@ -34,7 +34,11 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.cookspot.feature.authentication.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.example.cookspot.feature.feed.FeedFragment"

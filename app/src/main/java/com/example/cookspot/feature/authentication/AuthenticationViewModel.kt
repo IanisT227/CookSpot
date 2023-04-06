@@ -49,7 +49,8 @@ class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
     fun registerUser(email: String, password: String) {
         viewModelScope.launch {
             try {
-                _isLoading.value = authService.registerUser(email, password)
+                _isLoading.value = true
+                _isLogged.value = authService.registerUser(email, password)
                 _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
@@ -59,4 +60,6 @@ class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
             }
         }
     }
+
+    fun getCurrentUser() = authService.getCurrentUser()
 }

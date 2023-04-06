@@ -3,13 +3,11 @@ package com.example.cookspot.feature.authentication
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.cookspot.R
-import com.example.cookspot.checkMail
-import com.example.cookspot.checkUserOrPassword
+import com.example.cookspot.*
 import com.example.cookspot.databinding.FragmentRegisterBinding
-import com.example.cookspot.showAlerter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -23,6 +21,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initObservers()
         authenticationViewModel.initFirebase()
         initButtons()
 
@@ -57,6 +56,27 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             binding.nameTIEE.text!!.clear()
             binding.usernameTIEE.text!!.clear()
             binding.passwordTIEE.text!!.clear()
+        }
+    }
+
+    private fun initObservers() {
+        authenticationViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            logTag("isLoadingValue", isLoading.toString())
+            binding.isLoadingCIP.isVisible = isLoading
+            binding.signUpBtn.isEnabled = !isLoading
+        }
+
+        authenticationViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError != null) {
+                logTag("isErrorValue", isError.toString())
+                showAlerter(isError, requireActivity())
+            }
+        }
+
+        authenticationViewModel.isLogged.observe(viewLifecycleOwner) { isLogged ->
+            if (isLogged) {
+                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToFeedFragment())
+            }
         }
     }
 }

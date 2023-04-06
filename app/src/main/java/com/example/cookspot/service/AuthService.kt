@@ -3,7 +3,9 @@ package com.example.cookspot.service
 import com.example.cookspot.logTag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -37,6 +39,18 @@ class AuthService {
         }
         logTag(SERVICE_TAG, isErrorMessage.toString())
         return false
+    }
+
+    fun getCurrentUser(): String? {
+        try {
+            isErrorMessage = null
+            val firebaseDb = Firebase.database
+            val username = firebaseDb.getReference(firebaseAuth.currentUser!!.uid).child("username").get()
+            return firebaseAuth.currentUser!!.uid
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
+        return null
     }
 
     fun getIsErrorMessage() = isErrorMessage
