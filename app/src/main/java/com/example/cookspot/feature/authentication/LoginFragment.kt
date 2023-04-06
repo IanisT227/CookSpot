@@ -1,6 +1,7 @@
 package com.example.cookspot.feature.authentication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
@@ -65,6 +66,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
                 showAlerter(isError, requireActivity())
+            }
+        }
+
+        authenticationViewModel.isLogged.observe(viewLifecycleOwner) { isLogged ->
+            if (isLogged) {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFeedFragment())
             }
         }
     }

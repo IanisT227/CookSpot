@@ -20,6 +20,10 @@ class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
     val isError: LiveData<String?>
         get() = _isError
 
+    private val _isLogged: MutableLiveData<Boolean> = MutableLiveData()
+    val isLogged: LiveData<Boolean>
+        get() = _isLogged
+
     fun initFirebase() {
         viewModelScope.launch {
             authService.initFirebase()
@@ -30,9 +34,11 @@ class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                _isError.value = authService.loginUser(email, password)
+                _isLogged.value = authService.loginUser(email, password)
+                _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
+                _isLogged.value = false
             } finally {
                 _isLoading.value = false
                 _isError.value = null
@@ -43,8 +49,8 @@ class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
     fun registerUser(email: String, password: String) {
         viewModelScope.launch {
             try {
-                _isLoading.value = true
-                _isError.value = authService.registerUser(email, password)
+                _isLoading.value = authService.registerUser(email, password)
+                _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {

@@ -9,36 +9,39 @@ import kotlinx.coroutines.tasks.await
 
 class AuthService {
     private lateinit var firebaseAuth: FirebaseAuth
+    private var isErrorMessage: String? = null
 
     suspend fun initFirebase() {
         firebaseAuth = Firebase.auth
     }
 
-    suspend fun loginUser(email: String, password: String): String? {
-        var errorMessage: String? = null
+    suspend fun loginUser(email: String, password: String): Boolean {
         try {
+            isErrorMessage = null
             firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            return true
         } catch (e: Exception) {
-            errorMessage = e.message
+            isErrorMessage = e.message
         }
-
-        logTag(SERVICE_TAG, errorMessage.toString())
-        return errorMessage
+        logTag(SERVICE_TAG, isErrorMessage.toString())
+        return false
     }
 
-    suspend fun registerUser(email: String, password: String): String? {
-        var errorMessage: String? = null
+    suspend fun registerUser(email: String, password: String): Boolean {
         try {
+            isErrorMessage = null
             firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            return true
         } catch (e: Exception) {
-            errorMessage = e.message
+            isErrorMessage = e.message
         }
-
-        logTag(SERVICE_TAG, errorMessage.toString())
-        return errorMessage
+        logTag(SERVICE_TAG, isErrorMessage.toString())
+        return false
     }
 
-    companion object{
+    fun getIsErrorMessage() = isErrorMessage
+
+    companion object {
         const val SERVICE_TAG = "AuthService"
     }
 }
