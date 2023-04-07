@@ -4,13 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cookspot.logTag
+import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.AuthService
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
-class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
+class AuthenticationViewModel(
+    private val authService: AuthService,
+    private val internalStorageManager: UserDataInternalStorageManager
+) : ViewModel() {
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean>
@@ -61,5 +62,25 @@ class AuthenticationViewModel(val authService: AuthService) : ViewModel() {
         }
     }
 
-    fun getCurrentUser() = authService.getCurrentUser()
+    fun logOutUser() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                authService.logOutUser()
+                _isError.value = authService.getIsErrorMessage()
+                internalStorageManager.setIsUserLoggedIn(false)
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun setLoggedStatus(isLogged: Boolean) = internalStorageManager.setIsUserLoggedIn(isLogged)
+
+    fun getLoggedStatus() = internalStorageManager.getIsUserLoggedIn()
+
+    fun getCurrentUserId() = authService.getCurrentUserId()
 }

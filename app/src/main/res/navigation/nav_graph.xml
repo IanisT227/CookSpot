@@ -11,6 +11,9 @@
             android:id="@+id/action_splashFragment_to_authenticationFragment"
             app:destination="@id/authenticationFragment"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_splashFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
         android:id="@+id/authenticationFragment"
@@ -42,5 +45,9 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.example.cookspot.feature.feed.FeedFragment"
-        android:label="FeedFragment" />
+        android:label="FeedFragment" >
+        <action
+            android:id="@+id/action_feedFragment_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
+    </fragment>
 </navigation>

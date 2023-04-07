@@ -2,8 +2,6 @@ package com.example.cookspot.service
 
 import com.example.cookspot.logTag
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -13,7 +11,7 @@ class AuthService {
     private lateinit var firebaseAuth: FirebaseAuth
     private var isErrorMessage: String? = null
 
-    suspend fun initFirebase() {
+    fun initFirebase() {
         firebaseAuth = Firebase.auth
     }
 
@@ -41,11 +39,20 @@ class AuthService {
         return false
     }
 
-    fun getCurrentUser(): String? {
+    suspend fun logOutUser() {
         try {
             isErrorMessage = null
-            val firebaseDb = Firebase.database
-            val username = firebaseDb.getReference(firebaseAuth.currentUser!!.uid).child("username").get()
+            firebaseAuth.signOut()
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
+        logTag(SERVICE_TAG, isErrorMessage.toString())
+    }
+
+    fun getCurrentUserId(): String? {
+        try {
+            isErrorMessage = null
+            initFirebase()
             return firebaseAuth.currentUser!!.uid
         } catch (e: Exception) {
             isErrorMessage = e.message

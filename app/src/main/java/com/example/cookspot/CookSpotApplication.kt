@@ -14,6 +14,7 @@ class CookSpotApplication : Application() {
             modules(
                 listOf(
                     service,
+                    internalStorage,
                     viewModel
                 )
             )

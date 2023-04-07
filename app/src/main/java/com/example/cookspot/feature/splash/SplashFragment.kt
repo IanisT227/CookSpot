@@ -7,13 +7,21 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cookspot.R
+import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
+
+    private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToAuthenticationFragment())
+            if (authenticationViewModel.getLoggedStatus()) {
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToFeedFragment())
+            } else {
+                findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToAuthenticationFragment())
+            }
         }, SPLASH_NAV_DELAY)
     }
 

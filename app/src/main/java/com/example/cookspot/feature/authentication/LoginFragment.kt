@@ -71,6 +71,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         authenticationViewModel.isLogged.observe(viewLifecycleOwner) { isLogged ->
             if (isLogged) {
+                authenticationViewModel.setLoggedStatus(true)
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFeedFragment())
             }
         }
