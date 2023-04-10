@@ -1,7 +1,9 @@
 package com.example.cookspot.feature.feed
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -21,11 +23,21 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         super.onViewCreated(view, savedInstanceState)
 
         initObservers()
+        initViews()
         authenticationViewModel.getCurrentUserId()
         binding.logOutBtn.setOnClickListener {
             authenticationViewModel.logOutUser()
             findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToAuthenticationFragment())
         }
+    }
+
+    private fun initViews() {
+        binding.homeBtn.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.primary_orange
+            )
+        )
     }
 
     private fun initObservers() {

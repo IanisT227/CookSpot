@@ -58,6 +58,7 @@ class AuthenticationViewModel(
                 _isLogged.value = authService.registerUser(email, password, username, fullName)
                 _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
+                _isLogged.value = true
                 _isError.value = e.message
             } finally {
                 _isLoading.value = false
@@ -91,8 +92,8 @@ class AuthenticationViewModel(
             _isLoading.value = true
             authService.getCurrentUserId()
             _isError.value = authService.getIsErrorMessage()
-            internalStorageManager.setIsUserLoggedIn(false)
         } catch (e: Exception) {
+            internalStorageManager.setIsUserLoggedIn(true)
             _isError.value = e.message
         } finally {
             _isLoading.value = false
