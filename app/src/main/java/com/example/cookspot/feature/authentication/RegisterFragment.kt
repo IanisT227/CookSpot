@@ -40,16 +40,19 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             if (!(checkMail(binding.emailTIEE))) {
                 showAlerter("Invalid mail format", requireActivity())
             } else {
-                if (checkUserOrPassword(binding.usernameTIEE) && checkUserOrPassword(
-                        binding.nameTIEE
-                    ) && checkUserOrPassword(binding.passwordTIEE)
-                ) {
-                    showAlerter("All fields must have at least 8 characters", requireActivity())
+                if (!checkName(binding.nameTIEE)) {
+                    showAlerter("Invalid name format", requireActivity())
                 } else {
-                    authenticationViewModel.registerUser(
-                        binding.emailTIEE.text.toString(),
-                        binding.passwordTIEE.text.toString()
-                    )
+                    if (!(checkUserOrPassword(binding.usernameTIEE) && checkUserOrPassword(binding.passwordTIEE))) {
+                        showAlerter("All fields must have at least 8 characters", requireActivity())
+                    } else {
+                        authenticationViewModel.registerUser(
+                            binding.emailTIEE.text.toString(),
+                            binding.passwordTIEE.text.toString(),
+                            binding.usernameTIEE.text.toString(),
+                            binding.nameTIEE.text.toString()
+                        )
+                    }
                 }
             }
             binding.emailTIEE.text!!.clear()

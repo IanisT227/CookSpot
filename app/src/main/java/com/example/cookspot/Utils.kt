@@ -10,7 +10,8 @@ fun logTag(tag: String, message: String = "") {
 }
 
 fun checkMail(mailEditText: TextInputEditText): Boolean {
-    return Patterns.EMAIL_ADDRESS.matcher(mailEditText.text.toString()).matches() && mailEditText.text?.length!! > 7
+    return Patterns.EMAIL_ADDRESS.matcher(mailEditText.text.toString())
+        .matches() && mailEditText.text?.length!! > 7
 }
 
 fun checkUserOrPassword(userOrPasswordEditText: TextInputEditText): Boolean {
@@ -18,6 +19,11 @@ fun checkUserOrPassword(userOrPasswordEditText: TextInputEditText): Boolean {
         userOrPasswordEditText.text!!.length > 8
     } else
         false
+}
+
+fun checkName(nameEditText: TextInputEditText): Boolean {
+    val regex = Regex("^[a-zA-Z ]+\$")
+    return regex.matches(nameEditText.text.toString())
 }
 
 fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
@@ -28,3 +34,4 @@ fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
     .show()
 
 const val ERROR_DURATION = 2500L
+const val DATABASE_URL = "https://cookspot-a1a8c-default-rtdb.europe-west1.firebasedatabase.app/"

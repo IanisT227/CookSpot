@@ -21,7 +21,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         super.onViewCreated(view, savedInstanceState)
 
         initObservers()
-        binding.usernameTV.text = authenticationViewModel.getCurrentUserId()
+        authenticationViewModel.getCurrentUserId()
         binding.logOutBtn.setOnClickListener {
             authenticationViewModel.logOutUser()
             findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToAuthenticationFragment())
@@ -38,6 +38,10 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
                 logTag("isErrorValue", isError.toString())
                 showAlerter(isError, requireActivity())
             }
+        }
+
+        authenticationViewModel.userId.observe(viewLifecycleOwner) { userId ->
+            binding.usernameTV.text = userId
         }
     }
 }

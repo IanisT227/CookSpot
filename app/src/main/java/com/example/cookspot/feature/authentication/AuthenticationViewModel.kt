@@ -25,6 +25,10 @@ class AuthenticationViewModel(
     val isLogged: LiveData<Boolean>
         get() = _isLogged
 
+    private val _userId: MutableLiveData<String> = MutableLiveData()
+    val userId: LiveData<String>
+        get() = _userId
+
     fun initFirebase() {
         viewModelScope.launch {
             authService.initFirebase()
@@ -47,11 +51,11 @@ class AuthenticationViewModel(
         }
     }
 
-    fun registerUser(email: String, password: String) {
+    fun registerUser(email: String, password: String, username: String, fullName: String) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                _isLogged.value = authService.registerUser(email, password)
+                _isLogged.value = authService.registerUser(email, password, username, fullName)
                 _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
@@ -82,5 +86,17 @@ class AuthenticationViewModel(
 
     fun getLoggedStatus() = internalStorageManager.getIsUserLoggedIn()
 
-    fun getCurrentUserId() = authService.getCurrentUserId()
+    fun getCurrentUserId() = viewModelScope.launch {
+        try {
+            _isLoading.value = true
+            authService.getCurrentUserId()
+            _isError.value = authService.getIsErrorMessage()
+            internalStorageManager.setIsUserLoggedIn(false)
+        } catch (e: Exception) {
+            _isError.value = e.message
+        } finally {
+            _isLoading.value = false
+            _isError.value = null
+        }
+    }
 }
