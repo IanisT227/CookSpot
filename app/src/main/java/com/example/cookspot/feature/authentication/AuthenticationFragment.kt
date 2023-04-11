@@ -16,7 +16,6 @@ class AuthenticationFragment : Fragment(R.layout.fragment_authentication) {
     private val binding by viewBinding(FragmentAuthenticationBinding::bind)
     private var doubleBackPressed = false
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

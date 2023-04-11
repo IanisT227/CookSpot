@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.cookspot.feature.authentication.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.cookspot.feature.authentication.RegisterFragment"
-        android:label="RegisterFragment" >
+        android:label="RegisterFragment">
         <action
             android:id="@+id/action_registerFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
@@ -45,9 +45,22 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.example.cookspot.feature.feed.FeedFragment"
-        android:label="FeedFragment" >
+        android:label="FeedFragment">
         <action
             android:id="@+id/action_feedFragment_to_authenticationFragment"
             app:destination="@id/authenticationFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cookspot.feature.profile.ProfileFragment"
+        android:label="ProfileFragment">
+        <action
+            android:id="@+id/action_profileFragment_to_feedFragment"
+            app:destination="@id/feedFragment"
+            app:popUpTo="@id/feedFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -54,6 +54,7 @@ dependencies {
 
     //region Components
     implementation "com.github.tapadoo:alerter:7.2.4"
+    implementation 'com.mikhaellopez:circularimageview:4.3.1'
     //endregion
 
 

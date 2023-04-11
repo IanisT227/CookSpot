@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/neutral_white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    tools:showIn="@layout/fragment_feed">
+
+    <ImageButton
+        android:id="@+id/homeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:background="@null"
+        android:src="@drawable/ic_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recommendedBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/neutral_black" />
+
+    <ImageButton
+        android:id="@+id/recommendedBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_recommended"
+        app:layout_constraintBottom_toBottomOf="@id/homeBtn"
+        app:layout_constraintEnd_toStartOf="@id/addNewRecipeBtn"
+        app:layout_constraintStart_toEndOf="@id/homeBtn"
+        app:layout_constraintTop_toTopOf="@id/homeBtn"
+        app:tint="@color/neutral_black" />
+
+    <ImageButton
+        android:id="@+id/addNewRecipeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@id/homeBtn"
+        app:layout_constraintEnd_toStartOf="@id/searchBtn"
+        app:layout_constraintStart_toEndOf="@id/recommendedBtn"
+        app:layout_constraintTop_toTopOf="@id/homeBtn"
+        app:tint="@color/neutral_black" />
+
+    <ImageButton
+        android:id="@+id/searchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/homeBtn"
+        app:layout_constraintEnd_toStartOf="@id/profileBtn"
+        app:layout_constraintStart_toEndOf="@id/addNewRecipeBtn"
+        app:layout_constraintTop_toTopOf="@id/homeBtn"
+        app:tint="@color/neutral_black" />
+
+    <ImageButton
+        android:id="@+id/profileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_profile"
+        app:layout_constraintBottom_toBottomOf="@id/homeBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/searchBtn"
+        app:layout_constraintTop_toTopOf="@id/homeBtn"
+        app:tint="@color/neutral_black" />
+</androidx.constraintlayout.widget.ConstraintLayout>
