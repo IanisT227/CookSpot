@@ -40,7 +40,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun initButtons() {
-
         binding.bottomNavigationBarCL.homeBtn.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFeedFragment())
         }
