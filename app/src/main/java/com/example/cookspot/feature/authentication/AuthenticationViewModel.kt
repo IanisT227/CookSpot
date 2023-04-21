@@ -1,9 +1,11 @@
 package com.example.cookspot.feature.authentication
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cookspot.feature.authentication.model.User
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.AuthService
 import kotlinx.coroutines.launch
@@ -28,6 +30,10 @@ class AuthenticationViewModel(
     private val _userId: MutableLiveData<String> = MutableLiveData()
     val userId: LiveData<String>
         get() = _userId
+
+    private val _userData: MutableLiveData<User?> = MutableLiveData()
+    val userData: LiveData<User?>
+        get() = _userData
 
     fun initFirebase() {
         viewModelScope.launch {
@@ -90,7 +96,7 @@ class AuthenticationViewModel(
     fun getCurrentUserId() = viewModelScope.launch {
         try {
             _isLoading.value = true
-            authService.getCurrentUserId()
+            _userId.value = authService.getCurrentUserId()
             _isError.value = authService.getIsErrorMessage()
         } catch (e: Exception) {
             internalStorageManager.setIsUserLoggedIn(true)
@@ -98,6 +104,23 @@ class AuthenticationViewModel(
         } finally {
             _isLoading.value = false
             _isError.value = null
+        }
+    }
+
+    fun getCurrentUser() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _userData.value = authService.getCurrentUser().receive()
+                Log.v("userdatavm", _userData.value.toString())
+                _isError.value = authService.getIsErrorMessage()
+            } catch (e: Exception) {
+                internalStorageManager.setIsUserLoggedIn(true)
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
         }
     }
 }

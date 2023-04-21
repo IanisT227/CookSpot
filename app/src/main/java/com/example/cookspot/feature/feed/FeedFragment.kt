@@ -34,7 +34,6 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         initViews()
         initButtons()
         authenticationViewModel.getCurrentUserId()
-
     }
 
     private fun initViews() {

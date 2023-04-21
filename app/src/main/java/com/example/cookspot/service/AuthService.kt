@@ -6,11 +6,12 @@ import com.example.cookspot.feature.authentication.model.User
 import com.example.cookspot.logTag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.channels.Channel
 
 class AuthService {
     private lateinit var firebaseAuth: FirebaseAuth
@@ -76,6 +77,32 @@ class AuthService {
             isErrorMessage = e.message
         }
         return null
+    }
+
+    fun getCurrentUser(): Channel<User?> {
+        val channel = Channel<User?>()
+        var currentUser: User? = null
+        firebaseReference.child(firebaseAuth.currentUser!!.uid)
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    val value = snapshot.getValue<User>()
+                    channel.trySend(value).isSuccess
+                    channel.close()
+                    Log.v("userData", "Value is: " + value)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w("userData", "Failed to read value.", error.toException())
+                    channel.trySend(null).isSuccess
+                    channel.close()
+                }
+
+            })
+        Log.v("userdataAS", currentUser.toString())
+        return channel
     }
 
     fun getIsErrorMessage() = isErrorMessage
