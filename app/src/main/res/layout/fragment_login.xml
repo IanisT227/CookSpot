@@ -67,11 +67,11 @@
                     android:text="@string/emailText"
                     android:textAllCaps="true"
                     android:textColor="@color/dark_orange"
-                    app:layout_constraintBottom_toTopOf="@id/emailTIL"
+                    app:layout_constraintBottom_toTopOf="@id/titleTIL"
                     app:layout_constraintStart_toStartOf="@id/welcomeTV" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/emailTIL"
+                    android:id="@+id/titleTIL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
@@ -82,7 +82,7 @@
                     app:layout_constraintStart_toStartOf="@id/welcomeTV">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/emailTIEE"
+                        android:id="@+id/titleTIEE"
                         android:inputType="textEmailAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

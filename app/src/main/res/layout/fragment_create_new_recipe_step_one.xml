@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/neutral_white"
+        app:title="Create new recipe"
+        app:titleCentered="true"
+        app:titleTextColor="@color/neutral_white" />
+
+    <TextView
+        android:id="@+id/titleTV"
+        style="@style/RegularTextBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Title"
+        android:textColor="@color/neutral_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleTIL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="48dp"
+        app:boxBackgroundMode="none"
+        app:counterEnabled="true"
+        app:counterMaxLength="25"
+        app:counterTextColor="@color/neutral_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/titleTV"
+        app:layout_constraintTop_toBottomOf="@id/titleTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/titleTIEE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_edit_text"
+            android:inputType="text"
+            android:maxLength="25"
+            android:maxLines="2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/photoFrameCL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/bg_rounded_corner"
+        app:layout_constraintEnd_toEndOf="@id/titleTIL"
+        app:layout_constraintStart_toStartOf="@id/titleTIL"
+        app:layout_constraintTop_toBottomOf="@id/titleTIL">
+
+        <TextView
+            android:id="@+id/uploadPhotoInstructionTV"
+            style="@style/RegularTextSemiBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:text="Upload a photo of your recipe"
+            android:textColor="@color/neutral_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/deletePhotoIBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_delete"
+            app:flow_horizontalAlign="end"
+            app:layout_constraintBottom_toBottomOf="@id/uploadPhotoInstructionTV"
+            app:layout_constraintEnd_toEndOf="@id/uploadPhotoIV"
+            app:layout_constraintTop_toTopOf="@id/uploadPhotoInstructionTV"
+            app:tint="@color/neutral_white" />
+
+        <ImageView
+            android:id="@+id/uploadPhotoIV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/ic_add_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/uploadPhotoInstructionTV"
+            app:tint="@color/primary_orange" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/durationTV"
+        style="@style/RegularTextSemiBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:text="Cooking duration"
+        android:textColor="@color/neutral_white"
+        app:layout_constraintEnd_toStartOf="@+id/numberOfPersonsTV"
+        app:layout_constraintStart_toStartOf="@id/titleTV"
+        app:layout_constraintTop_toBottomOf="@id/photoFrameCL" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/durationTIL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="48dp"
+        app:boxBackgroundMode="none"
+        app:counterTextColor="@color/neutral_white"
+        app:layout_constraintEnd_toEndOf="@id/durationTV"
+        app:layout_constraintStart_toStartOf="@id/durationTV"
+        app:layout_constraintTop_toBottomOf="@id/durationTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/durationTIEE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_edit_text"
+            android:inputType="number"
+            android:maxLength="3"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/numberOfPersonsTV"
+        style="@style/RegularTextSemiBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Makes"
+        android:textColor="@color/neutral_white"
+        app:layout_constraintEnd_toEndOf="@id/titleTIL"
+        app:layout_constraintStart_toEndOf="@id/durationTV"
+        app:layout_constraintTop_toBottomOf="@id/photoFrameCL" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/numberOfPersonsTIL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="48dp"
+        app:boxBackgroundMode="none"
+        app:counterTextColor="@color/neutral_white"
+        app:layout_constraintEnd_toEndOf="@id/numberOfPersonsTV"
+        app:layout_constraintStart_toStartOf="@id/numberOfPersonsTV"
+        app:layout_constraintTop_toBottomOf="@id/numberOfPersonsTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/numberOfPersonsTIEE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_edit_text"
+            android:inputType="number"
+            android:maxLength="2"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/loginBtn"
+        style="@style/OutlinedButtonWhite"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Next step"
+        app:layout_constraintEnd_toEndOf="@id/titleTIL"
+        app:layout_constraintStart_toStartOf="@id/titleTIL"
+        app:layout_constraintTop_toBottomOf="@id/durationTIL" />
+</androidx.constraintlayout.widget.ConstraintLayout>
