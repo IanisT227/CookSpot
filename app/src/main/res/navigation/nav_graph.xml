@@ -71,7 +71,7 @@
     </fragment>
     <navigation
         android:id="@+id/create_recipe_navigation"
-        app:startDestination="@id/fragmentCreateRecipeStepTwo">
+        app:startDestination="@id/fragmentCreateRecipeStepOne">
         <fragment
             android:id="@+id/fragmentCreateRecipeStepTwo"
             android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepTwo"

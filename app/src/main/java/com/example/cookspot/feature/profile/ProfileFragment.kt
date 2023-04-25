@@ -73,10 +73,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             logTag("isLoadingValue", isLoading.toString())
         }
 
-        binding.bottomNavigationBarCL.addNewRecipeBtn.setOnClickListener {
-            findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToCreateRecipeNavigation())
-        }
-
         authenticationViewModel.userData.observe(viewLifecycleOwner) { userData ->
             Log.v("UserData", userData.toString())
             binding.usernameTV.text = "@${userData?.username}"
