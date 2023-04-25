@@ -133,7 +133,7 @@
     </style>
 
     <style name="RadioButtonDefault" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/neutral_white</item>
+        <item name="android:textColor">@color/primary_orange</item>
         <item name="backgroundTint">@null</item>
         <item name="android:background">@drawable/radio_flat_regular</item>
         <item name="android:textAllCaps">false</item>
