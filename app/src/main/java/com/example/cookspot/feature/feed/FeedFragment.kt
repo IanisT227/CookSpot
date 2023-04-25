@@ -1,6 +1,5 @@
 package com.example.cookspot.feature.feed
 
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cookspot.R
@@ -24,7 +22,6 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 class FeedFragment : Fragment(R.layout.fragment_feed) {
     private val binding by viewBinding(FragmentFeedBinding::bind)
     private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
-    private var doubleBackPressed = false
     private var bottomNavigationBarBinding: BottomNavigationLayoutBinding? =null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,20 +54,12 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToProfileFragment())
         }
 
+        binding.bottomNavigationBarCL.addNewRecipeBtn.setOnClickListener {
+            findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToCreateRecipeNavigation())
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback {
-            if (doubleBackPressed) {
                 requireActivity().finish()
-            } else {
-                doubleBackPressed = true
-                Toast.makeText(
-                    requireContext(),
-                    "Press again to exit",
-                    Toast.LENGTH_SHORT
-                ).show()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    doubleBackPressed = false
-                }, AuthenticationFragment.ON_BACK_RESET_DURATION)
-            }
         }
     }
 

@@ -52,6 +52,11 @@
         <item name="fontFamily">@font/montserrat_bold</item>
     </style>
 
+    <style name="Button4">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+    </style>
+
     <style name="RegularText">
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/montserrat_regular</item>
@@ -110,6 +115,34 @@
         <item name="android:outlineProvider">none</item>
         <item name="android:minHeight">@dimen/button_height</item>
         <item name="android:textAppearance">@style/Button3</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="RadioButtonSelected" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/neutral_white</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/radio_flat_selected</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:textAppearance">@style/Button4</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="RadioButtonDefault" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/neutral_white</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/radio_flat_regular</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:outlineProvider">none</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:textAppearance">@style/Button4</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 

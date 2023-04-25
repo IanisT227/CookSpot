@@ -137,6 +137,7 @@
         app:layout_constraintTop_toBottomOf="@id/durationTV">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:textAlignment="center"
             android:id="@+id/durationTIEE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -171,6 +172,7 @@
         app:layout_constraintTop_toBottomOf="@id/numberOfPersonsTV">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:textAlignment="center"
             android:id="@+id/numberOfPersonsTIEE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -182,11 +184,12 @@
 
     <Button
         android:id="@+id/loginBtn"
-        style="@style/OutlinedButtonWhite"
+        style="@style/PrimaryButtonWhite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Next step"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/titleTIL"
         app:layout_constraintStart_toStartOf="@id/titleTIL"
         app:layout_constraintTop_toBottomOf="@id/durationTIL" />

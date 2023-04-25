@@ -11,6 +11,7 @@ import com.example.cookspot.R
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentProfileBinding
 import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import com.example.cookspot.feature.feed.FeedFragmentDirections
 import com.example.cookspot.logTag
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -51,6 +52,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFeedFragment())
         }
 
+        binding.bottomNavigationBarCL.addNewRecipeBtn.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToCreateRecipeNavigation())
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFeedFragment())
         }
@@ -68,9 +73,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             logTag("isLoadingValue", isLoading.toString())
         }
 
+        binding.bottomNavigationBarCL.addNewRecipeBtn.setOnClickListener {
+            findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToCreateRecipeNavigation())
+        }
+
         authenticationViewModel.userData.observe(viewLifecycleOwner) { userData ->
             Log.v("UserData", userData.toString())
-            binding.usernameTV.text = userData?.username
+            binding.usernameTV.text = "@${userData?.username}"
             binding.userFullNameTV.text = userData?.fullName
         }
     }

@@ -2,31 +2,46 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/neutral_white"
+        app:title="Create new recipe"
+        app:titleCentered="true"
+        app:titleTextColor="@color/neutral_white" />
+
     <TextView
         android:id="@+id/ingredientsTV"
         style="@style/RegularTextBold"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="48dp"
         android:text="Ingredients"
         android:textColor="@color/neutral_white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/durationTIL" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ingredientsTIL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginBottom="48dp"
         app:boxBackgroundMode="none"
         app:counterEnabled="true"
         app:counterMaxLength="250"
         app:counterTextColor="@color/neutral_white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ingredientsTV"
         app:layout_constraintStart_toStartOf="@id/ingredientsTV"
         app:layout_constraintTop_toBottomOf="@id/ingredientsTV">
 
@@ -44,13 +59,13 @@
     <TextView
         android:id="@+id/processTV"
         style="@style/RegularTextBold"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="48dp"
         android:text="Method:"
         android:textColor="@color/neutral_white"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ingredientsTV"
+        app:layout_constraintStart_toStartOf="@id/ingredientsTV"
         app:layout_constraintTop_toBottomOf="@id/ingredientsTIL" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,14 +73,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="48dp"
         app:boxBackgroundMode="none"
         app:counterEnabled="true"
         app:counterMaxLength="500"
         app:counterTextColor="@color/neutral_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/processTV"
+        app:layout_constraintEnd_toEndOf="@id/ingredientsTV"
+        app:layout_constraintStart_toStartOf="@id/ingredientsTV"
         app:layout_constraintTop_toBottomOf="@id/processTV">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -78,4 +91,16 @@
             android:maxLines="25"
             android:minHeight="200dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/nextStepBtn"
+        style="@style/PrimaryButtonWhite"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Recipe summary"
+        app:layout_constraintTop_toBottomOf="@id/processTIL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ingredientsTV"
+        app:layout_constraintStart_toStartOf="@id/ingredientsTV" />
 </androidx.constraintlayout.widget.ConstraintLayout>

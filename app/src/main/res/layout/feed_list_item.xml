@@ -109,7 +109,6 @@
         app:layout_constraintTop_toBottomOf="@id/recipeAuthorTV"
         tools:text="15'" />
 
-
     <TextView
         android:id="@+id/recipeTagOneBtn"
         style="@style/TagTextView"

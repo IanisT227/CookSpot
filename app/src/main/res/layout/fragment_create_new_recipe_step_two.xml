@@ -1,41 +1,126 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background">
+    android:background="@drawable/main_background"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/neutral_white"
+        app:title="Create new recipe"
+        app:titleCentered="true"
+        app:titleTextColor="@color/neutral_white" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationIconTint="@color/neutral_white"
-            app:title="Create new recipe"
-            app:titleCentered="true"
-            app:titleTextColor="@color/neutral_white" />
+    <TextView
+        android:id="@+id/recipeDifficultyTV"
+        style="@style/Subtitle2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="How difficult is your recipe?"
+        android:textAlignment="center"
+        android:textColor="@color/neutral_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <TextView
-            android:id="@+id/recipeDifficultyTV"
-            style="@style/Subtitle2"
+    <RadioGroup
+        android:id="@+id/recipeDifficultyRG"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/recipeDifficultyTV"
+        app:layout_constraintStart_toStartOf="@id/recipeDifficultyTV"
+        app:layout_constraintTop_toBottomOf="@id/recipeDifficultyTV">
+
+        <RadioButton
+            android:id="@+id/radioEasyBtn"
+            style="@style/RadioButtonSelected"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="How difficult is your recipe?"
-            android:textColor="@color/neutral_white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            android:layout_weight="1"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Easy"
+            android:textAlignment="center" />
+
+        <RadioButton
+            android:id="@+id/radioMediumBtn"
+            style="@style/RadioButtonDefault"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/radio_flat_selector"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Medium"
+            android:textAlignment="center"
+            android:textColor="@color/dark_orange" />
+
+        <RadioButton
+            android:id="@+id/radioHardBtn"
+            style="@style/RadioButtonDefault"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/radio_flat_selector"
+            android:button="@android:color/transparent"
+            android:checked="false"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:text="Hard"
+            android:textAlignment="center"
+            android:textColor="@color/dark_orange" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tagsTV"
+        style="@style/Subtitle2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Time to choose some tags:"
+        android:textAlignment="textStart"
+        android:textColor="@color/neutral_white"
+        app:layout_constraintEnd_toEndOf="@id/recipeDifficultyTV"
+        app:layout_constraintStart_toStartOf="@id/recipeDifficultyTV"
+        app:layout_constraintTop_toBottomOf="@id/recipeDifficultyRG" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tagsRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="24dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/nextStepBtn"
+        app:layout_constraintEnd_toEndOf="@id/recipeDifficultyTV"
+        app:layout_constraintStart_toStartOf="@id/recipeDifficultyTV"
+        app:layout_constraintTop_toBottomOf="@id/tagsTV" />
+
+    <Button
+        android:id="@+id/nextStepBtn"
+        style="@style/PrimaryButtonWhite"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Next step"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/recipeDifficultyTV"
+        app:layout_constraintStart_toStartOf="@id/recipeDifficultyTV" />
+</androidx.constraintlayout.widget.ConstraintLayout>

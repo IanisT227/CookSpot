@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_feedFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_create_recipe_navigation"
+            app:destination="@id/create_recipe_navigation" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -62,5 +65,35 @@
             app:destination="@id/feedFragment"
             app:popUpTo="@id/feedFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_create_recipe_navigation"
+            app:destination="@id/create_recipe_navigation" />
     </fragment>
+    <navigation
+        android:id="@+id/create_recipe_navigation"
+        app:startDestination="@id/fragmentCreateRecipeStepTwo">
+        <fragment
+            android:id="@+id/fragmentCreateRecipeStepTwo"
+            android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepTwo"
+            android:label="FragmentCreateRecipeStepTwo">
+            <action
+                android:id="@+id/action_fragmentCreateRecipeStepTwo_to_fragmentCreateRecipeStepThree"
+                app:destination="@id/fragmentCreateRecipeStepThree" />
+        </fragment>
+        <fragment
+            android:id="@+id/fragmentCreateRecipeStepOne"
+            android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepOne"
+            android:label="FragmentCreateRecipeStepOne">
+            <action
+                android:id="@+id/action_fragmentCreateRecipeStepOne_to_fragmentCreateRecipeStepTwo"
+                app:destination="@id/fragmentCreateRecipeStepTwo" />
+        </fragment>
+        <fragment
+            android:id="@+id/fragmentCreateRecipeStepThree"
+            android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepThree"
+            android:label="FragmentCreateRecipeStepThree" />
+        <action
+            android:id="@+id/action_global_feedFragment"
+            app:destination="@id/feedFragment" />
+    </navigation>
 </navigation>
