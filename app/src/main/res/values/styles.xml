@@ -31,6 +31,11 @@
         <item name="fontFamily">@font/montserrat_semibold</item>
     </style>
 
+    <style name="Subtitle3">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+    </style>
+
     <style name="Heading4">
         <item name="android:textSize">24sp</item>
         <item name="fontFamily">@font/montserrat_extrabold</item>

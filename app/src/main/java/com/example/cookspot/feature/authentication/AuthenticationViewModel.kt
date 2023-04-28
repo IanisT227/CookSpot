@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cookspot.feature.authentication.model.User
+import com.example.cookspot.model.User
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.AuthService
 import kotlinx.coroutines.launch

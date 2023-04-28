@@ -2,7 +2,7 @@ package com.example.cookspot.service
 
 import android.util.Log
 import com.example.cookspot.DATABASE_URL
-import com.example.cookspot.feature.authentication.model.User
+import com.example.cookspot.model.User
 import com.example.cookspot.logTag
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
