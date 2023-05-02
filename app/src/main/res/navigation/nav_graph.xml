@@ -79,6 +79,10 @@
             <action
                 android:id="@+id/action_fragmentCreateRecipeStepTwo_to_fragmentCreateRecipeStepThree"
                 app:destination="@id/fragmentCreateRecipeStepThree" />
+            <argument
+                android:name="newRecipe"
+                app:argType="com.example.cookspot.model.Recipe"
+                app:nullable="true" />
         </fragment>
         <fragment
             android:id="@+id/fragmentCreateRecipeStepOne"
@@ -91,7 +95,12 @@
         <fragment
             android:id="@+id/fragmentCreateRecipeStepThree"
             android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepThree"
-            android:label="FragmentCreateRecipeStepThree" />
+            android:label="FragmentCreateRecipeStepThree" >
+            <argument
+                android:name="newRecipe"
+                app:argType="com.example.cookspot.model.Recipe"
+                app:nullable="true" />
+        </fragment>
         <action
             android:id="@+id/action_global_feedFragment"
             app:destination="@id/feedFragment" />

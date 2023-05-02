@@ -16,6 +16,7 @@ import com.example.awesomedialog.onPositive
 import com.example.cookspot.BuildConfig
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepOneBinding
+import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import java.io.File
@@ -29,6 +30,7 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
             if (isSuccess) {
                 latestTmpUri?.let { uri ->
                     binding.uploadPhotoIV.setImageURI(uri)
+                    latestTmpUri = uri
                     photoStatus = true
                 }
             }
@@ -38,6 +40,7 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 binding.uploadPhotoIV.setImageURI(uri)
+                latestTmpUri = uri
                 photoStatus = true
             }
         }
@@ -75,9 +78,8 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
     }
 
     private fun checkRecipe(): Boolean {
-        if (binding.titleTIEE.text.isNullOrEmpty() || binding.durationTIEE.text.isNullOrEmpty() || binding.numberOfPersonsTIEE.text.isNullOrEmpty() || photoStatus == false)
-            return false
         return true
+        return !(binding.titleTIEE.text.isNullOrEmpty() || binding.durationTIEE.text.isNullOrEmpty() || binding.numberOfPersonsTIEE.text.isNullOrEmpty() || !photoStatus)
     }
 
     private fun initButtons() {
@@ -91,7 +93,16 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
 
         binding.nextStepBtn.setOnClickListener {
             if (checkRecipe())
-                findNavController().navigate(FragmentCreateRecipeStepOneDirections.actionFragmentCreateRecipeStepOneToFragmentCreateRecipeStepTwo())
+                findNavController().navigate(
+                    FragmentCreateRecipeStepOneDirections.actionFragmentCreateRecipeStepOneToFragmentCreateRecipeStepTwo(
+                        Recipe(
+                            name = binding.titleTIEE.text.toString(),
+                            duration = binding.durationTIEE.text.toString(),
+                            imageUri = latestTmpUri!!,
+                            makes = binding.numberOfPersonsTIEE.text.toString()
+                        )
+                    )
+                )
             else
                 showAlerter("All fields must be completed", requireActivity())
         }

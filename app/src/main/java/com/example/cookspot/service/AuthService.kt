@@ -2,16 +2,16 @@ package com.example.cookspot.service
 
 import android.util.Log
 import com.example.cookspot.DATABASE_URL
-import com.example.cookspot.model.User
 import com.example.cookspot.logTag
+import com.example.cookspot.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.tasks.await
 
 class AuthService {
     private lateinit var firebaseAuth: FirebaseAuth
@@ -47,7 +47,12 @@ class AuthService {
             isErrorMessage = null
             firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             firebaseReference.child(firebaseAuth.currentUser!!.uid)
-                .setValue(User(email = email, username = username, fullName = fullName))
+                .setValue(
+                    User(
+                        email = email, username = username, fullName = fullName,
+                        publishedRecipes = ArrayList(), followedUsers = ArrayList()
+                    )
+                )
             return true
         } catch (e: Exception) {
             isErrorMessage = e.message
