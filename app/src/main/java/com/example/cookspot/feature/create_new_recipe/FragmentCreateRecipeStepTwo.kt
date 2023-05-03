@@ -58,7 +58,12 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                     )
                 )
             }
+        }
 
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigate(
+                FragmentCreateRecipeStepTwoDirections.actionGlobalFeedFragment()
+            )
         }
     }
 }
