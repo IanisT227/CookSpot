@@ -9,15 +9,20 @@ import androidx.navigation.fragment.navArgs
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepTwoBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe_step_two) {
 
+    private val recipeViewModel: RecipeViewModel by activityViewModel()
     private val binding by viewBinding(FragmentCreateNewRecipeStepTwoBinding::bind)
     private val args: FragmentCreateRecipeStepTwoArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.v("arguments", args.newRecipe.toString())
+
+        recipeViewModel.initFirebase()
+        recipeViewModel.getTags()
     }
 
     private fun initButtons() {

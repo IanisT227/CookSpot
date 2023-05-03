@@ -1,14 +1,19 @@
 package com.example.cookspot
 
 import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import com.example.cookspot.feature.create_new_recipe.RecipeViewModel
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.AuthService
+import com.example.cookspot.service.RecipeService
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 
-val service = module { single { AuthService() } }
+val service = module {
+    single { AuthService() }
+    single { RecipeService() }
+}
 
 val internalStorage = module {
     single { UserDataInternalStorageManager(androidContext()) }
@@ -19,6 +24,11 @@ val viewModel = module {
         AuthenticationViewModel(
             authService = get(),
             internalStorageManager = get()
+        )
+    }
+    viewModel {
+        RecipeViewModel(
+            recipeService = get()
         )
     }
 }

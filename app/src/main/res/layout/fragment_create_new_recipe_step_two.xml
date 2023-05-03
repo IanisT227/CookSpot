@@ -48,7 +48,7 @@
 
         <RadioButton
             android:id="@+id/radioEasyBtn"
-            style="@style/RadioButtonSelected"
+            style="@style/RadioButtonDefault"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
