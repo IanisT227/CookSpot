@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:maxLines="1"
+        android:textColor="@color/dark_grey"
         app:layout_constraintEnd_toEndOf="@id/recipeNameTV"
         app:layout_constraintStart_toStartOf="@id/recipeNameTV"
         app:layout_constraintTop_toBottomOf="@id/recipeNameTV"
@@ -66,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyTV"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/recipeDifficultyTV"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@id/recipeNameTV"
         app:layout_constraintTop_toTopOf="@id/recipeDifficultyTV"
         app:tint="@color/neutral_black" />
@@ -78,7 +79,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
         android:maxLines="1"
         android:textColor="@color/neutral_black"
         app:layout_constraintStart_toEndOf="@id/recipeDifficultyIV"
@@ -86,13 +86,14 @@
         tools:text="Medium" />
 
     <ImageView
+        android:layout_marginStart="12dp"
         android:id="@+id/recipeDurationIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
         android:src="@drawable/ic_duration"
-        app:layout_constraintEnd_toStartOf="@id/recipeDurationTV"
+        app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyTV"
         app:layout_constraintTop_toTopOf="@id/recipeDifficultyTV"
+        app:layout_constraintStart_toEndOf="@+id/recipeDifficultyTV"
         app:tint="@color/neutral_black" />
 
 
@@ -101,12 +102,39 @@
         style="@style/RegularTextBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/neutral_black"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyTV"
+        app:layout_constraintStart_toEndOf="@id/recipeDurationIV"
+        app:layout_constraintTop_toTopOf="@id/recipeDifficultyTV"
+        tools:text="15'" />
+
+    <ImageView
+        android:layout_marginStart="12dp"
+        android:id="@+id/recipeMakesIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_makes"
+        app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyIV"
+        app:layout_constraintEnd_toStartOf="@id/recipeMakesTV"
+        app:layout_constraintStart_toEndOf="@id/recipeDurationTV"
+        app:layout_constraintTop_toTopOf="@id/recipeDifficultyIV" />
+
+    <TextView
+        android:layout_marginStart="12dp"
+        android:id="@+id/recipeMakesTV"
+        style="@style/RegularTextBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:textColor="@color/neutral_black"
+        app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyTV"
         app:layout_constraintEnd_toEndOf="@id/recipeNameTV"
-        app:layout_constraintTop_toBottomOf="@id/recipeAuthorTV"
+        app:layout_constraintStart_toEndOf="@id/recipeMakesIV"
+        app:layout_constraintTop_toTopOf="@id/recipeDifficultyTV"
         tools:text="15'" />
 
     <TextView
@@ -118,7 +146,7 @@
         app:layout_constraintEnd_toStartOf="@id/recipeTagTwoBtn"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@id/recipeNameTV"
-        app:layout_constraintTop_toBottomOf="@id/recipeDurationIV"
+        app:layout_constraintTop_toBottomOf="@id/recipeDifficultyTV"
         tools:text="American" />
 
     <TextView

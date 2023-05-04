@@ -1,11 +1,14 @@
 package com.example.cookspot.feature.create_new_recipe
 
 import android.os.Bundle
-import android.view.KeyEvent
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.awesomedialog.*
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepThreeBinding
 import com.example.cookspot.model.Recipe
@@ -25,34 +28,36 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
     }
 
     private fun initViews() {
-        binding.ingredientsTIEE.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
-                val selectionStart = binding.ingredientsTIEE.selectionStart
-                binding.ingredientsTIEE.selectionEnd
-                val editable = binding.ingredientsTIEE.text
-                val start = binding.ingredientsTIEE.layout.getLineStart(
-                    binding.ingredientsTIEE.layout.getLineForOffset(selectionStart)
-                )
-                val end = binding.ingredientsTIEE.layout.getLineEnd(
-                    binding.ingredientsTIEE.layout.getLineForOffset(selectionStart)
-                )
-                val lineText = editable?.subSequence(start, end).toString()
 
-                if (lineText.trim { it <= ' ' }.isEmpty()) {
-                    editable?.insert(start, "• ")
-                } else {
-                    editable?.insert(end, "\n• ")
+        binding.ingredientsTIEE.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(e: Editable) {}
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
+            override fun onTextChanged(
+                text: CharSequence,
+                start: Int,
+                lengthBefore: Int,
+                lengthAfter: Int
+            ) {
+                if (lengthAfter > lengthBefore) {
+                    if (text.toString().length == 1) {
+                        binding.ingredientsTIEE.setText("• $text")
+                        binding.ingredientsTIEE.setSelection(binding.ingredientsTIEE.text!!.length)
+                    }
+                    if (text.toString().endsWith("\n")) {
+                        var newText = text.toString().replace("\n", "\n• ")
+                        newText = newText.toString().replace("• •", "•")
+                        binding.ingredientsTIEE.setText(newText)
+                        binding.ingredientsTIEE.setSelection(binding.ingredientsTIEE.text!!.length)
+                    }
                 }
-                return@OnKeyListener true
             }
-            false
         })
     }
 
     private fun initButtons() {
         binding.nextStepBtn.setOnClickListener {
             if (checkFields()) {
-                val recipe: Recipe = Recipe(
+                val recipe = Recipe(
                     name = args.newRecipe!!.name,
                     duration = args.newRecipe!!.duration,
                     imageUri = args.newRecipe!!.imageUri,
@@ -64,7 +69,7 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
                     args.newRecipe!!.publisherId
                 )
                 findNavController().navigate(
-                    FragmentCreateRecipeStepThreeDirections.actionFragmentCreateRecipeStepThreeToRecipeDetailFragment(
+                    FragmentCreateRecipeStepThreeDirections.actionFragmentCreateRecipeStepThreeToRecipeSummaryFragment(
                         finalRecipe = recipe
                     )
                 )
@@ -72,6 +77,30 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
                 showAlerter("All fields must be completed", requireActivity())
             }
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            showDialog()
+        }
+
+        binding.toolbar.setNavigationOnClickListener {
+            showDialog()
+        }
+    }
+
+    private fun showDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title(title = "Discard recipe?", titleColor = R.color.neutral_black)
+            .body(
+                body = "If you go back, your progress will be deleted",
+                color = R.color.neutral_black
+            )
+            .onPositive(text = "Discard") {
+                findNavController().navigate(
+                    FragmentCreateRecipeStepTwoDirections.actionGlobalFeedFragment()
+                )
+            }
+            .onNegative(text = "Cancel") {
+            }
     }
 
     private fun checkFields(): Boolean {

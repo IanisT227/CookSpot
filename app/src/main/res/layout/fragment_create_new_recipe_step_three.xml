@@ -48,12 +48,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ingredientsTIEE"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
+            android:gravity="top|start"
             android:background="@drawable/bg_rounded_edit_text"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:maxLength="250"
-            android:maxLines="25"
-            android:minHeight="200dp" />
+            android:maxLines="25" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -84,12 +84,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/processTIEE"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:background="@drawable/bg_rounded_edit_text"
-            android:inputType="text"
             android:maxLength="250"
-            android:maxLines="25"
-            android:minHeight="200dp" />
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:maxLines="25" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

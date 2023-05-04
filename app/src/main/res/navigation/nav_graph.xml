@@ -101,7 +101,7 @@
                 app:argType="com.example.cookspot.model.Recipe"
                 app:nullable="true" />
             <action
-                android:id="@+id/action_fragmentCreateRecipeStepThree_to_recipeDetailFragment"
+                android:id="@+id/action_fragmentCreateRecipeStepThree_to_recipeSummaryFragment"
                 app:destination="@id/recipeDetailFragment" />
         </fragment>
         <action
@@ -109,7 +109,7 @@
             app:destination="@id/feedFragment" />
         <fragment
             android:id="@+id/recipeDetailFragment"
-            android:name="com.example.cookspot.feature.feed.RecipeDetailFragment"
+            android:name="com.example.cookspot.feature.create_new_recipe.RecipeSummaryFragment"
             android:label="RecipeDetailFragment" >
             <argument
                 android:name="finalRecipe"

@@ -5,5 +5,5 @@ data class User(
     val fullName: String = "",
     val email: String = "",
     val publishedRecipes: ArrayList<String> = ArrayList(),
-    val followedUsers: ArrayList<String>,
+    val followedUsers: ArrayList<String> = ArrayList(),
 )

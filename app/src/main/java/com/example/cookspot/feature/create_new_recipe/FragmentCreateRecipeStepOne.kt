@@ -7,6 +7,7 @@ import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,14 +17,19 @@ import com.example.awesomedialog.onPositive
 import com.example.cookspot.BuildConfig
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepOneBinding
+import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.io.File
 
 class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe_step_one) {
 
     private val binding by viewBinding(FragmentCreateNewRecipeStepOneBinding::bind)
+    private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
+    private lateinit var currentUserId: String
     private var photoStatus = false
     private val takeImageResult =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
@@ -50,7 +56,11 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        authenticationViewModel.initFirebase()
         initButtons()
+        initObservers()
+        authenticationViewModel.getCurrentUserId()
+        authenticationViewModel.getCurrentUser()
     }
 
 
@@ -78,7 +88,6 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
     }
 
     private fun checkRecipe(): Boolean {
-        return true
         return !(binding.titleTIEE.text.isNullOrEmpty() || binding.durationTIEE.text.isNullOrEmpty() || binding.numberOfPersonsTIEE.text.isNullOrEmpty() || !photoStatus)
     }
 
@@ -99,7 +108,8 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
                             name = binding.titleTIEE.text.toString(),
                             duration = binding.durationTIEE.text.toString(),
                             imageUri = latestTmpUri!!,
-                            makes = binding.numberOfPersonsTIEE.text.toString()
+                            makes = binding.numberOfPersonsTIEE.text.toString(),
+                            publisherId = currentUserId
                         )
                     )
                 )
@@ -130,6 +140,19 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
             .onNegative(text = "Choose from gallery") {
                 selectImageFromGallery()
             }
+    }
+
+    private fun initObservers() {
+        authenticationViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            logTag("isLoadingValue", isLoading.toString())
+            binding.isLoadingCIP.isVisible = isLoading
+            binding.nextStepBtn.isEnabled = !isLoading
+        }
+
+        authenticationViewModel.userId.observe(viewLifecycleOwner) { userId ->
+            currentUserId = userId
+            logTag("userid", currentUserId)
+        }
     }
 
     companion object {

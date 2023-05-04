@@ -3,6 +3,7 @@ package com.example.cookspot.feature.create_new_recipe
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -51,7 +52,8 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                     duration = args.newRecipe!!.duration,
                     imageUri = args.newRecipe!!.imageUri,
                     makes = args.newRecipe!!.makes,
-                    difficulty = difficultyLevel!!
+                    difficulty = difficultyLevel!!,
+                    publisherId = args.newRecipe!!.publisherId
                 )
                 findNavController().navigate(
                     FragmentCreateRecipeStepTwoDirections.actionFragmentCreateRecipeStepTwoToFragmentCreateRecipeStepThree(
@@ -59,6 +61,10 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                     )
                 )
             }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback {
+            showDialog()
         }
 
         binding.toolbar.setNavigationOnClickListener {

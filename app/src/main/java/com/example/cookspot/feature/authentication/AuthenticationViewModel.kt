@@ -80,6 +80,8 @@ class AuthenticationViewModel(
                 authService.logOutUser()
                 _isError.value = authService.getIsErrorMessage()
                 internalStorageManager.setIsUserLoggedIn(false)
+                internalStorageManager.setUserFullName("")
+                internalStorageManager.setUserUsername("")
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {
@@ -113,6 +115,8 @@ class AuthenticationViewModel(
                 _isLoading.value = true
                 _userData.value = authService.getCurrentUser().receive()
                 Log.v("userdatavm", _userData.value.toString())
+                internalStorageManager.setUserUsername(_userData.value?.username.toString())
+                internalStorageManager.setUserFullName(_userData.value?.fullName.toString())
                 _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 internalStorageManager.setIsUserLoggedIn(true)

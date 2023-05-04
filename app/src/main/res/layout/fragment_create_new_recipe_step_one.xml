@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/main_background"
     android:fillViewport="true"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -193,4 +194,17 @@
         app:layout_constraintEnd_toEndOf="@id/titleTIL"
         app:layout_constraintStart_toStartOf="@id/titleTIL"
         app:layout_constraintTop_toBottomOf="@id/durationTIL" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/isLoadingCIP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/neutral_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

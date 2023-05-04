@@ -6,10 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
 import kotlinx.coroutines.launch
 
-class RecipeViewModel(private val recipeService: RecipeService) : ViewModel() {
+class RecipeViewModel(
+    private val recipeService: RecipeService,
+    private val internalStorageManager: UserDataInternalStorageManager
+) : ViewModel() {
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean>
@@ -44,6 +48,8 @@ class RecipeViewModel(private val recipeService: RecipeService) : ViewModel() {
             }
         }
     }
+
+    fun getUserName(): String = internalStorageManager.getUserUsername().toString()
 
     fun uploadRecipe(recipeToUpload: Recipe) {
         viewModelScope.launch {
