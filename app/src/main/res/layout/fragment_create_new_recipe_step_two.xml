@@ -54,8 +54,6 @@
             android:layout_weight="1"
             android:button="@android:color/transparent"
             android:checked="false"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
             android:text="Easy"
             android:textAlignment="center" />
 
@@ -65,11 +63,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/radio_flat_selector"
             android:button="@android:color/transparent"
             android:checked="false"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
             android:text="Medium"
             android:textAlignment="center"
              />
@@ -80,11 +75,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/radio_flat_selector"
             android:button="@android:color/transparent"
             android:checked="false"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
             android:text="Hard"
             android:textAlignment="center"
             />
