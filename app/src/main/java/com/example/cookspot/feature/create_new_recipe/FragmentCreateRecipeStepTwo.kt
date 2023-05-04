@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.awesomedialog.*
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepTwoBinding
 import com.example.cookspot.model.Recipe
@@ -61,9 +62,23 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(
-                FragmentCreateRecipeStepTwoDirections.actionGlobalFeedFragment()
-            )
+            showDialog()
         }
+    }
+
+    private fun showDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title(title = "Discard recipe?", titleColor = R.color.neutral_black)
+            .body(
+                body = "If you go back, your progress will be deleted",
+                color = R.color.neutral_black
+            )
+            .onPositive(text = "Discard") {
+                findNavController().navigate(
+                    FragmentCreateRecipeStepTwoDirections.actionGlobalFeedFragment()
+                )
+            }
+            .onNegative(text = "Cancel") {
+            }
     }
 }
