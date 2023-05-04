@@ -1,7 +1,6 @@
 package com.example.cookspot.feature.create_new_recipe
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 

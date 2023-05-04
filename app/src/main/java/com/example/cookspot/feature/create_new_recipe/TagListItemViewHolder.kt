@@ -6,6 +6,4 @@ import com.example.cookspot.databinding.TagListItemBinding
 class TagListItemViewHolder(
     private val binding: TagListItemBinding,
     private val onTagClickListener: OnTagClickListener
-) : RecyclerView.ViewHolder(binding.root) {
-
-}
+) : RecyclerView.ViewHolder(binding.root)
