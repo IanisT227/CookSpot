@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cookspot.model.Recipe
 import com.example.cookspot.service.RecipeService
 import kotlinx.coroutines.launch
 
@@ -33,7 +34,7 @@ class RecipeViewModel(private val recipeService: RecipeService) : ViewModel() {
             try {
                 _isLoading.value = true
                 _recipeTags.value = recipeService.getTags().receive()
-                Log.v("userdatavm", _recipeTags.value.toString())
+                Log.v(VIEWMODEL_TAG, _recipeTags.value.toString())
                 _isError.value = recipeService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
@@ -42,5 +43,24 @@ class RecipeViewModel(private val recipeService: RecipeService) : ViewModel() {
                 _isError.value = null
             }
         }
+    }
+
+    fun uploadRecipe(recipeToUpload: Recipe) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                recipeService.uploadRecipe(recipeToUpload)
+                _isError.value = recipeService.getIsErrorMessage()
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    companion object {
+        const val VIEWMODEL_TAG = "RECIPE_VIEWMODEL"
     }
 }
