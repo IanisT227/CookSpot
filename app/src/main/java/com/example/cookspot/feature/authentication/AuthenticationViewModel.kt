@@ -127,4 +127,8 @@ class AuthenticationViewModel(
             }
         }
     }
+
+    fun getCurrentUserFullName() = internalStorageManager.getUserFullName()
+
+    fun getCurrentUserUsername() = internalStorageManager.getUserUsername()
 }

@@ -29,7 +29,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         initViews()
         initButtons()
         initObservers()
-        authenticationViewModel.getCurrentUser()
+//        authenticationViewModel.getCurrentUser()
     }
 
     private fun initViews() {
@@ -45,6 +45,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.editProfileBtn.setOnClickListener {
             authenticationViewModel.getCurrentUser()
         }
+
+        binding.userFullNameTV.text = authenticationViewModel.getCurrentUserFullName()
+        binding.usernameTV.text = "@${authenticationViewModel.getCurrentUserUsername()}"
     }
 
     private fun initButtons() {
@@ -71,12 +74,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         authenticationViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             logTag("isLoadingValue", isLoading.toString())
-        }
-
-        authenticationViewModel.userData.observe(viewLifecycleOwner) { userData ->
-            Log.v("UserData", userData.toString())
-            binding.usernameTV.text = "@${userData?.username}"
-            binding.userFullNameTV.text = userData?.fullName
         }
     }
 }
