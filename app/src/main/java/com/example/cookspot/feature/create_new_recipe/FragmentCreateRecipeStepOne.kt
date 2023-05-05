@@ -107,7 +107,7 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
                         Recipe(
                             name = binding.titleTIEE.text.toString(),
                             duration = binding.durationTIEE.text.toString(),
-                            imageUri = latestTmpUri!!,
+                            imageUri = latestTmpUri.toString(),
                             makes = binding.numberOfPersonsTIEE.text.toString(),
                             publisherId = currentUserId
                         )

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/RadioButtonDefault"
+    android:layout_margin="8dp"
+    android:padding="8dp"
+    android:id="@+id/radioButtonTagItem"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:button="@android:color/transparent"
-    android:checked="true"
+    android:checked="false"
     android:minWidth="100dp"
     android:textAlignment="center"
     tools:text="COX" />

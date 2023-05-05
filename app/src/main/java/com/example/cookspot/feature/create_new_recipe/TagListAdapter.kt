@@ -1,18 +1,22 @@
 package com.example.cookspot.feature.create_new_recipe
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.example.cookspot.databinding.TagListItemBinding
 
 
-typealias OnTagClickListener = (tagId: Int) -> Unit
+typealias OnTagClickListener = (tagId: String) -> Unit
 
 class TagListAdapter(private val onTagClickListener: OnTagClickListener) :
     ListAdapter<String, TagListItemViewHolder>(TagListItemDiffUtilItemCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagListItemViewHolder {
-        TODO("Not yet implemented")
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TagListItemViewHolder(
+        TagListItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), onTagClickListener
+    )
 
     override fun onBindViewHolder(holder: TagListItemViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(getItem(position))
     }
 }

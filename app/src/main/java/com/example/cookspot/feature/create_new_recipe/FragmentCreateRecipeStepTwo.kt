@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.awesomedialog.*
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepTwoBinding
+import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -20,14 +23,35 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
     private val recipeViewModel: RecipeViewModel by activityViewModel()
     private val binding by viewBinding(FragmentCreateNewRecipeStepTwoBinding::bind)
     private val args: FragmentCreateRecipeStepTwoArgs by navArgs()
+    private val adapter by lazy { initTagsAdapter() }
     private var difficultyLevel: String? = null
+    private var tagItemsList: ArrayList<String> = ArrayList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.v("arguments", args.newRecipe.toString())
         initButtons()
+        initObservers()
         recipeViewModel.initFirebase()
         recipeViewModel.getTags()
+    }
+
+    private fun initTagsAdapter(): TagListAdapter = TagListAdapter(::onItemClickListener)
+
+    private fun initRecyclerView(layoutManager: GridLayoutManager, tagList: List<String>) {
+        val tagListAdapter = TagListAdapter(::onItemClickListener)
+        binding.tagsRV.adapter = tagListAdapter
+        tagListAdapter.submitList(tagList)
+        binding.tagsRV.layoutManager = layoutManager
+    }
+
+    private fun onItemClickListener(tag: String) {
+        if (tag !in tagItemsList) {
+            tagItemsList.add(tag)
+        } else {
+            tagItemsList.remove(tag)
+        }
+        logTag("itemlisttag", tagItemsList.toString())
     }
 
     private fun initButtons() {
@@ -51,6 +75,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                     name = args.newRecipe!!.name,
                     duration = args.newRecipe!!.duration,
                     imageUri = args.newRecipe!!.imageUri,
+                    tags = tagItemsList,
                     makes = args.newRecipe!!.makes,
                     difficulty = difficultyLevel!!,
                     publisherId = args.newRecipe!!.publisherId
@@ -86,5 +111,32 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
             }
             .onNegative(text = "Cancel") {
             }
+    }
+
+    private fun initObservers() {
+        recipeViewModel.recipeTags.observe(viewLifecycleOwner) { tagList ->
+            if (tagList != null)
+                initRecyclerView(
+                    GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
+                    tagList.keys.toList()
+                )
+        }
+
+        recipeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            logTag("isLoadingValue", isLoading.toString())
+            binding.isLoadingCIP.isVisible = isLoading
+            binding.nextStepBtn.isEnabled = !isLoading
+        }
+
+        recipeViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError != null) {
+                logTag("isErrorValue", isError.toString())
+                showAlerter(isError, requireActivity())
+            }
+        }
+    }
+
+    companion object {
+        const val GALLERY_SPAN_COUNT = 3
     }
 }

@@ -2,6 +2,7 @@ package com.example.cookspot.service
 
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import com.example.cookspot.DATABASE_URL
 import com.example.cookspot.model.Recipe
 import com.google.firebase.auth.FirebaseAuth
@@ -66,7 +67,7 @@ class RecipeService {
         try {
             val recipeId: String = UUID.randomUUID().toString()
             firebaseReference.child(recipeId).setValue(recipe)
-            uploadPicture(recipe.imageUri, recipeId)
+            uploadPicture(recipe.imageUri.toUri(), recipeId)
         } catch (e: Exception) {
             isErrorMessage = e.message
         }

@@ -37,21 +37,6 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:src="@drawable/cat_profile" />
 
-        <ImageButton
-            android:id="@+id/saveRecipeIBtn"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="8dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_save"
-            app:layout_constraintBottom_toBottomOf="@id/recipeNameTV"
-            app:layout_constraintDimensionRatio="2:2.6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/recipeNameTV"
-            app:tint="@color/primary_orange" />
-
         <TextView
             android:id="@+id/recipeNameTV"
             style="@style/Heading4"
@@ -61,12 +46,11 @@
             android:layout_marginTop="24dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:minLines="2"
             android:textColor="@color/neutral_black"
-            app:layout_constraintEnd_toStartOf="@id/saveRecipeIBtn"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recipePictureIV"
-            tools:text="Burgeri foarte foarte buni" />
+            tools:text="Burgeri foarte foarte basdfsafauni" />
 
         <TextView
             android:id="@+id/recipeAuthorTV"
@@ -188,79 +172,11 @@
             style="@style/TagTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/saveRecipeIBtn"
+            app:layout_constraintEnd_toEndOf="@id/recipeNameTV"
             app:layout_constraintStart_toEndOf="@id/recipeTagTwoBtn"
             app:layout_constraintTop_toTopOf="@id/recipeTagOneBtn"
             tools:text="Heavy on the stomach" />
 
-        <ImageButton
-            android:id="@+id/likeBtn"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_heart"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@id/commentBtn"
-            app:layout_constraintStart_toStartOf="@id/recipeNameTV"
-            app:layout_constraintTop_toBottomOf="@id/recipeTagOneBtn"
-            app:tint="@color/primary_orange" />
-
-        <TextView
-            android:id="@+id/likesNumberTV"
-            style="@style/RegularText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:maxLines="1"
-            app:layout_constraintEnd_toEndOf="@id/likeBtn"
-            app:layout_constraintStart_toStartOf="@id/likeBtn"
-            app:layout_constraintTop_toBottomOf="@id/likeBtn"
-            tools:text="55.5k" />
-
-        <ImageButton
-            android:id="@+id/commentBtn"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_comment"
-            app:layout_constraintBottom_toBottomOf="@id/likeBtn"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="@id/recipeTagOneBtn"
-            app:layout_constraintStart_toEndOf="@id/likeBtn"
-            app:layout_constraintTop_toBottomOf="@id/recipeTagOneBtn"
-            app:tint="@color/primary_orange" />
-
-        <TextView
-            android:id="@+id/commentsNumberBtn"
-            style="@style/RegularText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:maxLines="1"
-            app:layout_constraintEnd_toEndOf="@id/commentBtn"
-            app:layout_constraintStart_toStartOf="@id/commentBtn"
-            app:layout_constraintTop_toBottomOf="@id/commentBtn"
-            tools:text="55.5k" />
-
-        <ImageButton
-            android:id="@+id/shareBtn"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_share"
-            app:layout_constraintBottom_toBottomOf="@id/likeBtn"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="@id/saveRecipeIBtn"
-            app:layout_constraintStart_toStartOf="@id/saveRecipeIBtn"
-            app:layout_constraintTop_toBottomOf="@id/recipeTagOneBtn"
-            app:tint="@color/primary_orange" />
 
         <TextView
             android:id="@+id/ingredientsTitleTV"
@@ -271,7 +187,7 @@
             android:text="Ingredients:"
             android:textColor="@color/neutral_black"
             app:layout_constraintStart_toStartOf="@id/recipeNameTV"
-            app:layout_constraintTop_toBottomOf="@id/likesNumberTV" />
+            app:layout_constraintTop_toBottomOf="@id/recipeTagOneBtn" />
 
         <TextView
             android:id="@+id/ingredientsListTV"
@@ -281,7 +197,7 @@
             android:layout_marginTop="12dp"
             android:minLines="3"
             android:textColor="@color/dark_grey"
-            app:layout_constraintEnd_toStartOf="@id/saveRecipeIBtn"
+            app:layout_constraintEnd_toEndOf="@id/recipeNameTV"
             app:layout_constraintStart_toStartOf="@id/recipeNameTV"
             app:layout_constraintTop_toBottomOf="@id/ingredientsTitleTV"
             tools:text="allalalalalala" />
@@ -305,7 +221,7 @@
             android:layout_marginTop="12dp"
             android:minLines="3"
             android:textColor="@color/dark_grey"
-            app:layout_constraintEnd_toStartOf="@id/saveRecipeIBtn"
+            app:layout_constraintEnd_toEndOf="@id/recipeNameTV"
             app:layout_constraintStart_toStartOf="@id/ingredientsTitleTV"
             app:layout_constraintTop_toBottomOf="@id/cookingProcessTitleTV" />
 
@@ -320,5 +236,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cookingProcessParagraphTV" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/isLoadingCIP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/primary_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class Recipe(
     val name: String = "",
     val duration: String = "",
-    val imageUri: Uri,
+    val imageUri: String = "",
     val makes: String = "",
     val difficulty: String = "",
     val tags: ArrayList<String> = ArrayList<String>(),

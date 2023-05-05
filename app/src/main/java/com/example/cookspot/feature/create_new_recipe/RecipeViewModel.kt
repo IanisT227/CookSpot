@@ -19,6 +19,10 @@ class RecipeViewModel(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+    private val _isPosted: MutableLiveData<Boolean> = MutableLiveData()
+    val isPosted: LiveData<Boolean>
+        get() = _isPosted
+
     private val _isError: MutableLiveData<String?> = MutableLiveData()
     val isError: LiveData<String?>
         get() = _isError
@@ -30,6 +34,7 @@ class RecipeViewModel(
     fun initFirebase() {
         viewModelScope.launch {
             recipeService.initFirebase()
+            _isPosted.value = false
         }
     }
 
@@ -57,6 +62,7 @@ class RecipeViewModel(
                 _isLoading.value = true
                 recipeService.uploadRecipe(recipeToUpload)
                 _isError.value = recipeService.getIsErrorMessage()
+                _isPosted.value = true
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {
