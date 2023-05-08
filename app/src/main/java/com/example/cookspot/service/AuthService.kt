@@ -1,6 +1,8 @@
 package com.example.cookspot.service
 
+import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import com.example.cookspot.DATABASE_URL
 import com.example.cookspot.logTag
 import com.example.cookspot.model.User
@@ -14,19 +16,49 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.tasks.await
+import java.io.File
 
 class AuthService {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var firebaseReference: DatabaseReference
+    private lateinit var firebaseStorage: FirebaseStorage
     private var isErrorMessage: String? = null
 
     fun initFirebase() {
         firebaseAuth = Firebase.auth
         firebaseDatabase = Firebase.database(DATABASE_URL)
         firebaseReference = firebaseDatabase.getReference("users")
+        firebaseStorage = FirebaseStorage.getInstance()
+
+    }
+
+    suspend fun uploadPicture(imageUri: Uri, userId: String) {
+        val storageReference = firebaseStorage.getReference("users_pictures/" + userId)
+        try {
+            storageReference.putFile(imageUri).await()
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
+    }
+
+    suspend fun getPicture(userId: String): Uri? {
+        val storageReference = firebaseStorage.getReference("users_pictures/" + userId)
+        var finalUri: Uri? = null
+        try {
+            val localFile = File.createTempFile("temp", "jpg")
+            storageReference.getFile(localFile.toUri()).await()
+            finalUri = localFile.toUri()
+        } catch (e: Exception) {
+            logTag("AuthService", e.message.toString())
+        } finally {
+            return finalUri
+        }
+
+
     }
 
     suspend fun loginUser(email: String, password: String): Boolean {

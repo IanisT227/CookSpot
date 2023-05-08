@@ -61,6 +61,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         authenticationViewModel.initFirebase()
         initObservers()
         authenticationViewModel.getCurrentUser()
+        authenticationViewModel.getCurrentUserProfilePicture()
         initButtons()
 
     }
@@ -127,6 +128,13 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 initViews(user)
             }
         }
+
+        authenticationViewModel.profilePictureUri.observe(viewLifecycleOwner) { pictureUri ->
+            if (pictureUri != null)
+                binding.profilePictureCIV.setImageURI(pictureUri)
+            else
+                binding.profilePictureCIV.isVisible = false
+        }
     }
 
     private fun initButtons() {
@@ -135,7 +143,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 authenticationViewModel.updateUser(
                     binding.usernameTIEE.text.toString(), binding.fullNameTIEE.text.toString()
                 )
-
+                authenticationViewModel.uploadProfilePicture(latestTmpUri !!)
                 Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
             } else {
                 showAlerter("Fields cannot be empty", requireActivity())
@@ -154,6 +162,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun checkFields(): Boolean {
-        return (checkName(binding.fullNameTIEE) || checkUserOrPassword(binding.usernameTIEE))
+        return (checkName(binding.fullNameTIEE) || checkUserOrPassword(binding.usernameTIEE) || ! photoStatus)
     }
 }

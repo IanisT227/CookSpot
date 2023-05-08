@@ -1,5 +1,6 @@
 package com.example.cookspot.feature.authentication
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,6 +35,10 @@ class AuthenticationViewModel(
     private val _userData: MutableLiveData<User?> = MutableLiveData()
     val userData: LiveData<User?>
         get() = _userData
+
+    private val _profilePictureUri: MutableLiveData<Uri?> = MutableLiveData()
+    val profilePictureUri: LiveData<Uri?>
+        get() = _profilePictureUri
 
     fun initFirebase() {
         viewModelScope.launch {
@@ -138,6 +143,39 @@ class AuthenticationViewModel(
                 _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 internalStorageManager.setIsUserLoggedIn(true)
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun getCurrentUserProfilePicture() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _profilePictureUri.value = authService.getPicture(_userId.value!!)
+                Log.v("userdatavm", _userData.value.toString())
+                internalStorageManager.setUserUsername(_userData.value?.username.toString())
+                internalStorageManager.setUserFullName(_userData.value?.fullName.toString())
+                _isError.value = authService.getIsErrorMessage()
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun uploadProfilePicture(imageUri: Uri){
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                authService.uploadPicture(imageUri, _userId.value!!)
+                _isError.value = authService.getIsErrorMessage()
+            } catch (e: Exception) {
                 _isError.value = e.message
             } finally {
                 _isLoading.value = false

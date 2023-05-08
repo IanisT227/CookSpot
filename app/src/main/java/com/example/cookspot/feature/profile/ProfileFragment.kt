@@ -29,6 +29,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         initButtons()
         initObservers()
         authenticationViewModel.getCurrentUser()
+        authenticationViewModel.getCurrentUserProfilePicture()
     }
 
     private fun initViews() {
@@ -85,6 +86,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.editProfileBtn.isEnabled = ! isLoading
             binding.logOutBtn.isEnabled = ! isLoading
             logTag("isLoadingValue", isLoading.toString())
+        }
+
+        authenticationViewModel.profilePictureUri.observe(viewLifecycleOwner) { pictureUri ->
+            if (pictureUri != null)
+                binding.profilePictureCIV.setImageURI(pictureUri)
         }
     }
 }
