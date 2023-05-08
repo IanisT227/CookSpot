@@ -9,7 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.awesomedialog.*
+import com.example.awesomedialog.AwesomeDialog
+import com.example.awesomedialog.body
+import com.example.awesomedialog.onNegative
+import com.example.awesomedialog.onPositive
+import com.example.awesomedialog.title
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepTwoBinding
 import com.example.cookspot.logTag
@@ -26,6 +30,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
     private val adapter by lazy { initTagsAdapter() }
     private var difficultyLevel: String? = null
     private var tagItemsList: ArrayList<String> = ArrayList()
+    private var isListFull = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,11 +50,18 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         binding.tagsRV.layoutManager = layoutManager
     }
 
-    private fun onItemClickListener(tag: String) {
-        if (tag !in tagItemsList) {
-            tagItemsList.add(tag)
+    private fun onItemClickListener(tag: String): Boolean {
+        return if (tag !in tagItemsList) {
+            if (tagItemsList.size < 3) {
+                tagItemsList.add(tag)
+                false
+            } else {
+                showAlerter("Remove a tag before adding another", requireActivity())
+                true
+            }
         } else {
             tagItemsList.remove(tag)
+            false
         }
         logTag("itemlisttag", tagItemsList.toString())
     }
@@ -68,17 +80,17 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         }
 
         binding.nextStepBtn.setOnClickListener {
-            if (difficultyLevel == null) {
-                showAlerter("Please choose a difficulty level", requireActivity())
+            if (checkFields()) {
+                showAlerter("Please choose a difficulty level and three tags", requireActivity())
             } else {
                 val recipe = Recipe(
-                    name = args.newRecipe!!.name,
-                    duration = args.newRecipe!!.duration,
-                    imageUri = args.newRecipe!!.imageUri,
+                    name = args.newRecipe !!.name,
+                    duration = args.newRecipe !!.duration,
+                    imageUri = args.newRecipe !!.imageUri,
                     tags = tagItemsList,
-                    makes = args.newRecipe!!.makes,
-                    difficulty = difficultyLevel!!,
-                    publisherId = args.newRecipe!!.publisherId
+                    makes = args.newRecipe !!.makes,
+                    difficulty = difficultyLevel !!,
+                    publisherId = args.newRecipe !!.publisherId
                 )
                 findNavController().navigate(
                     FragmentCreateRecipeStepTwoDirections.actionFragmentCreateRecipeStepTwoToFragmentCreateRecipeStepThree(
@@ -125,7 +137,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         recipeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             logTag("isLoadingValue", isLoading.toString())
             binding.isLoadingCIP.isVisible = isLoading
-            binding.nextStepBtn.isEnabled = !isLoading
+            binding.nextStepBtn.isEnabled = ! isLoading
         }
 
         recipeViewModel.isError.observe(viewLifecycleOwner) { isError ->
@@ -134,6 +146,10 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                 showAlerter(isError, requireActivity())
             }
         }
+    }
+
+    private fun checkFields(): Boolean {
+        return (difficultyLevel == null || tagItemsList.size != 3)
     }
 
     companion object {

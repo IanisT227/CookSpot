@@ -50,7 +50,7 @@ class AuthService {
                 .setValue(
                     User(
                         email = email, username = username, fullName = fullName,
-                        publishedRecipes = ArrayList(), followedUsers = ArrayList()
+                        publishedRecipes = HashMap(), followedUsers = HashMap()
                     )
                 )
             return true

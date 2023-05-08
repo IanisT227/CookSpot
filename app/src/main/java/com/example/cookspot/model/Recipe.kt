@@ -1,8 +1,13 @@
 package com.example.cookspot.model
 
-import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.sql.Date
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Parcelize
 data class Recipe(
@@ -14,5 +19,6 @@ data class Recipe(
     val tags: ArrayList<String> = ArrayList<String>(),
     val ingredients: String = "",
     val cookingProcess: String = "",
-    val publisherId: String = ""
+    val publisherId: String = "",
+    val createdAt: String = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Calendar.getInstance().time)
 ):Parcelable

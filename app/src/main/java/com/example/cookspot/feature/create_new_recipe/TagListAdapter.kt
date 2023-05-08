@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.cookspot.databinding.TagListItemBinding
 
 
-typealias OnTagClickListener = (tagId: String) -> Unit
+typealias OnTagClickListener = (tagId: String) -> Boolean
 
 class TagListAdapter(private val onTagClickListener: OnTagClickListener) :
     ListAdapter<String, TagListItemViewHolder>(TagListItemDiffUtilItemCallback()) {

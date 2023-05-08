@@ -7,7 +7,11 @@ import com.example.cookspot.DATABASE_URL
 import com.example.cookspot.model.Recipe
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -20,6 +24,7 @@ class RecipeService {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var firebaseReference: DatabaseReference
+    private lateinit var firebaseUserReference: DatabaseReference
     private lateinit var firebaseStorage: FirebaseStorage
     private var isErrorMessage: String? = null
 
@@ -27,6 +32,7 @@ class RecipeService {
         firebaseAuth = Firebase.auth
         firebaseDatabase = Firebase.database(DATABASE_URL)
         firebaseReference = firebaseDatabase.getReference("recipes")
+        firebaseUserReference = firebaseDatabase.getReference("users")
         firebaseStorage = FirebaseStorage.getInstance()
     }
 
@@ -49,7 +55,6 @@ class RecipeService {
                     channel.trySend(null).isSuccess
                     channel.close()
                 }
-
             })
         return channel
     }
@@ -68,10 +73,19 @@ class RecipeService {
             val recipeId: String = UUID.randomUUID().toString()
             firebaseReference.child(recipeId).setValue(recipe)
             uploadPicture(recipe.imageUri.toUri(), recipeId)
+            addRecipeToUser(recipe.publisherId, recipeId)
         } catch (e: Exception) {
             isErrorMessage = e.message
         }
+    }
 
+    suspend fun addRecipeToUser(userId: String, recipeId: String) {
+        try {
+            firebaseUserReference.child(userId).child("publishedRecipes").child(recipeId)
+                .setValue(true).await()
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
     }
 
     fun getIsErrorMessage() = isErrorMessage
