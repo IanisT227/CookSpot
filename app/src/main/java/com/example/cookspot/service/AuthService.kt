@@ -6,7 +6,11 @@ import com.example.cookspot.logTag
 import com.example.cookspot.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -86,7 +90,7 @@ class AuthService {
 
     fun getCurrentUser(): Channel<User?> {
         val channel = Channel<User?>()
-        var currentUser: User? = null
+        val currentUser: User? = null
         firebaseReference.child(firebaseAuth.currentUser!!.uid)
             .addValueEventListener(object : ValueEventListener {
 
@@ -108,6 +112,13 @@ class AuthService {
             })
         Log.v("userdataAS", currentUser.toString())
         return channel
+    }
+
+    suspend fun updateUser(username: String, fullName: String) {
+        firebaseReference.child(firebaseAuth.currentUser !!.uid).child("username")
+            .setValue(username).await()
+        firebaseReference.child(firebaseAuth.currentUser !!.uid).child("fullName")
+            .setValue(fullName).await()
     }
 
     fun getIsErrorMessage() = isErrorMessage

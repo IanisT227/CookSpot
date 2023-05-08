@@ -1,17 +1,16 @@
 package com.example.cookspot.feature.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cookspot.R
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentProfileBinding
 import com.example.cookspot.feature.authentication.AuthenticationViewModel
-import com.example.cookspot.feature.feed.FeedFragmentDirections
 import com.example.cookspot.logTag
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -29,7 +28,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         initViews()
         initButtons()
         initObservers()
-//        authenticationViewModel.getCurrentUser()
+        authenticationViewModel.getCurrentUser()
     }
 
     private fun initViews() {
@@ -59,6 +58,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToCreateRecipeNavigation())
         }
 
+        binding.logOutBtn.setOnClickListener {
+            authenticationViewModel.logOutUser()
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAuthenticationFragment())
+        }
+
+        binding.editProfileBtn.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment())
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFeedFragment())
         }
@@ -73,6 +81,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         authenticationViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.isLoadingCIP.isVisible = isLoading
+            binding.editProfileBtn.isEnabled = ! isLoading
+            binding.logOutBtn.isEnabled = ! isLoading
             logTag("isLoadingValue", isLoading.toString())
         }
     }

@@ -73,6 +73,24 @@ class AuthenticationViewModel(
         }
     }
 
+    fun updateUser(username: String, fullName: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                authService.updateUser(username, fullName)
+                internalStorageManager.setUserFullName(fullName)
+                internalStorageManager.setUserUsername(username)
+                _isError.value = authService.getIsErrorMessage()
+            } catch (e: Exception) {
+                _isLogged.value = true
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
     fun logOutUser() {
         viewModelScope.launch {
             try {

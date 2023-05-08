@@ -51,22 +51,9 @@
             app:destination="@id/authenticationFragment" />
         <action
             android:id="@+id/action_feedFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/user_profile" />
         <action
             android:id="@+id/action_feedFragment_to_create_recipe_navigation"
-            app:destination="@id/create_recipe_navigation" />
-    </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.cookspot.feature.profile.ProfileFragment"
-        android:label="ProfileFragment">
-        <action
-            android:id="@+id/action_profileFragment_to_feedFragment"
-            app:destination="@id/feedFragment"
-            app:popUpTo="@id/feedFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_profileFragment_to_create_recipe_navigation"
             app:destination="@id/create_recipe_navigation" />
     </fragment>
     <navigation
@@ -114,6 +101,36 @@
             <argument
                 android:name="finalRecipe"
                 app:argType="com.example.cookspot.model.Recipe" />
+        </fragment>
+    </navigation>
+    <navigation android:id="@+id/user_profile"
+        app:startDestination="@id/profileFragment">
+        <fragment
+            android:id="@+id/editProfileFragment"
+            android:name="com.example.cookspot.feature.profile.EditProfileFragment"
+            android:label="EditProfileFragment" >
+            <action
+                android:id="@+id/action_editProfileFragment_to_profileFragment"
+                app:destination="@id/profileFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/profileFragment"
+            android:name="com.example.cookspot.feature.profile.ProfileFragment"
+            android:label="ProfileFragment">
+            <action
+                android:id="@+id/action_profileFragment_to_feedFragment"
+                app:destination="@id/feedFragment"
+                app:popUpTo="@id/feedFragment"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_profileFragment_to_create_recipe_navigation"
+                app:destination="@id/create_recipe_navigation" />
+            <action
+                android:id="@+id/action_profileFragment_to_authenticationFragment"
+                app:destination="@id/authenticationFragment" />
+            <action
+                android:id="@+id/action_profileFragment_to_editProfileFragment"
+                app:destination="@id/editProfileFragment" />
         </fragment>
     </navigation>
 </navigation>
