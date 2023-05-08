@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.awesomedialog.AwesomeDialog
 import com.example.awesomedialog.onNegative
 import com.example.awesomedialog.onPositive
+import com.example.awesomedialog.title
 import com.example.cookspot.BuildConfig
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepOneBinding
@@ -62,7 +63,6 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
         authenticationViewModel.getCurrentUserId()
         authenticationViewModel.getCurrentUser()
     }
-
 
     private fun takeImage() {
         lifecycleScope.launchWhenStarted {
@@ -134,6 +134,7 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
 
     private fun showDialog() {
         AwesomeDialog.build(requireActivity())
+            .title(title = "Upload from:")
             .onPositive(text = "Take picture") {
                 takeImage()
             }

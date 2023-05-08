@@ -16,7 +16,7 @@ data class Recipe(
     val imageUri: String = "",
     val makes: String = "",
     val difficulty: String = "",
-    val tags: ArrayList<String> = ArrayList<String>(),
+    val tags: ArrayList<String> = ArrayList(),
     val ingredients: String = "",
     val cookingProcess: String = "",
     val publisherId: String = "",
