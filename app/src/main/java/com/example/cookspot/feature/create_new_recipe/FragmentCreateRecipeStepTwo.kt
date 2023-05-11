@@ -31,6 +31,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
     private var difficultyLevel: String? = null
     private var tagItemsList: ArrayList<String> = ArrayList()
     private var isListFull = false
+    private lateinit var username: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +40,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         initObservers()
         recipeViewModel.initFirebase()
         recipeViewModel.getTags()
+        username = recipeViewModel.getUserName()
     }
 
     private fun initTagsAdapter(): TagListAdapter = TagListAdapter(::onItemClickListener)
@@ -90,7 +92,8 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                     tags = tagItemsList,
                     makes = args.newRecipe !!.makes,
                     difficulty = difficultyLevel !!,
-                    publisherId = args.newRecipe !!.publisherId
+                    publisherId = args.newRecipe !!.publisherId,
+                    publisherName = username
                 )
                 findNavController().navigate(
                     FragmentCreateRecipeStepTwoDirections.actionFragmentCreateRecipeStepTwoToFragmentCreateRecipeStepThree(

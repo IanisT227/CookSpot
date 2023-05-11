@@ -22,7 +22,6 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
         initButtons()
     }
