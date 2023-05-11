@@ -53,6 +53,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.emailTIEE.text!!.clear()
             binding.passwordTIEE.text!!.clear()
         }
+
+//        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+//            val heightDiff = binding.root.height - rootView.height
+//            val keyboardVisibleThreshold = 200 // Adjust this threshold according to your needs
+//
+//            if (heightDiff > keyboardVisibleThreshold) {
+//                goBackLoginBtn.visibility = View.INVISIBLE
+//            } else {
+//                goBackLoginBtn.visibility = View.VISIBLE
+//            }
+//        }
     }
 
     private fun initObservers() {

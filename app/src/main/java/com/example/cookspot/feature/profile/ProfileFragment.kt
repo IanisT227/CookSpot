@@ -92,5 +92,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             if (pictureUri != null)
                 binding.profilePictureCIV.setImageURI(pictureUri)
         }
+
+        authenticationViewModel.userData.observe(viewLifecycleOwner) { user ->
+            if (authenticationViewModel.getCurrentUserFullName()
+                    .isNullOrEmpty() || authenticationViewModel.getCurrentUserUsername()
+                    .isNullOrEmpty()
+            ) {
+                binding.userFullNameTV.text = user!!.fullName
+                binding.usernameTV.text = "@${user.username}"
+            }
+        }
     }
 }

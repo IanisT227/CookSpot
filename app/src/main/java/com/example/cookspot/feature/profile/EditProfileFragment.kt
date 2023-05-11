@@ -143,7 +143,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 authenticationViewModel.updateUser(
                     binding.usernameTIEE.text.toString(), binding.fullNameTIEE.text.toString()
                 )
-                authenticationViewModel.uploadProfilePicture(latestTmpUri !!)
+                if (photoStatus) {
+                    authenticationViewModel.uploadProfilePicture(latestTmpUri !!)
+                }
                 Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
             } else {
                 showAlerter("Fields cannot be empty", requireActivity())
@@ -162,6 +164,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun checkFields(): Boolean {
-        return (checkName(binding.fullNameTIEE) || checkUserOrPassword(binding.usernameTIEE) || ! photoStatus)
+        return (checkName(binding.fullNameTIEE) || checkUserOrPassword(binding.usernameTIEE))
     }
 }
