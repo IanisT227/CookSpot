@@ -1,4 +1,4 @@
-package com.example.cookspot.feature.authentication
+package com.example.cookspot.viewmodel
 
 import android.net.Uri
 import android.util.Log

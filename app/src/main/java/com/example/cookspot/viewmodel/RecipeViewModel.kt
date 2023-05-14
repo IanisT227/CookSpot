@@ -1,10 +1,11 @@
-package com.example.cookspot.feature.create_new_recipe
+package com.example.cookspot.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
@@ -31,6 +32,10 @@ class RecipeViewModel(
     val recipeTags: LiveData<HashMap<String, Boolean>?>
         get() = _recipeTags
 
+    private val _recipeList: MutableLiveData<HashMap<String, Recipe>?> = MutableLiveData()
+    val recipeList: LiveData<HashMap<String, Recipe>?>
+        get() = _recipeList
+
     fun initFirebase() {
         viewModelScope.launch {
             recipeService.initFirebase()
@@ -50,6 +55,27 @@ class RecipeViewModel(
             } finally {
                 _isLoading.value = false
                 _isError.value = null
+            }
+        }
+    }
+
+    fun getRecipes(userId: String) {
+        viewModelScope.launch {
+            try {
+                logTag("Calllllll", "aaaaa")
+                _isLoading.value = true
+                logTag("Calllllll", "bbbbb")
+                _recipeList.value = recipeService.getRecipes(userId).receive()
+                logTag("Calllllll", "ddddddddd")
+                Log.v("Calllllll", _recipeList.value.toString())
+                _isError.value = recipeService.getIsErrorMessage()
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+                logTag("Calllllll", "cccccccccc")
+
             }
         }
     }

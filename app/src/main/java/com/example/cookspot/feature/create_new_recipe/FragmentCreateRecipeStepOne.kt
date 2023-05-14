@@ -18,7 +18,7 @@ import com.example.awesomedialog.title
 import com.example.cookspot.BuildConfig
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepOneBinding
-import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter

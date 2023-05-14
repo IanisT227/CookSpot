@@ -19,6 +19,7 @@ import com.example.cookspot.databinding.FragmentCreateNewRecipeStepTwoBinding
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
+import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -27,7 +28,6 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
     private val recipeViewModel: RecipeViewModel by activityViewModel()
     private val binding by viewBinding(FragmentCreateNewRecipeStepTwoBinding::bind)
     private val args: FragmentCreateRecipeStepTwoArgs by navArgs()
-    private val adapter by lazy { initTagsAdapter() }
     private var difficultyLevel: String? = null
     private var tagItemsList: ArrayList<String> = ArrayList()
     private var isListFull = false
@@ -42,8 +42,6 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         recipeViewModel.getTags()
         username = recipeViewModel.getUserName()
     }
-
-    private fun initTagsAdapter(): TagListAdapter = TagListAdapter(::onItemClickListener)
 
     private fun initRecyclerView(layoutManager: GridLayoutManager, tagList: List<String>) {
         val tagListAdapter = TagListAdapter(::onItemClickListener)

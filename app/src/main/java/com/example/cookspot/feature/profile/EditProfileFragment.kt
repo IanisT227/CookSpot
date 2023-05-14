@@ -20,7 +20,7 @@ import com.example.cookspot.R
 import com.example.cookspot.checkName
 import com.example.cookspot.checkUserOrPassword
 import com.example.cookspot.databinding.FragmentEditProfileBinding
-import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepOne
 import com.example.cookspot.logTag
 import com.example.cookspot.model.User

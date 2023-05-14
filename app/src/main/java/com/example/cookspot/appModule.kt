@@ -1,7 +1,7 @@
 package com.example.cookspot
 
-import com.example.cookspot.feature.authentication.AuthenticationViewModel
-import com.example.cookspot.feature.create_new_recipe.RecipeViewModel
+import com.example.cookspot.viewmodel.AuthenticationViewModel
+import com.example.cookspot.viewmodel.RecipeViewModel
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.AuthService
 import com.example.cookspot.service.RecipeService

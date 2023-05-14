@@ -57,8 +57,6 @@ class AuthService {
         } finally {
             return finalUri
         }
-
-
     }
 
     suspend fun loginUser(email: String, password: String): Boolean {

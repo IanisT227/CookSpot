@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.cookspot.R
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentProfileBinding
-import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.logTag
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding

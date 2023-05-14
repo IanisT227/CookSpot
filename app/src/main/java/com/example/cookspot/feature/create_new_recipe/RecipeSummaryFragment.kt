@@ -13,6 +13,7 @@ import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentRecipeSummaryBinding
 import com.example.cookspot.logTag
 import com.example.cookspot.showAlerter
+import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 

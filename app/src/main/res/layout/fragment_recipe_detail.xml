@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="@id/recipeNameTV"
             app:layout_constraintStart_toStartOf="@id/recipeNameTV"
             app:layout_constraintTop_toBottomOf="@id/recipeNameTV"
-            tools:text="@ianist2001" />
+            tools:text="\@ianist2001" />
 
         <ImageView
             android:id="@+id/recipeDifficultyIV"
@@ -197,12 +197,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
             android:background="@null"
             android:scaleType="fitXY"
             android:src="@drawable/ic_heart"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@id/commentBtn"
             app:layout_constraintStart_toStartOf="@id/recipeNameTV"
             app:layout_constraintTop_toBottomOf="@id/recipeTagOneBtn"
             app:tint="@color/primary_orange" />
@@ -217,33 +215,6 @@
             app:layout_constraintEnd_toEndOf="@id/likeBtn"
             app:layout_constraintStart_toStartOf="@id/likeBtn"
             app:layout_constraintTop_toBottomOf="@id/likeBtn"
-            tools:text="55.5k" />
-
-        <ImageButton
-            android:id="@+id/commentBtn"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_comment"
-            app:layout_constraintBottom_toBottomOf="@id/likeBtn"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="@id/recipeTagOneBtn"
-            app:layout_constraintStart_toEndOf="@id/likeBtn"
-            app:layout_constraintTop_toBottomOf="@id/recipeTagOneBtn"
-            app:tint="@color/primary_orange" />
-
-        <TextView
-            android:id="@+id/commentsNumberBtn"
-            style="@style/RegularText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:maxLines="1"
-            app:layout_constraintEnd_toEndOf="@id/commentBtn"
-            app:layout_constraintStart_toStartOf="@id/commentBtn"
-            app:layout_constraintTop_toBottomOf="@id/commentBtn"
             tools:text="55.5k" />
 
         <ImageButton

@@ -23,15 +23,17 @@ import java.util.*
 class RecipeService {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseDatabase: FirebaseDatabase
-    private lateinit var firebaseReference: DatabaseReference
+    private lateinit var firebaseRecipeReference: DatabaseReference
     private lateinit var firebaseUserReference: DatabaseReference
+    private lateinit var firebaseReference: DatabaseReference
     private lateinit var firebaseStorage: FirebaseStorage
     private var isErrorMessage: String? = null
 
     fun initFirebase() {
         firebaseAuth = Firebase.auth
         firebaseDatabase = Firebase.database(DATABASE_URL)
-        firebaseReference = firebaseDatabase.getReference("recipes")
+        firebaseRecipeReference = firebaseDatabase.getReference("recipes")
+        firebaseReference = firebaseDatabase.reference
         firebaseUserReference = firebaseDatabase.getReference("users")
         firebaseStorage = FirebaseStorage.getInstance()
     }
@@ -59,7 +61,7 @@ class RecipeService {
         return channel
     }
 
-    suspend fun uploadPicture(imageUri: Uri, recipeId: String) {
+    private suspend fun uploadPicture(imageUri: Uri, recipeId: String) {
         val storageReference = firebaseStorage.getReference("recipes_pictures/" + recipeId)
         try {
             storageReference.putFile(imageUri).await()
@@ -71,7 +73,8 @@ class RecipeService {
     suspend fun uploadRecipe(recipe: Recipe) {
         try {
             val recipeId: String = UUID.randomUUID().toString()
-            firebaseReference.child(recipeId).setValue(recipe)
+            firebaseRecipeReference.child(recipeId)
+                .setValue(recipe.copy(imageUri = recipeId))
             uploadPicture(recipe.imageUri.toUri(), recipeId)
             addRecipeToUser(recipe.publisherId, recipeId)
         } catch (e: Exception) {
@@ -79,13 +82,36 @@ class RecipeService {
         }
     }
 
-    suspend fun addRecipeToUser(userId: String, recipeId: String) {
+    private suspend fun addRecipeToUser(userId: String, recipeId: String) {
         try {
             firebaseUserReference.child(userId).child("publishedRecipes").child(recipeId)
                 .setValue(true).await()
         } catch (e: Exception) {
             isErrorMessage = e.message
         }
+    }
+
+    fun getRecipes(userId: String): Channel<HashMap<String, Recipe>?> {
+        val channel = Channel<HashMap<String, Recipe>?>()
+        firebaseDatabase.getReference("recipes").orderByChild("publisherId").equalTo(userId)
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    val value = snapshot.getValue<HashMap<String, Recipe>?>()
+                    channel.trySend(value).isSuccess
+                    channel.close()
+                    Log.v("tagsRecipe", "Value is: " + value)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(SERVICE_TAG, "Failed to read value.", error.toException())
+                    channel.trySend(null).isSuccess
+                    channel.close()
+                }
+            })
+        return channel
     }
 
     fun getIsErrorMessage() = isErrorMessage

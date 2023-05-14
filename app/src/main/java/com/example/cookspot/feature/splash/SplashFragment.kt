@@ -7,7 +7,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cookspot.R
-import com.example.cookspot.feature.authentication.AuthenticationViewModel
+import com.example.cookspot.viewmodel.AuthenticationViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {

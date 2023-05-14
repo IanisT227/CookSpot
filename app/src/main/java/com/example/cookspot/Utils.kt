@@ -2,8 +2,12 @@ package com.example.cookspot
 
 import android.app.Activity
 import android.util.Patterns
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
+
 
 fun logTag(tag: String, message: String = "") {
     println("[$tag] $message")
@@ -32,6 +36,22 @@ fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
     .setBackgroundColorRes(R.color.primary_orange)
     .setDuration(ERROR_DURATION)
     .show()
+
+fun ImageView.loadUrl(url: String?) {
+    val firebaseStorage = FirebaseStorage.getInstance().getReference("recipes_pictures/$url")
+
+    firebaseStorage.downloadUrl.addOnSuccessListener {
+        Glide.with(this)
+            .load(url)
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .error(R.drawable.ic_launcher_background)
+            .into(this)
+    }.addOnFailureListener {
+        // Handle any errors
+    }
+
+
+}
 
 const val ERROR_DURATION = 2500L
 const val DATABASE_URL = "https://cookspot-a1a8c-default-rtdb.europe-west1.firebasedatabase.app/"
