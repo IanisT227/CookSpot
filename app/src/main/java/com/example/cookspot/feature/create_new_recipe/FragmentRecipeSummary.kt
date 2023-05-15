@@ -8,7 +8,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.awesomedialog.*
+import com.example.awesomedialog.AwesomeDialog
+import com.example.awesomedialog.body
+import com.example.awesomedialog.onNegative
+import com.example.awesomedialog.onPositive
+import com.example.awesomedialog.title
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentRecipeSummaryBinding
 import com.example.cookspot.logTag
@@ -17,10 +21,10 @@ import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class RecipeSummaryFragment : Fragment(R.layout.fragment_recipe_summary) {
+class FragmentRecipeSummary : Fragment(R.layout.fragment_recipe_summary) {
     private val binding by viewBinding(FragmentRecipeSummaryBinding::bind)
     private val recipeViewModel: RecipeViewModel by activityViewModel()
-    private val recipeArgs: RecipeSummaryFragmentArgs by navArgs()
+    private val recipeArgs: FragmentRecipeSummaryArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +38,7 @@ class RecipeSummaryFragment : Fragment(R.layout.fragment_recipe_summary) {
         val receivedRecipe = recipeArgs.finalRecipe
         binding.recipePictureIV.setImageURI(receivedRecipe.imageUri.toUri())
         binding.recipeNameTV.text = receivedRecipe.name
-        binding.recipeAuthorTV.text = "@${recipeViewModel.getUserName()}"
+        binding.recipeAuthorTV.text = "@${receivedRecipe.publisherName}"
         binding.recipeDifficultyTV.text = receivedRecipe.difficulty
         binding.recipeDurationTV.text = receivedRecipe.duration
         binding.recipeMakesTV.text = receivedRecipe.makes
@@ -89,7 +93,7 @@ class RecipeSummaryFragment : Fragment(R.layout.fragment_recipe_summary) {
 
         recipeViewModel.isPosted.observe(viewLifecycleOwner) { isPosted ->
             if (isPosted)
-                findNavController().navigate(RecipeSummaryFragmentDirections.actionGlobalFeedFragment())
+                findNavController().navigate(FragmentRecipeSummaryDirections.actionGlobalFeedFragment())
         }
     }
 }

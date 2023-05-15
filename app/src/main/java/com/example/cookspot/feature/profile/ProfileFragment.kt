@@ -15,6 +15,7 @@ import com.example.cookspot.logTag
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import kotlin.math.log
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding by viewBinding(FragmentProfileBinding::bind)
@@ -25,6 +26,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        authenticationViewModel.initFirebase()
         initViews()
         initButtons()
         initObservers()
@@ -94,6 +96,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         authenticationViewModel.userData.observe(viewLifecycleOwner) { user ->
+            logTag("profileValues", user.toString())
+            logTag("profileValues", authenticationViewModel.getCurrentUserFullName().toString())
+            logTag("profileValues",authenticationViewModel.getCurrentUserUsername().toString())
             if (authenticationViewModel.getCurrentUserFullName()
                     .isNullOrEmpty() || authenticationViewModel.getCurrentUserUsername()
                     .isNullOrEmpty()

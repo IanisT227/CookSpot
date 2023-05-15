@@ -8,10 +8,13 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.awesomedialog.*
+import com.example.awesomedialog.AwesomeDialog
+import com.example.awesomedialog.body
+import com.example.awesomedialog.onNegative
+import com.example.awesomedialog.onPositive
+import com.example.awesomedialog.title
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepThreeBinding
-import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
@@ -56,16 +59,9 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
     private fun initButtons() {
         binding.nextStepBtn.setOnClickListener {
             if (checkFields()) {
-                val recipe = Recipe(
-                    name = args.newRecipe!!.name,
-                    duration = args.newRecipe!!.duration,
-                    imageUri = args.newRecipe!!.imageUri,
-                    makes = args.newRecipe!!.makes,
-                    args.newRecipe!!.difficulty,
-                    args.newRecipe!!.tags,
-                    binding.ingredientsTIEE.text.toString(),
-                    binding.processTIEE.text.toString(),
-                    args.newRecipe!!.publisherId
+                val recipe = args.newRecipe !!.copy(
+                    ingredients = binding.ingredientsTIEE.text.toString(),
+                    cookingProcess = binding.processTIEE.text.toString(),
                 )
                 findNavController().navigate(
                     FragmentCreateRecipeStepThreeDirections.actionFragmentCreateRecipeStepThreeToRecipeSummaryFragment(

@@ -18,13 +18,14 @@ import com.example.awesomedialog.title
 import com.example.cookspot.BuildConfig
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepOneBinding
-import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
+import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.io.File
+import kotlin.math.log
 
 class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe_step_one) {
 
@@ -109,7 +110,8 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
                             duration = binding.durationTIEE.text.toString(),
                             imageUri = latestTmpUri.toString(),
                             makes = binding.numberOfPersonsTIEE.text.toString(),
-                            publisherId = currentUserId
+                            publisherId = currentUserId,
+                            publisherName = authenticationViewModel.getCurrentUserUsername() !!
                         )
                     )
                 )

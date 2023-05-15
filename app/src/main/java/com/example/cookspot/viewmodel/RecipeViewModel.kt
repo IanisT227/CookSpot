@@ -7,13 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
-import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(
-    private val recipeService: RecipeService,
-    private val internalStorageManager: UserDataInternalStorageManager
+    private val recipeService: RecipeService
 ) : ViewModel() {
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -79,8 +77,6 @@ class RecipeViewModel(
             }
         }
     }
-
-    fun getUserName(): String = internalStorageManager.getUserUsername().toString()
 
     fun uploadRecipe(recipeToUpload: Recipe) {
         viewModelScope.launch {

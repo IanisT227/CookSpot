@@ -26,7 +26,7 @@
             app:titleTextColor="@color/neutral_white" />
 
         <ImageView
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:id="@+id/recipePictureIV"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -41,7 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="8dp"
             android:background="@null"
             android:scaleType="fitXY"
             android:src="@drawable/ic_save"
@@ -60,12 +59,11 @@
             android:layout_marginTop="24dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:minLines="2"
             android:textColor="@color/neutral_black"
             app:layout_constraintEnd_toStartOf="@id/saveRecipeIBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recipePictureIV"
-            tools:text="Burgeri foarte foarte buni" />
+            tools:text="Burgeri foarte" />
 
         <TextView
             android:textColor="@color/dark_grey"
@@ -206,6 +204,8 @@
             app:tint="@color/primary_orange" />
 
         <TextView
+            android:textAlignment="center"
+            android:textColor="@color/dark_grey"
             android:id="@+id/likesNumberTV"
             style="@style/RegularText"
             android:layout_width="0dp"
@@ -279,8 +279,8 @@
             app:layout_constraintTop_toBottomOf="@id/cookingProcessTitleTV" />
 
         <Button
-            android:text="Post"
-            android:id="@+id/postRecipeBtn"
+            android:id="@+id/markAsCookedRecipeBtn"
+            android:text="Mark as cooked"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"

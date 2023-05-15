@@ -17,7 +17,6 @@ import com.example.awesomedialog.title
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepTwoBinding
 import com.example.cookspot.logTag
-import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -40,7 +39,6 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         initObservers()
         recipeViewModel.initFirebase()
         recipeViewModel.getTags()
-        username = recipeViewModel.getUserName()
     }
 
     private fun initRecyclerView(layoutManager: GridLayoutManager, tagList: List<String>) {
@@ -83,15 +81,11 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
             if (checkFields()) {
                 showAlerter("Please choose a difficulty level and three tags", requireActivity())
             } else {
-                val recipe = Recipe(
-                    name = args.newRecipe !!.name,
-                    duration = args.newRecipe !!.duration,
-                    imageUri = args.newRecipe !!.imageUri,
+                val recipe = args.newRecipe !!.copy(
                     tags = tagItemsList,
                     makes = args.newRecipe !!.makes,
                     difficulty = difficultyLevel !!,
                     publisherId = args.newRecipe !!.publisherId,
-                    publisherName = username
                 )
                 findNavController().navigate(
                     FragmentCreateRecipeStepTwoDirections.actionFragmentCreateRecipeStepTwoToFragmentCreateRecipeStepThree(

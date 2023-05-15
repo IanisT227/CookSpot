@@ -3,10 +3,17 @@ package com.example.cookspot
 import android.app.Activity
 import android.util.Patterns
 import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
+import kotlin.math.log
 
 
 fun logTag(tag: String, message: String = "") {
@@ -40,17 +47,16 @@ fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
 fun ImageView.loadUrl(url: String?) {
     val firebaseStorage = FirebaseStorage.getInstance().getReference("recipes_pictures/$url")
 
-    firebaseStorage.downloadUrl.addOnSuccessListener {
+    firebaseStorage.downloadUrl.addOnSuccessListener { it ->
+
         Glide.with(this)
-            .load(url)
+            .load(it)
             .placeholder(R.drawable.ic_launcher_foreground)
             .error(R.drawable.ic_launcher_background)
             .into(this)
     }.addOnFailureListener {
         // Handle any errors
     }
-
-
 }
 
 const val ERROR_DURATION = 2500L

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cookspot.R
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentFeedBinding
-import com.example.cookspot.feature.create_new_recipe.TagListAdapter
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
@@ -29,6 +28,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recipeViewModel.initFirebase()
+        authenticationViewModel.initFirebase()
         initObservers()
         initViews()
         initButtons()
@@ -88,15 +88,22 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         }
     }
 
-    private fun initRecyclerView(layoutManager: LinearLayoutManager, recipeList: MutableCollection<Recipe>) {
+    private fun initRecyclerView(
+        layoutManager: LinearLayoutManager,
+        recipeList: MutableCollection<Recipe>
+    ) {
         val feedListAdapter = FeedListAdapter(::onItemClickListener)
         binding.feedRecipesRV.adapter = feedListAdapter
         feedListAdapter.submitList(recipeList.toMutableList())
         binding.feedRecipesRV.layoutManager = layoutManager
     }
 
-    private fun onItemClickListener(s: String) {
-
+    private fun onItemClickListener(recipe: Recipe) {
+        findNavController().navigate(
+            FeedFragmentDirections.actionFeedFragmentToFragmentViewFullRecipe(
+                recipe
+            )
+        )
     }
 
 }

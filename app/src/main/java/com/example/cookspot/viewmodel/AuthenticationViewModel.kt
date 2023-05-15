@@ -173,7 +173,7 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                authService.uploadPicture(imageUri, _userId.value!!)
+                authService.uploadPicture(imageUri, _userId.value !!)
                 _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message

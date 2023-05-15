@@ -33,7 +33,6 @@ class AuthService {
         firebaseDatabase = Firebase.database(DATABASE_URL)
         firebaseReference = firebaseDatabase.getReference("users")
         firebaseStorage = FirebaseStorage.getInstance()
-
     }
 
     suspend fun uploadPicture(imageUri: Uri, userId: String) {
@@ -108,7 +107,6 @@ class AuthService {
     fun getCurrentUserId(): String? {
         try {
             isErrorMessage = null
-            initFirebase()
             val userId = firebaseAuth.currentUser!!.uid
             Log.v("UserId", userId)
             return firebaseAuth.currentUser!!.uid
