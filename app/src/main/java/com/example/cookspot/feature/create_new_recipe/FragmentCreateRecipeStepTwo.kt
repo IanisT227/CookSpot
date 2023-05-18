@@ -29,8 +29,6 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
     private val args: FragmentCreateRecipeStepTwoArgs by navArgs()
     private var difficultyLevel: String? = null
     private var tagItemsList: ArrayList<String> = ArrayList()
-    private var isListFull = false
-    private lateinit var username: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -124,7 +122,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         recipeViewModel.recipeTags.observe(viewLifecycleOwner) { tagList ->
             if (tagList != null)
                 initRecyclerView(
-                    GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
+                    GridLayoutManager(requireContext(), TAG_SPAN_COUNT),
                     tagList.keys.toList()
                 )
         }
@@ -148,6 +146,6 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
     }
 
     companion object {
-        const val GALLERY_SPAN_COUNT = 3
+        const val TAG_SPAN_COUNT = 3
     }
 }

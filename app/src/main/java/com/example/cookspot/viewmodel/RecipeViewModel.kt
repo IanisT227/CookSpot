@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.service.RecipeService
 import kotlinx.coroutines.launch
@@ -30,8 +29,8 @@ class RecipeViewModel(
     val recipeTags: LiveData<HashMap<String, Boolean>?>
         get() = _recipeTags
 
-    private val _recipeList: MutableLiveData<HashMap<String, Recipe>?> = MutableLiveData()
-    val recipeList: LiveData<HashMap<String, Recipe>?>
+    private val _recipeList: MutableLiveData<List<Recipe>?> = MutableLiveData()
+    val recipeList: LiveData<List<Recipe>?>
         get() = _recipeList
 
     fun initFirebase() {
@@ -60,20 +59,19 @@ class RecipeViewModel(
     fun getRecipes(userId: String) {
         viewModelScope.launch {
             try {
-                logTag("Calllllll", "aaaaa")
                 _isLoading.value = true
-                logTag("Calllllll", "bbbbb")
-                _recipeList.value = recipeService.getRecipes(userId).receive()
-                logTag("Calllllll", "ddddddddd")
-                Log.v("Calllllll", _recipeList.value.toString())
+                val receivedRecipes = recipeService.getRecipes(userId).receive()
+                if (receivedRecipes != null) {
+                    _recipeList.value =
+                        receivedRecipes.values.toMutableList().sortedByDescending { it.createdAt }
+                } else
+                    _recipeList.value = null
                 _isError.value = recipeService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {
                 _isLoading.value = false
                 _isError.value = null
-                logTag("Calllllll", "cccccccccc")
-
             }
         }
     }

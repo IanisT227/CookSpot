@@ -10,7 +10,7 @@ import com.example.cookspot.model.Recipe
 typealias OnRecipeClickListener = (recipe: Recipe) -> Unit
 
 class FeedListAdapter(private val onRecipeClickListener: OnRecipeClickListener) :
-    ListAdapter<Recipe, FeedListItemViewHolder>(FeedListItemDiffUtilItemCallback()) {
+    ListAdapter<Recipe, FeedListItemViewHolder>(RecipeItemDiffUtilItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FeedListItemViewHolder(
         FeedListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onRecipeClickListener

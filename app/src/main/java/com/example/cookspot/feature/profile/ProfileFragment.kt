@@ -7,21 +7,24 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cookspot.R
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentProfileBinding
-import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.logTag
+import com.example.cookspot.model.Recipe
 import com.example.cookspot.showAlerter
+import com.example.cookspot.viewmodel.AuthenticationViewModel
+import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
-import kotlin.math.log
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding by viewBinding(FragmentProfileBinding::bind)
     private var doubleBackPressed = false
     private var bottomNavigationBarBinding: BottomNavigationLayoutBinding? = null
     private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
+    private val recipeViewModel: RecipeViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -98,14 +101,45 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         authenticationViewModel.userData.observe(viewLifecycleOwner) { user ->
             logTag("profileValues", user.toString())
             logTag("profileValues", authenticationViewModel.getCurrentUserFullName().toString())
-            logTag("profileValues",authenticationViewModel.getCurrentUserUsername().toString())
+            logTag("profileValues", authenticationViewModel.getCurrentUserUsername().toString())
             if (authenticationViewModel.getCurrentUserFullName()
                     .isNullOrEmpty() || authenticationViewModel.getCurrentUserUsername()
                     .isNullOrEmpty()
             ) {
-                binding.userFullNameTV.text = user!!.fullName
+                binding.userFullNameTV.text = user !!.fullName
                 binding.usernameTV.text = "@${user.username}"
             }
         }
+
+        recipeViewModel.recipeList.observe(viewLifecycleOwner) { recipeList ->
+            logTag("recipelist", recipeList.toString())
+            if (recipeList != null)
+                initRecyclerView(
+                    GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
+                    recipeList,
+                )
+        }
+    }
+
+    private fun initRecyclerView(
+        layoutManager: GridLayoutManager,
+        recipeList: List<Recipe>
+    ) {
+        val profileListAdapter = ProfileCollectionAdapter(::onItemClickListener)
+        binding.collectionRV.adapter = profileListAdapter
+        profileListAdapter.submitList(recipeList)
+        binding.collectionRV.layoutManager = layoutManager
+    }
+
+    private fun onItemClickListener(recipe: Recipe) {
+        findNavController().navigate(
+            ProfileFragmentDirections.actionGlobalFragmentViewFullRecipe(
+                recipe
+            )
+        )
+    }
+
+    companion object {
+        const val GALLERY_SPAN_COUNT = 3
     }
 }

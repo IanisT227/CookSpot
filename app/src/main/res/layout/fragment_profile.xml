@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
-        tools:text="@ianist227"
+        tools:text="\@ianist227"
         android:textAlignment="center"
         android:textColor="@color/neutral_white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -167,6 +167,7 @@
         app:layout_constraintTop_toTopOf="@id/editProfileBtn" />
 
     <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -176,6 +177,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editProfileBtn" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:backgroundTint="@null"
+        android:id="@+id/collectionRV"
+        tools:listitem="@layout/tag_list_item"
+        android:layout_margin="4dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationBarCL"/>
 
     <include
         android:id="@+id/bottomNavigationBarCL"

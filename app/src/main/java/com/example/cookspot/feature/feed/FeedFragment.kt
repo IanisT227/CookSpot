@@ -83,14 +83,14 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             if (recipeList != null)
                 initRecyclerView(
                     LinearLayoutManager(requireContext()),
-                    recipeList.values
+                    recipeList
                 )
         }
     }
 
     private fun initRecyclerView(
         layoutManager: LinearLayoutManager,
-        recipeList: MutableCollection<Recipe>
+        recipeList: List<Recipe>
     ) {
         val feedListAdapter = FeedListAdapter(::onItemClickListener)
         binding.feedRecipesRV.adapter = feedListAdapter
@@ -105,5 +105,4 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             )
         )
     }
-
 }
