@@ -28,7 +28,8 @@ val viewModel = module {
     }
     viewModel {
         RecipeViewModel(
-            recipeService = get()
+            recipeService = get(),
+            internalStorageManager = get()
         )
     }
 }

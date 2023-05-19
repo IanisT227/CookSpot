@@ -186,4 +186,6 @@ class AuthenticationViewModel(
     fun getCurrentUserFullName() = internalStorageManager.getUserFullName()
 
     fun getCurrentUserUsername() = internalStorageManager.getUserUsername()
+
+    fun setCurrentUserId(userId: String) = internalStorageManager.setUserUserId(userId)
 }

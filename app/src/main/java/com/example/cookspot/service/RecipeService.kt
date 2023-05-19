@@ -91,20 +91,16 @@ class RecipeService {
         }
     }
 
-    fun getRecipes(userId: String): Channel<HashMap<String, Recipe>?> {
+    fun getPostedRecipes(userId: String): Channel<HashMap<String, Recipe>?> {
         val channel = Channel<HashMap<String, Recipe>?>()
         firebaseDatabase.getReference("recipes").orderByChild("publisherId").equalTo(userId)
             .addValueEventListener(object : ValueEventListener {
-
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
                     val value = snapshot.getValue<HashMap<String, Recipe>?>()
                     channel.trySend(value).isSuccess
                     channel.close()
                     Log.v("tagsRecipe", "Value is: " + value)
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(SERVICE_TAG, "Failed to read value.", error.toException())
                     channel.trySend(null).isSuccess
@@ -112,6 +108,24 @@ class RecipeService {
                 }
             })
         return channel
+    }
+
+    suspend fun addPostToCooked(userId: String, recipeId: String){
+        try {
+            firebaseUserReference.child(userId).child("cookedRecipes").child(recipeId)
+                .setValue(true).await()
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
+    }
+
+    suspend fun addPostToSaved(userId: String, recipeId: String){
+        try {
+            firebaseUserReference.child(userId).child("savedRecipes").child(recipeId)
+                .setValue(true).await()
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
     }
 
     fun getIsErrorMessage() = isErrorMessage

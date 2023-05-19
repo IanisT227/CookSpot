@@ -33,7 +33,6 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         initViews()
         initButtons()
         authenticationViewModel.getCurrentUserId()
-        recipeViewModel.getRecipes("ulZ7uhkuSUeCMHSBjAeHrusB4hg1")
     }
 
     private fun initViews() {
@@ -85,6 +84,11 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
 
         authenticationViewModel.userId.observe(viewLifecycleOwner){ userId ->
             logTag("userId=", userId)
+            if (userId != null) {
+                authenticationViewModel.setCurrentUserId(userId)
+                recipeViewModel.getPostedRecipes(userId)
+            }
+
         }
     }
 

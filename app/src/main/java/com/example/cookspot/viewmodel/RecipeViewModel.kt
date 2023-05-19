@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(
-    private val recipeService: RecipeService
+    private val recipeService: RecipeService,
+    private val internalStorageManager: UserDataInternalStorageManager
 ) : ViewModel() {
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -56,11 +58,11 @@ class RecipeViewModel(
         }
     }
 
-    fun getRecipes(userId: String) {
+    fun getPostedRecipes(userId: String) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                val receivedRecipes = recipeService.getRecipes(userId).receive()
+                val receivedRecipes = recipeService.getPostedRecipes(userId).receive()
                 if (receivedRecipes != null) {
                     _recipeList.value =
                         receivedRecipes.values.toMutableList().sortedByDescending { it.createdAt }
@@ -91,6 +93,40 @@ class RecipeViewModel(
             }
         }
     }
+
+    fun addToCooked(userId: String, recipeId: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                recipeService.addPostToCooked(userId, recipeId)
+                _isError.value = recipeService.getIsErrorMessage()
+                _isPosted.value = true
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun addToSaved(userId: String, recipeId: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                recipeService.addPostToSaved(userId, recipeId)
+                _isError.value = recipeService.getIsErrorMessage()
+                _isPosted.value = true
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun getUserId() = internalStorageManager.getUserId()
 
     companion object {
         const val VIEWMODEL_TAG = "RECIPE_VIEWMODEL"

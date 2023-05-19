@@ -25,11 +25,19 @@ class UserDataInternalStorageManager(context: Context) {
         KEY_USER_USERNAME, userUsername
     ).apply()
 
+    fun getUserId(): String? = preferences.getString(KEY_USER_ID, "")
+
+    fun setUserUserId(userId: String) = preferences.edit().putString(
+        KEY_USER_ID, userId
+    ).apply()
+
     companion object {
         const val KEY_PREFERENCES = "com.example.cookspot.KEY_PREFERENCES"
         const val KEY_IS_LOGGED_IN = "com.example.cookspot.KEY_IS_LOGGED_IN"
         const val KEY_USER_FULL_NAME = "com.example.cookspot.KEY_USER_FULL_NAME"
         const val KEY_USER_USERNAME = "com.example.cookspot.KEY_USER_USERNAME"
+        const val KEY_USER_ID = "com.example.cookspot.KEY_USER_ID"
+
 
     }
 }

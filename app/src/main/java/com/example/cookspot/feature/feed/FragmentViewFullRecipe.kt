@@ -9,11 +9,15 @@ import androidx.navigation.fragment.navArgs
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentViewFullRecipeBinding
 import com.example.cookspot.loadUrl
+import com.example.cookspot.viewmodel.AuthenticationViewModel
+import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
     private val args: FragmentViewFullRecipeArgs by navArgs()
     private val binding by viewBinding(FragmentViewFullRecipeBinding::bind)
+    private val recipeViewModel: RecipeViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +53,10 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
             findNavController().navigate(
                 FragmentViewFullRecipeDirections.actionFragmentViewFullRecipeToFeedFragment()
             )
+        }
+
+        binding.markAsCookedRecipeBtn.setOnClickListener {
+
         }
     }
 
