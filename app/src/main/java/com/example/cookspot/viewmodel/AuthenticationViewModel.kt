@@ -137,7 +137,6 @@ class AuthenticationViewModel(
             try {
                 _isLoading.value = true
                 _userData.value = authService.getCurrentUser().receive()
-                Log.v("userdatavm", _userData.value.toString())
                 internalStorageManager.setUserUsername(_userData.value?.username.toString())
                 internalStorageManager.setUserFullName(_userData.value?.fullName.toString())
                 _isError.value = authService.getIsErrorMessage()

@@ -74,10 +74,6 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             }
         }
 
-        authenticationViewModel.userId.observe(viewLifecycleOwner) { userId ->
-//            recipeViewModel.getRecipes(userId)
-        }
-
         recipeViewModel.recipeList.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
             if (recipeList != null)
@@ -85,6 +81,10 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
                     LinearLayoutManager(requireContext()),
                     recipeList
                 )
+        }
+
+        authenticationViewModel.userId.observe(viewLifecycleOwner){ userId ->
+            logTag("userId=", userId)
         }
     }
 

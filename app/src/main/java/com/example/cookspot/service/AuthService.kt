@@ -107,8 +107,6 @@ class AuthService {
     fun getCurrentUserId(): String? {
         try {
             isErrorMessage = null
-            val userId = firebaseAuth.currentUser!!.uid
-            Log.v("UserId", userId)
             return firebaseAuth.currentUser!!.uid
         } catch (e: Exception) {
             isErrorMessage = e.message
@@ -128,7 +126,6 @@ class AuthService {
                     val value = snapshot.getValue<User>()
                     channel.trySend(value).isSuccess
                     channel.close()
-                    Log.v("userData", "Value is: " + value)
                 }
 
                 override fun onCancelled(error: DatabaseError) {

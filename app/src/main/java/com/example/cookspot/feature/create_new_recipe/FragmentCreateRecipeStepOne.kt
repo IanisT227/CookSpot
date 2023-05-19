@@ -25,7 +25,6 @@ import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.io.File
-import kotlin.math.log
 
 class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe_step_one) {
 
@@ -136,7 +135,7 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
 
     private fun showDialog() {
         AwesomeDialog.build(requireActivity())
-            .title(title = "Upload from:")
+            .title(title = "Upload from:", titleColor = R.color.dark_grey)
             .onPositive(text = "Take picture") {
                 takeImage()
             }
