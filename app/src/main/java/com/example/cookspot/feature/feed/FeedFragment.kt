@@ -73,7 +73,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             }
         }
 
-        recipeViewModel.recipeList.observe(viewLifecycleOwner) { recipeList ->
+        recipeViewModel.postedRecipesList.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
             if (recipeList != null)
                 initRecyclerView(

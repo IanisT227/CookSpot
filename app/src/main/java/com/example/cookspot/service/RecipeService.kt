@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.net.toUri
 import com.example.cookspot.DATABASE_URL
+import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -119,13 +120,60 @@ class RecipeService {
         }
     }
 
-    suspend fun addPostToSaved(userId: String, recipeId: String){
+    suspend fun addPostToSaved(userId: String, recipeId: String) {
         try {
             firebaseUserReference.child(userId).child("savedRecipes").child(recipeId)
                 .setValue(true).await()
         } catch (e: Exception) {
             isErrorMessage = e.message
         }
+    }
+
+    suspend fun getRecipeById(recipeId: String): Channel<Recipe?> {
+        logTag("newRecipeId", recipeId)
+        val channel = Channel<Recipe?>()
+        val currentRecipe: Recipe? = null
+        firebaseRecipeReference.child(recipeId)
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val value = snapshot.getValue<Recipe>()
+                    channel.trySend(value).isSuccess
+                    channel.close()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    logTag("recipeData", "Failed to read value." + error.toException())
+                    channel.trySend(null).isSuccess
+                    channel.close()
+                }
+
+            })
+        Log.v("recipeDataAS", currentRecipe.toString())
+        return channel
+    }
+
+    fun getCookedRecipesIdList(userId: String): Channel<HashMap<String, Boolean>?> {
+        val channel = Channel<HashMap<String, Boolean>?>()
+        firebaseUserReference.child(userId).child("cookedRecipes")
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    val value = snapshot.getValue<HashMap<String, Boolean>?>()
+                    channel.trySend(value).isSuccess
+                    channel.close()
+                    Log.v("tagsRecipe", "Value is: " + value)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(SERVICE_TAG, "Failed to read value.", error.toException())
+                    channel.trySend(null).isSuccess
+                    channel.close()
+                }
+            })
+        return channel
     }
 
     fun getIsErrorMessage() = isErrorMessage

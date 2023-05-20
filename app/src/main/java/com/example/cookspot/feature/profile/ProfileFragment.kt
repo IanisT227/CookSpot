@@ -25,6 +25,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var bottomNavigationBarBinding: BottomNavigationLayoutBinding? = null
     private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
     private val recipeViewModel: RecipeViewModel by activityViewModel()
+    private lateinit var profileListAdapter: ProfileCollectionAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,6 +77,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         requireActivity().onBackPressedDispatcher.addCallback {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFeedFragment())
         }
+
+        binding.cookedTV.setOnClickListener {
+            recipeViewModel.getCookedRecipeList()
+        }
     }
 
     private fun initObservers() {
@@ -99,9 +104,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         authenticationViewModel.userData.observe(viewLifecycleOwner) { user ->
-            logTag("profileValues", user.toString())
-            logTag("profileValues", authenticationViewModel.getCurrentUserFullName().toString())
-            logTag("profileValues", authenticationViewModel.getCurrentUserUsername().toString())
             if (authenticationViewModel.getCurrentUserFullName()
                     .isNullOrEmpty() || authenticationViewModel.getCurrentUserUsername()
                     .isNullOrEmpty()
@@ -111,7 +113,24 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
 
-        recipeViewModel.recipeList.observe(viewLifecycleOwner) { recipeList ->
+        recipeViewModel.postedRecipesList.observe(viewLifecycleOwner) { recipeList ->
+            logTag("recipelist", recipeList.toString())
+            if (recipeList != null)
+                initRecyclerView(
+                    GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
+                    recipeList,
+                )
+        }
+
+        recipeViewModel.cookedRecipesList.observe(viewLifecycleOwner) { recipeList ->
+            logTag("recipelist", recipeList.toString())
+            if (recipeList != null) {
+                profileListAdapter.submitList(recipeList)
+                binding.collectionRV.adapter?.notifyDataSetChanged()
+            }
+        }
+
+        recipeViewModel.savedRecipeList.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
             if (recipeList != null)
                 initRecyclerView(

@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentViewFullRecipeBinding
 import com.example.cookspot.loadUrl
-import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -56,7 +55,7 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
         }
 
         binding.markAsCookedRecipeBtn.setOnClickListener {
-
+            recipeViewModel.addToCooked(args.recipe.imageUri)
         }
     }
 

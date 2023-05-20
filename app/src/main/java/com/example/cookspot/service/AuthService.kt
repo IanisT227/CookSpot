@@ -116,7 +116,6 @@ class AuthService {
 
     fun getCurrentUser(): Channel<User?> {
         val channel = Channel<User?>()
-        val currentUser: User? = null
         firebaseReference.child(firebaseAuth.currentUser!!.uid)
             .addValueEventListener(object : ValueEventListener {
 
@@ -135,7 +134,6 @@ class AuthService {
                 }
 
             })
-        Log.v("userdataAS", currentUser.toString())
         return channel
     }
 
