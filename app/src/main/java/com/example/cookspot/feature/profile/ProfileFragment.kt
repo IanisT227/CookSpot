@@ -21,7 +21,6 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding by viewBinding(FragmentProfileBinding::bind)
-    private var doubleBackPressed = false
     private var bottomNavigationBarBinding: BottomNavigationLayoutBinding? = null
     private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
     private val recipeViewModel: RecipeViewModel by activityViewModel()
@@ -36,6 +35,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         initObservers()
         authenticationViewModel.getCurrentUser()
         authenticationViewModel.getCurrentUserProfilePicture()
+        recipeViewModel.getPostedRecipes(authenticationViewModel.userId.value !!)
     }
 
     private fun initViews() {
@@ -78,8 +78,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFeedFragment())
         }
 
+        binding.postedTV.setOnClickListener {
+            recipeViewModel.getPostedRecipes(authenticationViewModel.userId.value !!)
+        }
+
         binding.cookedTV.setOnClickListener {
             recipeViewModel.getCookedRecipeList()
+        }
+
+        binding.savedTV.setOnClickListener {
+            recipeViewModel.getSavededRecipeList()
         }
     }
 
@@ -115,36 +123,44 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         recipeViewModel.postedRecipesList.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
-            if (recipeList != null)
+            if (recipeList != null) {
                 initRecyclerView(
                     GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
                     recipeList,
                 )
+                binding.postedNumberTV.text = recipeList.size.toString()
+            }
+
         }
 
         recipeViewModel.cookedRecipesList.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
             if (recipeList != null) {
                 profileListAdapter.submitList(recipeList)
-                binding.collectionRV.adapter?.notifyDataSetChanged()
+                profileListAdapter.notifyDataSetChanged()
+                binding.cookedNumberTV.text = recipeList.size.toString()
+            } else {
+                showAlerter("No recipes in cooked", requireActivity())
             }
         }
 
         recipeViewModel.savedRecipeList.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
-            if (recipeList != null)
-                initRecyclerView(
-                    GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
-                    recipeList,
-                )
+            if (recipeList != null) {
+                profileListAdapter.submitList(recipeList)
+                profileListAdapter.notifyDataSetChanged()
+                binding.savedNumberTV.text = recipeList.size.toString()
+            } else {
+                showAlerter("No recipes in saved", requireActivity())
+            }
         }
     }
 
     private fun initRecyclerView(
         layoutManager: GridLayoutManager,
-        recipeList: List<Recipe>
+        recipeList: MutableList<Recipe>
     ) {
-        val profileListAdapter = ProfileCollectionAdapter(::onItemClickListener)
+        profileListAdapter = ProfileCollectionAdapter(::onItemClickListener, recipeList)
         binding.collectionRV.adapter = profileListAdapter
         profileListAdapter.submitList(recipeList)
         binding.collectionRV.layoutManager = layoutManager

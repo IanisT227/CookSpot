@@ -10,7 +10,10 @@ import com.example.cookspot.model.Recipe
 typealias OnRecipeClickListener = (recipe: Recipe) -> Unit
 
 
-class ProfileCollectionAdapter(private val onRecipeClickListener: OnRecipeClickListener) :
+class ProfileCollectionAdapter(
+    private val onRecipeClickListener: OnRecipeClickListener,
+    private var recipeList: MutableList<Recipe>
+) :
     ListAdapter<Recipe, ProfileCollectionItemViewHolder>(RecipeItemDiffUtilItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ProfileCollectionItemViewHolder(
@@ -24,5 +27,10 @@ class ProfileCollectionAdapter(private val onRecipeClickListener: OnRecipeClickL
 
     override fun onBindViewHolder(holder: ProfileCollectionItemViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    fun updateDataset(newDataset: MutableList<Recipe>) {
+        recipeList = newDataset
+        notifyDataSetChanged()
     }
 }

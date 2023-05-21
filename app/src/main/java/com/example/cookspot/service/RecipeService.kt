@@ -4,7 +4,6 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.net.toUri
 import com.example.cookspot.DATABASE_URL
-import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -100,7 +99,6 @@ class RecipeService {
                     val value = snapshot.getValue<HashMap<String, Recipe>?>()
                     channel.trySend(value).isSuccess
                     channel.close()
-                    Log.v("tagsRecipe", "Value is: " + value)
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(SERVICE_TAG, "Failed to read value.", error.toException())
@@ -129,51 +127,66 @@ class RecipeService {
         }
     }
 
-    suspend fun getRecipeById(recipeId: String): Channel<Recipe?> {
-        logTag("newRecipeId", recipeId)
-        val channel = Channel<Recipe?>()
-        val currentRecipe: Recipe? = null
-        firebaseRecipeReference.child(recipeId)
-            .addValueEventListener(object : ValueEventListener {
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val value = snapshot.getValue<Recipe>()
-                    channel.trySend(value).isSuccess
-                    channel.close()
+    suspend fun getCookedRecipesList(userId: String): MutableList<Recipe?> {
+        val receivedIdList: MutableList<String> = mutableListOf()
+        val cookedRecipesList = mutableListOf<Recipe?>()
+        firebaseUserReference.child(userId).child("cookedRecipes")
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    for (receivedPair in result.children) {
+                        receivedIdList?.add(receivedPair.key.toString())
+                    }
+                } else {
+                    isErrorMessage = task.exception?.message
                 }
+            }.await()
 
-                override fun onCancelled(error: DatabaseError) {
-                    logTag("recipeData", "Failed to read value." + error.toException())
-                    channel.trySend(null).isSuccess
-                    channel.close()
-                }
-
-            })
-        Log.v("recipeDataAS", currentRecipe.toString())
-        return channel
+        for (recipeId in receivedIdList) {
+            firebaseRecipeReference.child(recipeId).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val result = task.result
+                        result?.let {
+                            cookedRecipesList.add(result.getValue(Recipe::class.java))
+                        }
+                    } else {
+                        isErrorMessage = task.exception?.message
+                    }
+                }.await()
+        }
+        return cookedRecipesList
     }
 
-    fun getCookedRecipesIdList(userId: String): Channel<HashMap<String, Boolean>?> {
-        val channel = Channel<HashMap<String, Boolean>?>()
-        firebaseUserReference.child(userId).child("cookedRecipes")
-            .addValueEventListener(object : ValueEventListener {
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    val value = snapshot.getValue<HashMap<String, Boolean>?>()
-                    channel.trySend(value).isSuccess
-                    channel.close()
-                    Log.v("tagsRecipe", "Value is: " + value)
+    suspend fun getSavedRecipesList(userId: String): MutableList<Recipe?> {
+        val receivedIdList: MutableList<String> = mutableListOf()
+        val savedRecipesList = mutableListOf<Recipe?>()
+        firebaseUserReference.child(userId).child("savedRecipes")
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    for (receivedPair in result.children) {
+                        receivedIdList?.add(receivedPair.key.toString())
+                    }
+                } else {
+                    isErrorMessage = task.exception?.message
                 }
+            }.await()
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.w(SERVICE_TAG, "Failed to read value.", error.toException())
-                    channel.trySend(null).isSuccess
-                    channel.close()
-                }
-            })
-        return channel
+        for (recipeId in receivedIdList) {
+            firebaseRecipeReference.child(recipeId).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val result = task.result
+                        result?.let {
+                            savedRecipesList.add(result.getValue(Recipe::class.java))
+                        }
+                    } else {
+                        isErrorMessage = task.exception?.message
+                    }
+                }.await()
+        }
+        return savedRecipesList
     }
 
     fun getIsErrorMessage() = isErrorMessage
