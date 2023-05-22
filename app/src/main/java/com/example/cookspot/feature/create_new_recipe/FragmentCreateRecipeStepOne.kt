@@ -20,7 +20,7 @@ import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepOneBinding
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -115,7 +115,7 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
                     )
                 )
             else
-                showAlerter("All fields must be completed", requireActivity())
+                showError("All fields must be completed", requireActivity())
         }
 
         binding.uploadPhotoIV.setOnClickListener {

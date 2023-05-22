@@ -13,7 +13,7 @@ import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentFeedBinding
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -69,7 +69,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         recipeViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
-                showAlerter(isError, requireActivity())
+                showError(isError, requireActivity())
             }
         }
 

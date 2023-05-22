@@ -3,17 +3,10 @@ package com.example.cookspot
 import android.app.Activity
 import android.util.Patterns
 import android.widget.ImageView
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
-import kotlin.math.log
 
 
 fun logTag(tag: String, message: String = "") {
@@ -37,8 +30,15 @@ fun checkName(nameEditText: TextInputEditText): Boolean {
     return regex.matches(nameEditText.text.toString())
 }
 
-fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
+fun showError(bodyText: String, activity: Activity) = Alerter.create(activity)
     .setTitle("Error")
+    .setText(bodyText)
+    .setBackgroundColorRes(R.color.primary_orange)
+    .setDuration(ERROR_DURATION)
+    .show()
+
+fun showAlerter(bodyText: String, activity: Activity) = Alerter.create(activity)
+    .setTitle("Recipe added")
     .setText(bodyText)
     .setBackgroundColorRes(R.color.primary_orange)
     .setDuration(ERROR_DURATION)

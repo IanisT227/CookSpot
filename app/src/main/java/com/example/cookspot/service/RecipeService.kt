@@ -205,7 +205,7 @@ class RecipeService {
 
     suspend fun getSavedRecipesSize(userId: String): Int {
         var size = 0L
-        firebaseUserReference.child(userId).child("savededRecipes").get()
+        firebaseUserReference.child(userId).child("savedRecipes").get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     size = task.result.childrenCount

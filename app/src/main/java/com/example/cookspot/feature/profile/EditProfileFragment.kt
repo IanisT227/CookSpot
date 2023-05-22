@@ -24,7 +24,7 @@ import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepOne
 import com.example.cookspot.logTag
 import com.example.cookspot.model.User
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showError
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.io.File
@@ -119,7 +119,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         authenticationViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
-                showAlerter(isError, requireActivity())
+                showError(isError, requireActivity())
             }
         }
 
@@ -148,7 +148,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 }
                 Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
             } else {
-                showAlerter("Fields cannot be empty", requireActivity())
+                showError("Fields cannot be empty", requireActivity())
             }
         }
 

@@ -137,6 +137,20 @@ class AuthService {
         return channel
     }
 
+    suspend fun getUserById(userId: String): User? {
+        var user: User? = null
+        firebaseReference.child(userId).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    user = task.result.getValue(User::class.java)
+
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+        return user
+    }
+
     suspend fun updateUser(username: String, fullName: String) {
         firebaseReference.child(firebaseAuth.currentUser !!.uid).child("username")
             .setValue(username).await()

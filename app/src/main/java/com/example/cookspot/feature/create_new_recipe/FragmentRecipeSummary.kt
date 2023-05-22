@@ -16,7 +16,7 @@ import com.example.awesomedialog.title
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentRecipeSummaryBinding
 import com.example.cookspot.logTag
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -87,7 +87,7 @@ class FragmentRecipeSummary : Fragment(R.layout.fragment_recipe_summary) {
         recipeViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
-                showAlerter(isError, requireActivity())
+                showError(isError, requireActivity())
             }
         }
 

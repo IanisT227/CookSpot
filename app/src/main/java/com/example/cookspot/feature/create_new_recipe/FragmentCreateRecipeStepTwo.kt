@@ -17,7 +17,7 @@ import com.example.awesomedialog.title
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepTwoBinding
 import com.example.cookspot.logTag
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -52,7 +52,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                 tagItemsList.add(tag)
                 false
             } else {
-                showAlerter("Remove a tag before adding another", requireActivity())
+                showError("Remove a tag before adding another", requireActivity())
                 true
             }
         } else {
@@ -77,7 +77,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
 
         binding.nextStepBtn.setOnClickListener {
             if (checkFields()) {
-                showAlerter("Please choose a difficulty level and three tags", requireActivity())
+                showError("Please choose a difficulty level and three tags", requireActivity())
             } else {
                 val recipe = args.newRecipe !!.copy(
                     tags = tagItemsList,
@@ -136,7 +136,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
         recipeViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
-                showAlerter(isError, requireActivity())
+                showError(isError, requireActivity())
             }
         }
     }

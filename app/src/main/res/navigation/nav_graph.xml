@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_feedFragment_to_fragmentViewFullRecipe"
             app:destination="@id/fragmentViewFullRecipe" />
+        <action
+            android:id="@+id/action_feedFragment_to_recipeAuthorProfileFragment"
+            app:destination="@id/recipeAuthorProfileFragment" />
     </fragment>
     <navigation
         android:id="@+id/create_recipe_navigation"
@@ -151,6 +154,23 @@
             app:argType="com.example.cookspot.model.Recipe" />
         <action
             android:id="@+id/action_fragmentViewFullRecipe_to_feedFragment"
+            app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_fragmentViewFullRecipe_to_recipeAuthorProfileFragment"
+            app:destination="@id/recipeAuthorProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeAuthorProfileFragment"
+        android:name="com.example.cookspot.feature.feed.FragmentRecipeAuthorProfile"
+        android:label="RecipeAuthorProfileFragment" >
+        <action
+            android:id="@+id/action_recipeAuthorProfileFragment_to_fragmentViewFullRecipe"
+            app:destination="@id/fragmentViewFullRecipe" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recipeAuthorProfileFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
     </fragment>
 </navigation>

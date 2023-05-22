@@ -36,13 +36,13 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
         binding.signUpBtn.setOnClickListener {
             if (!(checkMail(binding.emailTIEE))) {
-                showAlerter("Invalid mail format", requireActivity())
+                showError("Invalid mail format", requireActivity())
             } else {
                 if (!checkName(binding.nameTIEE)) {
-                    showAlerter("Invalid name format", requireActivity())
+                    showError("Invalid name format", requireActivity())
                 } else {
                     if (!(checkUserOrPassword(binding.usernameTIEE) && checkUserOrPassword(binding.passwordTIEE))) {
-                        showAlerter("All fields must have at least 8 characters", requireActivity())
+                        showError("All fields must have at least 8 characters", requireActivity())
                     } else {
                         authenticationViewModel.registerUser(
                             binding.emailTIEE.text.toString(),
@@ -70,7 +70,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         authenticationViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
-                showAlerter(isError, requireActivity())
+                showError(isError, requireActivity())
             }
         }
 

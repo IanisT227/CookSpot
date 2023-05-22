@@ -13,7 +13,7 @@ import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentProfileBinding
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -96,7 +96,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         authenticationViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
-                showAlerter(isError, requireActivity())
+                showError(isError, requireActivity())
             }
         }
 
@@ -141,7 +141,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 profileListAdapter.notifyDataSetChanged()
                 binding.cookedNumberTV.text = recipeList.size.toString()
             } else {
-                showAlerter("No recipes in cooked", requireActivity())
+                showError("No recipes in Cooked", requireActivity())
             }
         }
 
@@ -152,7 +152,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 profileListAdapter.notifyDataSetChanged()
                 binding.savedNumberTV.text = recipeList.size.toString()
             } else {
-                showAlerter("No recipes in saved", requireActivity())
+                showError("No recipes in Saved", requireActivity())
             }
         }
 

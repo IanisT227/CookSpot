@@ -36,10 +36,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         binding.loginBtn.setOnClickListener {
             if (!(checkMail(binding.emailTIEE))) {
-                showAlerter("Invalid mail format", requireActivity())
+                showError("Invalid mail format", requireActivity())
             } else {
                 if (!checkUserOrPassword(binding.passwordTIEE)) {
-                    showAlerter("Password must have at least 8 characters!", requireActivity())
+                    showError("Password must have at least 8 characters!", requireActivity())
                 } else {
                     authenticationViewModel.loginUser(
                         binding.emailTIEE.text.toString(),
@@ -73,7 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         authenticationViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError != null) {
                 logTag("isErrorValue", isError.toString())
-                showAlerter(isError, requireActivity())
+                showError(isError, requireActivity())
             }
         }
 

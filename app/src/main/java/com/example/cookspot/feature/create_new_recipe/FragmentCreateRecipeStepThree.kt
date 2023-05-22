@@ -15,7 +15,7 @@ import com.example.awesomedialog.onPositive
 import com.example.awesomedialog.title
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentCreateNewRecipeStepThreeBinding
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showError
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_recipe_step_three) {
@@ -69,7 +69,7 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
                     )
                 )
             } else {
-                showAlerter("All fields must be completed", requireActivity())
+                showError("All fields must be completed", requireActivity())
             }
         }
 

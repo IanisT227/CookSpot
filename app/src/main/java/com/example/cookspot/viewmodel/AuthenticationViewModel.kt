@@ -150,11 +150,27 @@ class AuthenticationViewModel(
         }
     }
 
+    fun getUserById(userId: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _userData.value = authService.getUserById(userId)
+                _isError.value = authService.getIsErrorMessage()
+            } catch (e: Exception) {
+                internalStorageManager.setIsUserLoggedIn(true)
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
     fun getCurrentUserProfilePicture() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                _profilePictureUri.value = authService.getPicture(_userId.value!!)
+                _profilePictureUri.value = authService.getPicture(_userId.value !!)
                 Log.v("userdatavm", _userData.value.toString())
                 internalStorageManager.setUserUsername(_userData.value?.username.toString())
                 internalStorageManager.setUserFullName(_userData.value?.fullName.toString())
