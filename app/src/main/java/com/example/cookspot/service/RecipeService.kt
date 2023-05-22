@@ -189,6 +189,34 @@ class RecipeService {
         return savedRecipesList
     }
 
+    suspend fun getCookedRecipesSize(userId: String): Int {
+        var size = 0L
+        firebaseUserReference.child(userId).child("cookedRecipes").get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    size = task.result.childrenCount
+
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+        return size.toInt()
+    }
+
+    suspend fun getSavedRecipesSize(userId: String): Int {
+        var size = 0L
+        firebaseUserReference.child(userId).child("savededRecipes").get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    size = task.result.childrenCount
+
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+        return size.toInt()
+    }
+
     fun getIsErrorMessage() = isErrorMessage
 
     companion object {

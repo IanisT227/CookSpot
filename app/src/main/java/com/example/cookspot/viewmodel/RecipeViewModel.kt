@@ -44,6 +44,14 @@ class RecipeViewModel(
     val savedRecipeList: LiveData<MutableList<Recipe?>>
         get() = _savedRecipesList
 
+    private val _cookedRecipesSize: MutableLiveData<Int> = MutableLiveData()
+    val cookedRecipesSize: LiveData<Int>
+        get() = _cookedRecipesSize
+
+    private val _savedRecipesSize: MutableLiveData<Int> = MutableLiveData()
+    val savedRecipesSize: LiveData<Int>
+        get() = _savedRecipesSize
+
     fun initFirebase() {
         viewModelScope.launch {
             recipeService.initFirebase()
@@ -136,7 +144,26 @@ class RecipeViewModel(
         }
     }
 
-    fun getSavededRecipeList() {
+    fun getRecipesListSize() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _cookedRecipesSize.value =
+                    recipeService.getCookedRecipesSize(internalStorageManager.getUserId() !!)
+                _savedRecipesSize.value =
+                    recipeService.getSavedRecipesSize(internalStorageManager.getUserId() !!)
+                _isError.value = recipeService.getIsErrorMessage()
+                _isPosted.value = true
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun getSavedRecipeList() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true

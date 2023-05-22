@@ -36,6 +36,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         authenticationViewModel.getCurrentUser()
         authenticationViewModel.getCurrentUserProfilePicture()
         recipeViewModel.getPostedRecipes(authenticationViewModel.userId.value !!)
+        recipeViewModel.getRecipesListSize()
     }
 
     private fun initViews() {
@@ -87,7 +88,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.savedTV.setOnClickListener {
-            recipeViewModel.getSavededRecipeList()
+            recipeViewModel.getSavedRecipeList()
         }
     }
 
@@ -153,6 +154,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             } else {
                 showAlerter("No recipes in saved", requireActivity())
             }
+        }
+
+        recipeViewModel.cookedRecipesSize.observe(viewLifecycleOwner) { size ->
+            binding.cookedNumberTV.text = size.toString()
+        }
+
+        recipeViewModel.savedRecipesSize.observe(viewLifecycleOwner) { size ->
+            binding.savedNumberTV.text = size.toString()
         }
     }
 
