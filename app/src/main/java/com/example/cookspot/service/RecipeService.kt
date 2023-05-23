@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.net.toUri
 import com.example.cookspot.DATABASE_URL
+import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -215,6 +216,25 @@ class RecipeService {
                 }
             }.await()
         return size.toInt()
+    }
+
+    suspend fun likeRecipe(recipeId: String) {
+        val likes = getLikesForRecipe(recipeId) + 1
+        logTag("likesnumber", likes.toString())
+        firebaseRecipeReference.child(recipeId).child("likes").setValue(likes)
+    }
+
+    suspend fun getLikesForRecipe(recipeId: String): Long {
+        var likesNumber: Long = 0
+        firebaseRecipeReference.child(recipeId).child("likes").get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val result = task.result
+                likesNumber = result.getValue(Long::class.java)!!
+            } else {
+                isErrorMessage = task.exception?.message
+            }
+        }.await()
+        return likesNumber
     }
 
     fun getIsErrorMessage() = isErrorMessage

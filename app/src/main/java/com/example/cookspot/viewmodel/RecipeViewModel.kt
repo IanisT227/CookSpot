@@ -9,7 +9,9 @@ import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecipeViewModel(
     private val recipeService: RecipeService,
@@ -191,6 +193,20 @@ class RecipeViewModel(
                 _isError.value = e.message
             } finally {
                 _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun likeRecipe(recipeId: String) {
+        viewModelScope.launch {
+            try {
+                recipeService.likeRecipe(recipeId)
+                _isError.value = recipeService.getIsErrorMessage()
+                _isPosted.value = true
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
                 _isError.value = null
             }
         }

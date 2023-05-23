@@ -14,6 +14,7 @@ import com.example.cookspot.feature.profile.ProfileFragment
 import com.example.cookspot.loadUrl
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.model.User
+import com.example.cookspot.showFollowerAlerter
 import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -45,6 +46,11 @@ class FragmentRecipeAuthorProfile : Fragment(R.layout.fragment_recipe_author_pro
 
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigate(FragmentRecipeAuthorProfileDirections.actionRecipeAuthorProfileFragmentToFeedFragment())
+        }
+
+        binding.followUserProfile.setOnClickListener {
+            authenticationViewModel.followUser(recipeAuthorProfileFragmentArgs.userId)
+            showFollowerAlerter(requireActivity())
         }
     }
 

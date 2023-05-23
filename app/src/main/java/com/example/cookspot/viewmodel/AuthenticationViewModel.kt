@@ -199,6 +199,21 @@ class AuthenticationViewModel(
         }
     }
 
+    fun followUser(userId: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                authService.followUser(userId)
+                _isError.value = authService.getIsErrorMessage()
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
     fun getCurrentUserFullName() = internalStorageManager.getUserFullName()
 
     fun getCurrentUserUsername() = internalStorageManager.getUserUsername()

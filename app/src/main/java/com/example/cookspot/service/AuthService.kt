@@ -158,6 +158,11 @@ class AuthService {
             .setValue(fullName).await()
     }
 
+    suspend fun followUser(userId: String) {
+        firebaseReference.child(firebaseAuth.currentUser !!.uid).child("followedUsers")
+            .child(userId).setValue(true).await()
+    }
+
     fun getIsErrorMessage() = isErrorMessage
 
     companion object {

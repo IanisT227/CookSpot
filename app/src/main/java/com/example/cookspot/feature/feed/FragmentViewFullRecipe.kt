@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentViewFullRecipeBinding
 import com.example.cookspot.loadUrl
-import com.example.cookspot.showAlerter
+import com.example.cookspot.showRecipeAlerter
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -57,12 +57,12 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
 
         binding.markAsCookedRecipeBtn.setOnClickListener {
             recipeViewModel.addToCooked(args.recipe.imageUri)
-            showAlerter("Recipe added to Cooked collection", requireActivity())
+            showRecipeAlerter("Recipe added to Cooked collection", requireActivity())
         }
 
         binding.saveRecipeIBtn.setOnClickListener {
             recipeViewModel.addToSaved(args.recipe.imageUri)
-            showAlerter("Recipe added to saved collection", requireActivity())
+            showRecipeAlerter("Recipe added to saved collection", requireActivity())
         }
 
         binding.recipeAuthorTV.setOnClickListener {
@@ -71,6 +71,12 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
                     args.recipe.publisherId
                 )
             )
+        }
+
+        binding.likeBtn.setOnClickListener {
+            recipeViewModel.likeRecipe(args.recipe.imageUri)
+            binding.likesNumberTV.text = (args.recipe.likes + 1).toString()
+
         }
     }
 
