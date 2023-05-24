@@ -128,6 +128,15 @@ class RecipeService {
         }
     }
 
+    suspend fun removePostFromSaved(userId: String, recipeId: String) {
+        try {
+            firebaseUserReference.child(userId).child("savedRecipes").child(recipeId)
+                .removeValue().await()
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
+    }
+
     suspend fun getCookedRecipesList(userId: String): MutableList<Recipe?> {
         val receivedIdList: MutableList<String> = mutableListOf()
         val cookedRecipesList = mutableListOf<Recipe?>()
@@ -220,6 +229,12 @@ class RecipeService {
 
     suspend fun likeRecipe(recipeId: String) {
         val likes = getLikesForRecipe(recipeId) + 1
+        logTag("likesnumber", likes.toString())
+        firebaseRecipeReference.child(recipeId).child("likes").setValue(likes)
+    }
+
+    suspend fun unlikeRecipe(recipeId: String) {
+        val likes = getLikesForRecipe(recipeId) - 1
         logTag("likesnumber", likes.toString())
         firebaseRecipeReference.child(recipeId).child("likes").setValue(likes)
     }

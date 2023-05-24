@@ -18,6 +18,8 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
     private val args: FragmentViewFullRecipeArgs by navArgs()
     private val binding by viewBinding(FragmentViewFullRecipeBinding::bind)
     private val recipeViewModel: RecipeViewModel by activityViewModel()
+    private var isLiked = false
+    private var isSaved = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,8 +63,16 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
         }
 
         binding.saveRecipeIBtn.setOnClickListener {
-            recipeViewModel.addToSaved(args.recipe.imageUri)
-            showRecipeAlerter("Recipe added to saved collection", requireActivity())
+            if (! isSaved) {
+                recipeViewModel.addToSaved(args.recipe.imageUri)
+                showRecipeAlerter("Recipe added to saved collection", requireActivity())
+                isSaved = true
+                binding.saveRecipeIBtn.setImageResource(R.drawable.ic_saved_full)
+            } else {
+                recipeViewModel.removeFromSaved(args.recipe.imageUri)
+                isSaved = false
+                binding.saveRecipeIBtn.setImageResource(R.drawable.ic_save)
+            }
         }
 
         binding.recipeAuthorTV.setOnClickListener {
@@ -74,10 +84,19 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
         }
 
         binding.likeBtn.setOnClickListener {
-            recipeViewModel.likeRecipe(args.recipe.imageUri)
-            binding.likesNumberTV.text = (args.recipe.likes + 1).toString()
-
+            if (! isLiked) {
+                recipeViewModel.likeRecipe(args.recipe.imageUri)
+                binding.likesNumberTV.text = (getLikesNumber() + 1).toString()
+                binding.likeBtn.setImageResource(R.drawable.ic_heart_full)
+                isLiked = true
+            } else {
+                recipeViewModel.unlikeRecipe(args.recipe.imageUri)
+                binding.likesNumberTV.text = (getLikesNumber() - 1).toString()
+                binding.likeBtn.setImageResource(R.drawable.ic_heart)
+                isLiked = false
+            }
         }
     }
 
+    private fun getLikesNumber() = binding.likesNumberTV.text.toString().toInt()
 }
