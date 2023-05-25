@@ -204,5 +204,8 @@
         <action
             android:id="@+id/action_fragmentSearch_to_user_profile"
             app:destination="@id/user_profile" />
+        <action
+            android:id="@+id/action_fragmentSearch_to_fragmentViewFullRecipe"
+            app:destination="@id/fragmentViewFullRecipe" />
     </fragment>
 </navigation>

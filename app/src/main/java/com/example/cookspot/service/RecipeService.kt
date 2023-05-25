@@ -253,12 +253,30 @@ class RecipeService {
         firebaseRecipeReference.child(recipeId).child("likes").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val result = task.result
-                likesNumber = result.getValue(Long::class.java)!!
+                likesNumber = result.getValue(Long::class.java) !!
             } else {
                 isErrorMessage = task.exception?.message
             }
         }.await()
         return likesNumber
+    }
+
+    suspend fun searchRecipes(recipeName: String): MutableList<Recipe?> {
+        val cookedRecipesList = mutableListOf<Recipe?>()
+        firebaseRecipeReference.orderByChild("name").startAt(recipeName)
+            .endAt("$recipeName\uf8ff")
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    for (receivedPair in result.children) {
+                        logTag("receivedPair", receivedPair.toString())
+                        cookedRecipesList?.add(receivedPair.getValue(Recipe::class.java))
+                    }
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+        return cookedRecipesList
     }
 
     fun getIsErrorMessage() = isErrorMessage

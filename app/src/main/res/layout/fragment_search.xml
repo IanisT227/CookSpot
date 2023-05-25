@@ -8,17 +8,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchTIL"
-        style="@style/TextInputLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/primary_orange"
         app:layout_constraintBottom_toTopOf="@id/feedRecipesRV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:imeOptions="actionDone"
             android:id="@+id/searchTIET"
-            style="@style/SearchTextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/primary_orange"
@@ -26,9 +26,23 @@
             android:inputType="text"
             android:paddingVertical="16dp"
             android:paddingBottom="6dp"
+            android:paddingHorizontal="12dp"
             android:textColor="@color/neutral_white"
+            android:ellipsize="end"
+            android:maxLength="25"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:paddingHorizontal="8dp"
+        android:id="@+id/searchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="@id/searchTIL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/searchTIL" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feedRecipesRV"

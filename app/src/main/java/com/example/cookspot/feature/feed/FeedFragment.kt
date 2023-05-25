@@ -92,7 +92,6 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
                 authenticationViewModel.setCurrentUserId(userId)
                 recipeViewModel.getPostedRecipes(userId)
             }
-
         }
     }
 

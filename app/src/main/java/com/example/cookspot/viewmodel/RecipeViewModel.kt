@@ -9,9 +9,7 @@ import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RecipeViewModel(
     private val recipeService: RecipeService,
@@ -53,6 +51,10 @@ class RecipeViewModel(
     private val _savedRecipesSize: MutableLiveData<Int> = MutableLiveData()
     val savedRecipesSize: LiveData<Int>
         get() = _savedRecipesSize
+
+    private val _searchedRecipes: MutableLiveData<MutableList<Recipe?>> = MutableLiveData()
+    val searchedRecipes: LiveData<MutableList<Recipe?>>
+        get() = _searchedRecipes
 
     fun initFirebase() {
         viewModelScope.launch {
@@ -253,6 +255,23 @@ class RecipeViewModel(
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {
+                _isError.value = null
+            }
+        }
+    }
+
+    fun searchRecipes(searchTerm: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _searchedRecipes.value = recipeService.searchRecipes(searchTerm)
+                logTag("searchResults", _searchedRecipes.value.toString())
+                _isError.value = recipeService.getIsErrorMessage()
+                _isPosted.value = true
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
                 _isError.value = null
             }
         }

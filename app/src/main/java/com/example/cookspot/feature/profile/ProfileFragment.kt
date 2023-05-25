@@ -58,6 +58,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun initButtons() {
+        binding.bottomNavigationBarCL.profileBtn.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.primary_orange
+            )
+        )
+
         binding.bottomNavigationBarCL.homeBtn.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToFeedFragment())
         }

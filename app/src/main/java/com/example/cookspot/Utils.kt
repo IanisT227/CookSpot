@@ -1,7 +1,11 @@
 package com.example.cookspot
 
 import android.app.Activity
+import android.content.Context
 import android.util.Patterns
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.InputMethodManager.RESULT_UNCHANGED_SHOWN
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
@@ -63,6 +67,12 @@ fun ImageView.loadUrl(url: String?) {
     }.addOnFailureListener {
         // Handle any errors
     }
+}
+
+fun View.hideKeyboard(focusedView: View, activity: Activity){
+    val imm =
+        activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+    imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
 }
 
 const val ERROR_DURATION = 2500L
