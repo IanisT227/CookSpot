@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="@id/recipeNameTV"
             app:layout_constraintStart_toStartOf="@id/recipeNameTV"
             app:layout_constraintTop_toBottomOf="@id/recipeNameTV"
-            tools:text="@ianist2001" />
+            tools:text="\@ianist2001" />
 
         <ImageView
             android:id="@+id/recipeDifficultyIV"
@@ -92,14 +92,14 @@
             tools:text="Medium" />
 
         <ImageView
+            android:layout_marginStart="12dp"
             android:id="@+id/recipeDurationIV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:src="@drawable/ic_duration"
             app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyTV"
-            app:layout_constraintStart_toEndOf="@+id/recipeDifficultyTV"
             app:layout_constraintTop_toTopOf="@id/recipeDifficultyTV"
+            app:layout_constraintStart_toEndOf="@+id/recipeDifficultyTV"
             app:tint="@color/neutral_black" />
 
 
@@ -108,10 +108,10 @@
             style="@style/RegularTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:maxLines="1"
             android:textAlignment="center"
             android:textColor="@color/neutral_black"
+            android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyTV"
             app:layout_constraintStart_toEndOf="@id/recipeDurationIV"
             app:layout_constraintTop_toTopOf="@id/recipeDifficultyTV"
@@ -121,7 +121,6 @@
             android:id="@+id/recipeMakesIV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:src="@drawable/ic_makes"
             app:layout_constraintBottom_toBottomOf="@id/recipeDifficultyIV"
             app:layout_constraintEnd_toStartOf="@id/recipeMakesTV"
@@ -129,11 +128,11 @@
             app:layout_constraintTop_toTopOf="@id/recipeDifficultyIV" />
 
         <TextView
+            android:layout_marginEnd="24dp"
             android:id="@+id/recipeMakesTV"
             style="@style/RegularTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:maxLines="1"
             android:textAlignment="center"
             android:textColor="@color/neutral_black"

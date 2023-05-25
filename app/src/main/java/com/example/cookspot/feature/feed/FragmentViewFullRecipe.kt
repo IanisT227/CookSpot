@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentViewFullRecipeBinding
-import com.example.cookspot.loadUrl
+import com.example.cookspot.loadRecipePhoto
 import com.example.cookspot.showRecipeAlerter
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -42,7 +42,7 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
         binding.ingredientsListTV.text = receivedRecipe.ingredients
         binding.likesNumberTV.text = receivedRecipe.likes.toString()
         binding.cookingProcessParagraphTV.text = receivedRecipe.cookingProcess
-        binding.recipePictureIV.loadUrl(receivedRecipe.imageUri)
+        binding.recipePictureIV.loadRecipePhoto(receivedRecipe.imageUri)
     }
 
     private fun initButtons() {

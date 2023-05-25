@@ -11,7 +11,8 @@ import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentRecipeAuthorProfileFragmentBinding
 import com.example.cookspot.feature.profile.ProfileCollectionAdapter
 import com.example.cookspot.feature.profile.ProfileFragment
-import com.example.cookspot.loadUrl
+import com.example.cookspot.loadProfilePhoto
+import com.example.cookspot.loadRecipePhoto
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.model.User
 import com.example.cookspot.showFollowerAlerter
@@ -38,7 +39,7 @@ class FragmentRecipeAuthorProfile : Fragment(R.layout.fragment_recipe_author_pro
     private fun initViews(userData: User) {
         binding.usernameTV.text = "@${userData.username}"
         binding.userFullNameTV.text = userData.fullName
-        binding.profilePictureCIV.loadUrl(userData.imageUri)
+        binding.profilePictureCIV.loadProfilePhoto(recipeAuthorProfileFragmentArgs.userId)
 
         requireActivity().onBackPressedDispatcher.addCallback {
             findNavController().navigate(FragmentRecipeAuthorProfileDirections.actionRecipeAuthorProfileFragmentToFeedFragment())

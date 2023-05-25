@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.view.inputmethod.InputMethodManager.RESULT_UNCHANGED_SHOWN
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
@@ -54,8 +53,23 @@ fun showFollowerAlerter(activity: Activity) = Alerter.create(activity)
     .setDuration(ERROR_DURATION)
     .show()
 
-fun ImageView.loadUrl(url: String?) {
+fun ImageView.loadRecipePhoto(url: String?) {
     val firebaseStorage = FirebaseStorage.getInstance().getReference("recipes_pictures/$url")
+
+    firebaseStorage.downloadUrl.addOnSuccessListener { it ->
+
+        Glide.with(this)
+            .load(it)
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .error(R.drawable.ic_launcher_background)
+            .into(this)
+    }.addOnFailureListener {
+        // Handle any errors
+    }
+}
+
+fun ImageView.loadProfilePhoto(url: String?) {
+    val firebaseStorage = FirebaseStorage.getInstance().getReference("users_pictures/$url")
 
     firebaseStorage.downloadUrl.addOnSuccessListener { it ->
 

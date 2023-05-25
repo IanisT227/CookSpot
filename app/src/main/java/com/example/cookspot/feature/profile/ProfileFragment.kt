@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cookspot.R
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentProfileBinding
+import com.example.cookspot.loadProfilePhoto
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.showError
@@ -34,7 +35,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         initButtons()
         initObservers()
         authenticationViewModel.getCurrentUser()
-        authenticationViewModel.getCurrentUserProfilePicture()
         recipeViewModel.getPostedRecipes(authenticationViewModel.userId.value !!)
         recipeViewModel.getRecipesListSize()
     }
@@ -55,6 +55,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         binding.userFullNameTV.text = authenticationViewModel.getCurrentUserFullName()
         binding.usernameTV.text = "@${authenticationViewModel.getCurrentUserUsername()}"
+        binding.profilePictureCIV.loadProfilePhoto(authenticationViewModel.userId.value)
     }
 
     private fun initButtons() {
@@ -118,11 +119,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.editProfileBtn.isEnabled = ! isLoading
             binding.logOutBtn.isEnabled = ! isLoading
             logTag("isLoadingValue", isLoading.toString())
-        }
-
-        authenticationViewModel.profilePictureUri.observe(viewLifecycleOwner) { pictureUri ->
-            if (pictureUri != null)
-                binding.profilePictureCIV.setImageURI(pictureUri)
         }
 
         authenticationViewModel.userData.observe(viewLifecycleOwner) { user ->

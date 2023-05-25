@@ -2,7 +2,7 @@ package com.example.cookspot.feature.feed
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cookspot.databinding.FeedListItemBinding
-import com.example.cookspot.loadUrl
+import com.example.cookspot.loadRecipePhoto
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 
@@ -18,7 +18,7 @@ class FeedListItemViewHolder(
 
     fun bind(recipe: Recipe) {
         clickedRecipe = recipe
-        binding.recipePictureIV.loadUrl(recipe.imageUri)
+        binding.recipePictureIV.loadRecipePhoto(recipe.imageUri)
         binding.recipeNameTV.text = recipe.name
         binding.recipeAuthorTV.text = "@${recipe.publisherName}"
         binding.recipeDifficultyTV.text = recipe.difficulty

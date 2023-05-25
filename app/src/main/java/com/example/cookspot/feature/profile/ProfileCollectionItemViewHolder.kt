@@ -2,7 +2,7 @@ package com.example.cookspot.feature.profile
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cookspot.databinding.RecipeCollectionGridItemBinding
-import com.example.cookspot.loadUrl
+import com.example.cookspot.loadRecipePhoto
 import com.example.cookspot.model.Recipe
 
 class ProfileCollectionItemViewHolder(
@@ -18,6 +18,6 @@ class ProfileCollectionItemViewHolder(
     fun bind(recipe: Recipe) {
         clickedRecipe = recipe
         binding.recipePreviewTitleTV.text = recipe.name
-        binding.recipePreviewIV.loadUrl(recipe.imageUri)
+        binding.recipePreviewIV.loadRecipePhoto(recipe.imageUri)
     }
 }

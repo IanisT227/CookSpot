@@ -66,11 +66,9 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
         binding.searchTIET.hint = "Search..."
 
         binding.searchTIET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun afterTextChanged(s: Editable?) {
-            }
+            override fun afterTextChanged(s: Editable?) {}
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
                 if (text.toString().isNotEmpty()) {
@@ -81,7 +79,7 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
             }
         })
 
-        binding.searchTIET.setOnEditorActionListener { textView, actionId, event ->
+        binding.searchTIET.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
                 recipeViewModel.searchRecipes(binding.searchTIET.text.toString())
                 binding.searchBtn.hideKeyboard(binding.searchTIET, requireActivity())
@@ -100,7 +98,6 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
             binding.searchBtn.hideKeyboard(binding.searchTIET, requireActivity())
         }
     }
-
 
     private fun initObservables() {
         recipeViewModel.searchedRecipes.observe(viewLifecycleOwner) { searchResults ->
