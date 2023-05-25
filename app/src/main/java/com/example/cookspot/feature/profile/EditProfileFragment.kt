@@ -22,6 +22,7 @@ import com.example.cookspot.checkUserOrPassword
 import com.example.cookspot.databinding.FragmentEditProfileBinding
 import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepOne
+import com.example.cookspot.loadProfilePhoto
 import com.example.cookspot.logTag
 import com.example.cookspot.model.User
 import com.example.cookspot.showError
@@ -61,7 +62,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         authenticationViewModel.initFirebase()
         initObservers()
         authenticationViewModel.getCurrentUser()
-        authenticationViewModel.getCurrentUserProfilePicture()
         initButtons()
 
     }
@@ -129,12 +129,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             }
         }
 
-        authenticationViewModel.profilePictureUri.observe(viewLifecycleOwner) { pictureUri ->
-            if (pictureUri != null)
-                binding.profilePictureCIV.setImageURI(pictureUri)
-            else
-                binding.profilePictureCIV.isVisible = false
-        }
+        binding.profilePictureCIV.loadProfilePhoto(authenticationViewModel.userId.value)
     }
 
     private fun initButtons() {

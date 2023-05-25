@@ -44,20 +44,6 @@ class AuthService {
         }
     }
 
-    suspend fun getPicture(userId: String): Uri? {
-        val storageReference = firebaseStorage.getReference("users_pictures/" + userId)
-        var finalUri: Uri? = null
-        try {
-            val localFile = File.createTempFile("temp", "jpg")
-            storageReference.getFile(localFile.toUri()).await()
-            finalUri = localFile.toUri()
-        } catch (e: Exception) {
-            logTag("AuthService", e.message.toString())
-        } finally {
-            return finalUri
-        }
-    }
-
     suspend fun loginUser(email: String, password: String): Boolean {
         try {
             isErrorMessage = null

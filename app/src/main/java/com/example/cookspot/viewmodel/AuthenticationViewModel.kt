@@ -166,24 +166,6 @@ class AuthenticationViewModel(
         }
     }
 
-    fun getCurrentUserProfilePicture() {
-        viewModelScope.launch {
-            try {
-                _isLoading.value = true
-                _profilePictureUri.value = authService.getPicture(_userId.value !!)
-                Log.v("userdatavm", _userData.value.toString())
-                internalStorageManager.setUserUsername(_userData.value?.username.toString())
-                internalStorageManager.setUserFullName(_userData.value?.fullName.toString())
-                _isError.value = authService.getIsErrorMessage()
-            } catch (e: Exception) {
-                _isError.value = e.message
-            } finally {
-                _isLoading.value = false
-                _isError.value = null
-            }
-        }
-    }
-
     fun uploadProfilePicture(imageUri: Uri){
         viewModelScope.launch {
             try {
