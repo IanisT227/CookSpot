@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_feedFragment_to_recipeAuthorProfileFragment"
             app:destination="@id/recipeAuthorProfileFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_fragmentSearch"
+            app:destination="@id/fragmentSearch" />
     </fragment>
     <navigation
         android:id="@+id/create_recipe_navigation"
@@ -81,6 +84,9 @@
                 android:name="finalRecipe"
                 app:argType="com.example.cookspot.model.Recipe" />
         </fragment>
+        <action
+            android:id="@+id/action_global_fragmentSearch"
+            app:destination="@id/fragmentSearch" />
     </navigation>
     <navigation android:id="@+id/user_profile"
         app:startDestination="@id/profileFragment">
@@ -114,6 +120,15 @@
         <action
             android:id="@+id/action_global_fragmentViewFullRecipe"
             app:destination="@id/fragmentViewFullRecipe" />
+        <action
+            android:id="@+id/action_global_recipeAuthorProfileFragment"
+            app:destination="@id/recipeAuthorProfileFragment" />
+        <action
+            android:id="@+id/action_user_profile_self"
+            app:destination="@id/user_profile" />
+        <action
+            android:id="@+id/action_global_fragmentSearch3"
+            app:destination="@id/fragmentSearch" />
     </navigation>
     <navigation android:id="@+id/authentication"
         app:startDestination="@id/authenticationFragment">
@@ -172,5 +187,22 @@
         <action
             android:id="@+id/action_recipeAuthorProfileFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_recipeAuthorProfileFragment_to_user_profile"
+            app:destination="@id/user_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSearch"
+        android:name="com.example.cookspot.feature.search.FragmentSearch"
+        android:label="FragmentSearch" >
+        <action
+            android:id="@+id/action_fragmentSearch_to_feedFragment"
+            app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_fragmentSearch_to_create_recipe_navigation"
+            app:destination="@id/create_recipe_navigation" />
+        <action
+            android:id="@+id/action_fragmentSearch_to_user_profile"
+            app:destination="@id/user_profile" />
     </fragment>
 </navigation>

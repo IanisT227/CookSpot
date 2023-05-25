@@ -20,6 +20,7 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
     private val recipeViewModel: RecipeViewModel by activityViewModel()
     private var isLiked = false
     private var isSaved = false
+    private var isCooked = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,8 +59,17 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
         }
 
         binding.markAsCookedRecipeBtn.setOnClickListener {
-            recipeViewModel.addToCooked(args.recipe.imageUri)
-            showRecipeAlerter("Recipe added to Cooked collection", requireActivity())
+            if (! isCooked) {
+                recipeViewModel.addToCooked(args.recipe.imageUri)
+                showRecipeAlerter("Recipe added to Cooked collection", requireActivity())
+                isCooked = true
+                binding.markAsCookedRecipeBtn.text = "Remove from cooked"
+            } else {
+                recipeViewModel.removeFromCooked(args.recipe.imageUri)
+                isCooked = false
+                binding.markAsCookedRecipeBtn.text = "Mark as cooked"
+            }
+
         }
 
         binding.saveRecipeIBtn.setOnClickListener {

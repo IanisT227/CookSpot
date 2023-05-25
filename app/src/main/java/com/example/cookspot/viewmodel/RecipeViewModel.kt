@@ -146,6 +146,22 @@ class RecipeViewModel(
         }
     }
 
+    fun removeFromCooked(recipeId: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                recipeService.removePostFromCooked(internalStorageManager.getUserId() !!, recipeId)
+                _isError.value = recipeService.getIsErrorMessage()
+                _isPosted.value = true
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
     fun getRecipesListSize() {
         viewModelScope.launch {
             try {

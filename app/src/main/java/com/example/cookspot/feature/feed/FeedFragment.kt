@@ -55,8 +55,12 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToCreateRecipeNavigation())
         }
 
+        binding.bottomNavigationBarCL.searchBtn.setOnClickListener {
+            findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToFragmentSearch())
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback {
-                requireActivity().finish()
+            requireActivity().finish()
         }
     }
 

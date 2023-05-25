@@ -119,6 +119,15 @@ class RecipeService {
         }
     }
 
+    suspend fun removePostFromCooked(userId: String, recipeId: String) {
+        try {
+            firebaseUserReference.child(userId).child("cookedRecipes").child(recipeId)
+                .removeValue().await()
+        } catch (e: Exception) {
+            isErrorMessage = e.message
+        }
+    }
+
     suspend fun addPostToSaved(userId: String, recipeId: String) {
         try {
             firebaseUserReference.child(userId).child("savedRecipes").child(recipeId)

@@ -66,6 +66,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToCreateRecipeNavigation())
         }
 
+        binding.bottomNavigationBarCL.searchBtn.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionGlobalFragmentSearch3())
+        }
+
         binding.logOutBtn.setOnClickListener {
             authenticationViewModel.logOutUser()
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAuthenticationFragment())
@@ -90,6 +94,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.savedTV.setOnClickListener {
             recipeViewModel.getSavedRecipeList()
         }
+
+
     }
 
     private fun initObservers() {
