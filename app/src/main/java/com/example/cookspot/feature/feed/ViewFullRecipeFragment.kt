@@ -14,8 +14,8 @@ import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
-    private val args: FragmentViewFullRecipeArgs by navArgs()
+class ViewFullRecipeFragment : Fragment(R.layout.fragment_view_full_recipe) {
+    private val args: ViewFullRecipeFragmentArgs by navArgs()
     private val binding by viewBinding(FragmentViewFullRecipeBinding::bind)
     private val recipeViewModel: RecipeViewModel by activityViewModel()
     private var isLiked = false
@@ -48,13 +48,13 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
     private fun initButtons() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigate(
-                FragmentViewFullRecipeDirections.actionFragmentViewFullRecipeToFeedFragment()
+                ViewFullRecipeFragmentDirections.actionFragmentViewFullRecipeToFeedFragment()
             )
         }
 
         requireActivity().onBackPressedDispatcher.addCallback {
             findNavController().navigate(
-                FragmentViewFullRecipeDirections.actionFragmentViewFullRecipeToFeedFragment()
+                ViewFullRecipeFragmentDirections.actionFragmentViewFullRecipeToFeedFragment()
             )
         }
 
@@ -87,7 +87,7 @@ class FragmentViewFullRecipe : Fragment(R.layout.fragment_view_full_recipe) {
 
         binding.recipeAuthorTV.setOnClickListener {
             findNavController().navigate(
-                FragmentViewFullRecipeDirections.actionFragmentViewFullRecipeToRecipeAuthorProfileFragment(
+                ViewFullRecipeFragmentDirections.actionFragmentViewFullRecipeToRecipeAuthorProfileFragment(
                     args.recipe.publisherId
                 )
             )

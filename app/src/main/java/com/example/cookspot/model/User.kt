@@ -14,5 +14,6 @@ data class User(
     val publishedRecipes: HashMap<String, Boolean> = HashMap(),
     val followedUsers: HashMap<String, Boolean> = HashMap(),
     val cookedRecipes: HashMap<String, Boolean> = HashMap(),
-    val savedRecipes: HashMap<String, Boolean> = HashMap()
+    val savedRecipes: HashMap<String, Boolean> = HashMap(),
+    val likedRecipes: HashMap<String, Boolean> = HashMap()
 )

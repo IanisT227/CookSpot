@@ -37,13 +37,16 @@
         <action
             android:id="@+id/action_feedFragment_to_fragmentSearch"
             app:destination="@id/fragmentSearch" />
+        <action
+            android:id="@+id/action_feedFragment_to_recommendedFragment"
+            app:destination="@id/recommendedFragment" />
     </fragment>
     <navigation
         android:id="@+id/create_recipe_navigation"
         app:startDestination="@id/fragmentCreateRecipeStepOne">
         <fragment
             android:id="@+id/fragmentCreateRecipeStepTwo"
-            android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepTwo"
+            android:name="com.example.cookspot.feature.create_new_recipe.CreateRecipeStepTwoFragment"
             android:label="FragmentCreateRecipeStepTwo">
             <action
                 android:id="@+id/action_fragmentCreateRecipeStepTwo_to_fragmentCreateRecipeStepThree"
@@ -55,7 +58,7 @@
         </fragment>
         <fragment
             android:id="@+id/fragmentCreateRecipeStepOne"
-            android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepOne"
+            android:name="com.example.cookspot.feature.create_new_recipe.CreateRecipeStepOneFragment"
             android:label="FragmentCreateRecipeStepOne">
             <action
                 android:id="@+id/action_fragmentCreateRecipeStepOne_to_fragmentCreateRecipeStepTwo"
@@ -63,7 +66,7 @@
         </fragment>
         <fragment
             android:id="@+id/fragmentCreateRecipeStepThree"
-            android:name="com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepThree"
+            android:name="com.example.cookspot.feature.create_new_recipe.CreateRecipeStepThreeFragment"
             android:label="FragmentCreateRecipeStepThree" >
             <argument
                 android:name="newRecipe"
@@ -78,7 +81,7 @@
             app:destination="@id/feedFragment" />
         <fragment
             android:id="@+id/recipeDetailFragment"
-            android:name="com.example.cookspot.feature.create_new_recipe.FragmentRecipeSummary"
+            android:name="com.example.cookspot.feature.create_new_recipe.RecipeSummaryFragment"
             android:label="RecipeDetailFragment" >
             <argument
                 android:name="finalRecipe"
@@ -129,6 +132,9 @@
         <action
             android:id="@+id/action_global_fragmentSearch3"
             app:destination="@id/fragmentSearch" />
+        <action
+            android:id="@+id/action_global_recommendedFragment"
+            app:destination="@id/recommendedFragment" />
     </navigation>
     <navigation android:id="@+id/authentication"
         app:startDestination="@id/authenticationFragment">
@@ -162,7 +168,7 @@
     </navigation>
     <fragment
         android:id="@+id/fragmentViewFullRecipe"
-        android:name="com.example.cookspot.feature.feed.FragmentViewFullRecipe"
+        android:name="com.example.cookspot.feature.feed.ViewFullRecipeFragment"
         android:label="FragmentViewFullRecipe" >
         <argument
             android:name="recipe"
@@ -176,7 +182,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeAuthorProfileFragment"
-        android:name="com.example.cookspot.feature.feed.FragmentRecipeAuthorProfile"
+        android:name="com.example.cookspot.feature.feed.RecipeAuthorProfileFragment"
         android:label="RecipeAuthorProfileFragment" >
         <action
             android:id="@+id/action_recipeAuthorProfileFragment_to_fragmentViewFullRecipe"
@@ -193,7 +199,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSearch"
-        android:name="com.example.cookspot.feature.search.FragmentSearch"
+        android:name="com.example.cookspot.feature.search.SearchFragment"
         android:label="FragmentSearch" >
         <action
             android:id="@+id/action_fragmentSearch_to_feedFragment"
@@ -207,5 +213,28 @@
         <action
             android:id="@+id/action_fragmentSearch_to_fragmentViewFullRecipe"
             app:destination="@id/fragmentViewFullRecipe" />
+        <action
+            android:id="@+id/action_fragmentSearch_to_recommendedFragment"
+            app:destination="@id/recommendedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recommendedFragment"
+        android:name="com.example.cookspot.feature.recommended.RecommendedFragment"
+        android:label="RecommendedFragment" >
+        <action
+            android:id="@+id/action_recommendedFragment_to_user_profile"
+            app:destination="@id/user_profile" />
+        <action
+            android:id="@+id/action_recommendedFragment_to_fragmentSearch"
+            app:destination="@id/fragmentSearch" />
+        <action
+            android:id="@+id/action_recommendedFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_recommendedFragment_to_fragmentViewFullRecipe"
+            app:destination="@id/fragmentViewFullRecipe" />
+        <action
+            android:id="@+id/action_recommendedFragment_to_create_recipe_navigation"
+            app:destination="@id/create_recipe_navigation" />
     </fragment>
 </navigation>

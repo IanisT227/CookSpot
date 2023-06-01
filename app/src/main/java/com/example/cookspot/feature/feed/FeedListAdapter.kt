@@ -7,7 +7,7 @@ import com.example.cookspot.databinding.FeedListItemBinding
 import com.example.cookspot.model.Recipe
 
 
-typealias OnRecipeClickListener = (recipe: Recipe) -> Unit
+typealias OnRecipeClickListener = (recipe: Pair<Recipe, String>) -> Unit
 
 class FeedListAdapter(private val onRecipeClickListener: OnRecipeClickListener) :
     ListAdapter<Recipe, FeedListItemViewHolder>(RecipeItemDiffUtilItemCallback()) {

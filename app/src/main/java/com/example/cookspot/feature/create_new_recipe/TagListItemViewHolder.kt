@@ -18,11 +18,11 @@ class TagListItemViewHolder(
             if (! isFull) {
                 logTag("isFullValue", isFull.toString())
                 isChecked = ! isChecked
-                binding.radioButtonTagItem.setChecked(isChecked)
+                binding.radioButtonTagItem.isChecked = isChecked
             }
             else
             {
-                binding.radioButtonTagItem.setChecked(false)
+                binding.radioButtonTagItem.isChecked = false
             }
         }
     }

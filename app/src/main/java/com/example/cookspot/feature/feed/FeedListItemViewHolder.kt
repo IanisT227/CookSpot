@@ -1,6 +1,10 @@
 package com.example.cookspot.feature.feed
 
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cookspot.LIKE_RECIPE
+import com.example.cookspot.R
+import com.example.cookspot.SAVE_RECIPE
+import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.FeedListItemBinding
 import com.example.cookspot.loadRecipePhoto
 import com.example.cookspot.logTag
@@ -11,9 +15,42 @@ class FeedListItemViewHolder(
     private val onRecipeClickListener: OnRecipeClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var clickedRecipe: Recipe
+    private var isLiked = false
+    private var isSaved = false
 
     init {
-        binding.recipePictureIV.setOnClickListener { onRecipeClickListener(clickedRecipe) }
+        binding.recipePictureIV.setOnClickListener {
+            clickedRecipe.let {
+                onRecipeClickListener(Pair(clickedRecipe, VIEW_RECIPE))
+            }
+        }
+
+        binding.likeBtn.setOnClickListener {
+            clickedRecipe.let {
+                onRecipeClickListener(Pair(clickedRecipe, LIKE_RECIPE))
+                isLiked = if (! isLiked) {
+                    binding.likeBtn.setImageResource(R.drawable.ic_heart_full)
+                    true
+                } else {
+                    binding.likeBtn.setImageResource(R.drawable.ic_heart)
+                    false
+                }
+            }
+        }
+
+        binding.saveRecipeIBtn.setOnClickListener {
+            clickedRecipe.let {
+                onRecipeClickListener(Pair(clickedRecipe, SAVE_RECIPE))
+                isSaved = if (! isSaved) {
+                    binding.saveRecipeIBtn.setImageResource(R.drawable.ic_saved_full)
+                    true
+                } else {
+                    binding.saveRecipeIBtn.setImageResource(R.drawable.ic_save)
+                    false
+                }
+            }
+        }
+
     }
 
     fun bind(recipe: Recipe) {

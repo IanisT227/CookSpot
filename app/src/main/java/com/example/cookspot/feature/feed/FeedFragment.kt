@@ -8,7 +8,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cookspot.LIKE_RECIPE
 import com.example.cookspot.R
+import com.example.cookspot.SAVE_RECIPE
+import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentFeedBinding
 import com.example.cookspot.logTag
@@ -59,6 +62,10 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
             findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToFragmentSearch())
         }
 
+        binding.bottomNavigationBarCL.recommendedBtn.setOnClickListener {
+            findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToRecommendedFragment())
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback {
             requireActivity().finish()
         }
@@ -105,11 +112,21 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         binding.feedRecipesRV.layoutManager = layoutManager
     }
 
-    private fun onItemClickListener(recipe: Recipe) {
-        findNavController().navigate(
-            FeedFragmentDirections.actionFeedFragmentToFragmentViewFullRecipe(
-                recipe
-            )
-        )
+    private fun onItemClickListener(pair: Pair<Recipe, String>) {
+        when (pair.second) {
+            VIEW_RECIPE -> {
+                findNavController().navigate(
+                    FeedFragmentDirections.actionFeedFragmentToFragmentViewFullRecipe(
+                        pair.first
+                    )
+                )
+            }
+            LIKE_RECIPE -> {
+                recipeViewModel.handleLike(pair.first.imageUri)
+            }
+            SAVE_RECIPE -> {
+                recipeViewModel.addToSaved(pair.first.imageUri)
+            }
+        }
     }
 }

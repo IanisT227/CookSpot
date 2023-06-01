@@ -154,7 +154,7 @@ class RecipeService {
                 if (task.isSuccessful) {
                     val result = task.result
                     for (receivedPair in result.children) {
-                        receivedIdList?.add(receivedPair.key.toString())
+                        receivedIdList.add(receivedPair.key.toString())
                     }
                 } else {
                     isErrorMessage = task.exception?.message
@@ -185,7 +185,7 @@ class RecipeService {
                 if (task.isSuccessful) {
                     val result = task.result
                     for (receivedPair in result.children) {
-                        receivedIdList?.add(receivedPair.key.toString())
+                        receivedIdList.add(receivedPair.key.toString())
                     }
                 } else {
                     isErrorMessage = task.exception?.message
@@ -236,16 +236,35 @@ class RecipeService {
         return size.toInt()
     }
 
-    suspend fun likeRecipe(recipeId: String) {
+    suspend fun likeRecipe(recipeId: String, userId: String) {
+
         val likes = getLikesForRecipe(recipeId) + 1
         logTag("likesnumber", likes.toString())
         firebaseRecipeReference.child(recipeId).child("likes").setValue(likes)
+        firebaseUserReference.child(userId).child("likedRecipes").child(recipeId)
+            .setValue(true).await()
     }
 
-    suspend fun unlikeRecipe(recipeId: String) {
+    suspend fun unlikeRecipe(recipeId: String, userId: String) {
         val likes = getLikesForRecipe(recipeId) - 1
         logTag("likesnumber", likes.toString())
         firebaseRecipeReference.child(recipeId).child("likes").setValue(likes)
+        firebaseUserReference.child(userId).child("likedRecipes").child(recipeId)
+            .removeValue().await()
+    }
+
+    suspend fun isRecipeInLiked(recipeId: String, userId: String): Boolean {
+        var isInLiked = false
+        firebaseUserReference.child(userId).child("likedRecipes").child(recipeId).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (task.result.childrenCount > 0) {
+                        isInLiked = true
+                        logTag("recipecountt", task.result.childrenCount.toString())
+                    }
+                }
+            }.await()
+        return isInLiked
     }
 
     suspend fun getLikesForRecipe(recipeId: String): Long {
@@ -270,7 +289,7 @@ class RecipeService {
                     val result = task.result
                     for (receivedPair in result.children) {
                         logTag("receivedPair", receivedPair.toString())
-                        cookedRecipesList?.add(receivedPair.getValue(Recipe::class.java))
+                        cookedRecipesList.add(receivedPair.getValue(Recipe::class.java))
                     }
                 } else {
                     isErrorMessage = task.exception?.message

@@ -9,6 +9,7 @@ import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(
@@ -235,7 +236,7 @@ class RecipeViewModel(
     fun likeRecipe(recipeId: String) {
         viewModelScope.launch {
             try {
-                recipeService.likeRecipe(recipeId)
+                recipeService.likeRecipe(recipeId, getUserId() !!)
                 _isError.value = recipeService.getIsErrorMessage()
                 _isPosted.value = true
             } catch (e: Exception) {
@@ -249,13 +250,33 @@ class RecipeViewModel(
     fun unlikeRecipe(recipeId: String) {
         viewModelScope.launch {
             try {
-                recipeService.unlikeRecipe(recipeId)
+                recipeService.unlikeRecipe(recipeId, getUserId() !!)
                 _isError.value = recipeService.getIsErrorMessage()
                 _isPosted.value = true
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {
                 _isError.value = null
+            }
+        }
+    }
+
+    suspend fun isInLiked(recipeId: String): Boolean {
+        val job = viewModelScope.async {
+            return@async recipeService.isRecipeInLiked(
+                recipeId,
+                internalStorageManager.getUserId() !!
+            )
+        }
+        return job.await()
+    }
+
+    fun handleLike(recipeId: String) {
+        viewModelScope.launch {
+            if (isInLiked(recipeId)) {
+                likeRecipe(recipeId)
+            } else {
+                unlikeRecipe(recipeId)
             }
         }
     }

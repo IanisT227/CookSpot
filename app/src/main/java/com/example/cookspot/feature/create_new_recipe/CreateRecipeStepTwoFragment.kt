@@ -22,11 +22,11 @@ import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe_step_two) {
+class CreateRecipeStepTwoFragment : Fragment(R.layout.fragment_create_new_recipe_step_two) {
 
     private val recipeViewModel: RecipeViewModel by activityViewModel()
     private val binding by viewBinding(FragmentCreateNewRecipeStepTwoBinding::bind)
-    private val args: FragmentCreateRecipeStepTwoArgs by navArgs()
+    private val args: CreateRecipeStepTwoFragmentArgs by navArgs()
     private var difficultyLevel: String? = null
     private var tagItemsList: ArrayList<String> = ArrayList()
 
@@ -86,7 +86,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
                     publisherId = args.newRecipe !!.publisherId,
                 )
                 findNavController().navigate(
-                    FragmentCreateRecipeStepTwoDirections.actionFragmentCreateRecipeStepTwoToFragmentCreateRecipeStepThree(
+                    CreateRecipeStepTwoFragmentDirections.actionFragmentCreateRecipeStepTwoToFragmentCreateRecipeStepThree(
                         recipe
                     )
                 )
@@ -111,7 +111,7 @@ class FragmentCreateRecipeStepTwo : Fragment(R.layout.fragment_create_new_recipe
             )
             .onPositive(text = "Discard") {
                 findNavController().navigate(
-                    FragmentCreateRecipeStepTwoDirections.actionGlobalFeedFragment()
+                    CreateRecipeStepTwoFragmentDirections.actionGlobalFeedFragment()
                 )
             }
             .onNegative(text = "Cancel") {

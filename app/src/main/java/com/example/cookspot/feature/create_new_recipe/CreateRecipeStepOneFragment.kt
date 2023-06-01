@@ -26,7 +26,7 @@ import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.io.File
 
-class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe_step_one) {
+class CreateRecipeStepOneFragment : Fragment(R.layout.fragment_create_new_recipe_step_one) {
 
     private val binding by viewBinding(FragmentCreateNewRecipeStepOneBinding::bind)
     private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
@@ -93,17 +93,17 @@ class FragmentCreateRecipeStepOne : Fragment(R.layout.fragment_create_new_recipe
 
     private fun initButtons() {
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(FragmentCreateRecipeStepOneDirections.actionGlobalFeedFragment())
+            findNavController().navigate(CreateRecipeStepOneFragmentDirections.actionGlobalFeedFragment())
         }
 
         requireActivity().onBackPressedDispatcher.addCallback {
-            findNavController().navigate(FragmentCreateRecipeStepOneDirections.actionGlobalFeedFragment())
+            findNavController().navigate(CreateRecipeStepOneFragmentDirections.actionGlobalFeedFragment())
         }
 
         binding.nextStepBtn.setOnClickListener {
             if (checkRecipe())
                 findNavController().navigate(
-                    FragmentCreateRecipeStepOneDirections.actionFragmentCreateRecipeStepOneToFragmentCreateRecipeStepTwo(
+                    CreateRecipeStepOneFragmentDirections.actionFragmentCreateRecipeStepOneToFragmentCreateRecipeStepTwo(
                         Recipe(
                             name = binding.titleTIEE.text.toString(),
                             duration = binding.durationTIEE.text.toString(),

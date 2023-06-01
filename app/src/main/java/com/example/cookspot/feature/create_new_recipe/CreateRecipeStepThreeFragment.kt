@@ -18,10 +18,10 @@ import com.example.cookspot.databinding.FragmentCreateNewRecipeStepThreeBinding
 import com.example.cookspot.showError
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
-class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_recipe_step_three) {
+class CreateRecipeStepThreeFragment : Fragment(R.layout.fragment_create_new_recipe_step_three) {
 
     private val binding by viewBinding(FragmentCreateNewRecipeStepThreeBinding::bind)
-    private val args: FragmentCreateRecipeStepThreeArgs by navArgs()
+    private val args: CreateRecipeStepThreeFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,7 +64,7 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
                     cookingProcess = binding.processTIEE.text.toString(),
                 )
                 findNavController().navigate(
-                    FragmentCreateRecipeStepThreeDirections.actionFragmentCreateRecipeStepThreeToRecipeSummaryFragment(
+                    CreateRecipeStepThreeFragmentDirections.actionFragmentCreateRecipeStepThreeToRecipeSummaryFragment(
                         finalRecipe = recipe
                     )
                 )
@@ -91,7 +91,7 @@ class FragmentCreateRecipeStepThree : Fragment(R.layout.fragment_create_new_reci
             )
             .onPositive(text = "Discard") {
                 findNavController().navigate(
-                    FragmentCreateRecipeStepTwoDirections.actionGlobalFeedFragment()
+                    CreateRecipeStepThreeFragmentDirections.actionGlobalFeedFragment()
                 )
             }
             .onNegative(text = "Cancel") {

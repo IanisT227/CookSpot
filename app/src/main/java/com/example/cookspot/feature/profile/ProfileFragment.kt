@@ -78,6 +78,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             findNavController().navigate(ProfileFragmentDirections.actionGlobalFragmentSearch3())
         }
 
+        binding.bottomNavigationBarCL.recommendedBtn.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionGlobalRecommendedFragment())
+        }
+
         binding.logOutBtn.setOnClickListener {
             authenticationViewModel.logOutUser()
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAuthenticationFragment())

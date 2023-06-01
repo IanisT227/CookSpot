@@ -21,7 +21,7 @@ import com.example.cookspot.checkName
 import com.example.cookspot.checkUserOrPassword
 import com.example.cookspot.databinding.FragmentEditProfileBinding
 import com.example.cookspot.viewmodel.AuthenticationViewModel
-import com.example.cookspot.feature.create_new_recipe.FragmentCreateRecipeStepOne
+import com.example.cookspot.feature.create_new_recipe.CreateRecipeStepOneFragment
 import com.example.cookspot.loadProfilePhoto
 import com.example.cookspot.logTag
 import com.example.cookspot.model.User
@@ -56,14 +56,12 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private var latestTmpUri: Uri? = null
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         authenticationViewModel.initFirebase()
         initObservers()
         authenticationViewModel.getCurrentUser()
         initButtons()
-
     }
 
     private fun takeImage() {
@@ -79,8 +77,8 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private fun getTmpFileUri(): Uri {
         val tmpFile = File.createTempFile(
-            FragmentCreateRecipeStepOne.PREFIX,
-            FragmentCreateRecipeStepOne.SUFIX
+            CreateRecipeStepOneFragment.PREFIX,
+            CreateRecipeStepOneFragment.SUFIX
         ).apply {
             createNewFile()
             deleteOnExit()

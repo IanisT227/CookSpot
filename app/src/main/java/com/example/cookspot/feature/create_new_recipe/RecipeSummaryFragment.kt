@@ -21,10 +21,10 @@ import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class FragmentRecipeSummary : Fragment(R.layout.fragment_recipe_summary) {
+class RecipeSummaryFragment : Fragment(R.layout.fragment_recipe_summary) {
     private val binding by viewBinding(FragmentRecipeSummaryBinding::bind)
     private val recipeViewModel: RecipeViewModel by activityViewModel()
-    private val recipeArgs: FragmentRecipeSummaryArgs by navArgs()
+    private val recipeArgs: RecipeSummaryFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,7 +70,7 @@ class FragmentRecipeSummary : Fragment(R.layout.fragment_recipe_summary) {
             )
             .onPositive(text = "Discard") {
                 findNavController().navigate(
-                    FragmentCreateRecipeStepTwoDirections.actionGlobalFeedFragment()
+                    RecipeSummaryFragmentDirections.actionGlobalFeedFragment()
                 )
             }
             .onNegative(text = "Cancel") {
@@ -93,7 +93,7 @@ class FragmentRecipeSummary : Fragment(R.layout.fragment_recipe_summary) {
 
         recipeViewModel.isPosted.observe(viewLifecycleOwner) { isPosted ->
             if (isPosted)
-                findNavController().navigate(FragmentRecipeSummaryDirections.actionGlobalFeedFragment())
+                findNavController().navigate(RecipeSummaryFragmentDirections.actionGlobalFeedFragment())
         }
     }
 }

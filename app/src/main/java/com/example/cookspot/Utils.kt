@@ -91,3 +91,6 @@ fun View.hideKeyboard(focusedView: View, activity: Activity){
 
 const val ERROR_DURATION = 2500L
 const val DATABASE_URL = "https://cookspot-a1a8c-default-rtdb.europe-west1.firebasedatabase.app/"
+const val LIKE_RECIPE = "like"
+const val SAVE_RECIPE = "save"
+const val VIEW_RECIPE = "view"

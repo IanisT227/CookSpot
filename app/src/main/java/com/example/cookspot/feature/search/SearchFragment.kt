@@ -12,8 +12,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cookspot.LIKE_RECIPE
 import com.example.cookspot.R
+import com.example.cookspot.SAVE_RECIPE
+import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.FragmentSearchBinding
+import com.example.cookspot.feature.feed.FeedFragmentDirections
 import com.example.cookspot.feature.feed.FeedListAdapter
 import com.example.cookspot.hideKeyboard
 import com.example.cookspot.logTag
@@ -23,7 +27,7 @@ import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class FragmentSearch : Fragment(R.layout.fragment_search) {
+class SearchFragment : Fragment(R.layout.fragment_search) {
     private val binding by viewBinding(FragmentSearchBinding::bind)
     private val recipeViewModel: RecipeViewModel by activityViewModel()
 
@@ -43,24 +47,28 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
 
         binding.bottomNavigationBarCL.homeBtn.setOnClickListener {
             findNavController().navigate(
-                FragmentSearchDirections.actionFragmentSearchToFeedFragment()
+                SearchFragmentDirections.actionFragmentSearchToFeedFragment()
             )
         }
 
         binding.bottomNavigationBarCL.addNewRecipeBtn.setOnClickListener {
             findNavController().navigate(
-                FragmentSearchDirections.actionFragmentSearchToCreateRecipeNavigation()
+                SearchFragmentDirections.actionFragmentSearchToCreateRecipeNavigation()
             )
         }
 
         binding.bottomNavigationBarCL.profileBtn.setOnClickListener {
             findNavController().navigate(
-                FragmentSearchDirections.actionFragmentSearchToUserProfile()
+                SearchFragmentDirections.actionFragmentSearchToUserProfile()
             )
         }
 
+        binding.bottomNavigationBarCL.recommendedBtn.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionFragmentSearchToRecommendedFragment())
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback {
-            findNavController().navigate(FragmentSearchDirections.actionFragmentSearchToFeedFragment())
+            findNavController().navigate(SearchFragmentDirections.actionFragmentSearchToFeedFragment())
         }
 
         binding.searchTIET.hint = "Search..."
@@ -133,11 +141,21 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
         binding.feedRecipesRV.layoutManager = layoutManager
     }
 
-    private fun onItemClickListener(recipe: Recipe) {
-        findNavController().navigate(
-            FragmentSearchDirections.actionFragmentSearchToFragmentViewFullRecipe(
-                recipe
-            )
-        )
+    private fun onItemClickListener(pair: Pair<Recipe, String>) {
+        when (pair.second) {
+            VIEW_RECIPE -> {
+                findNavController().navigate(
+                    FeedFragmentDirections.actionFeedFragmentToFragmentViewFullRecipe(
+                        pair.first
+                    )
+                )
+            }
+            LIKE_RECIPE -> {
+                recipeViewModel.likeRecipe(pair.first.imageUri)
+            }
+            SAVE_RECIPE -> {
+                recipeViewModel.addToSaved(pair.first.imageUri)
+            }
+        }
     }
 }

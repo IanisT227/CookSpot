@@ -12,7 +12,6 @@ import com.example.cookspot.databinding.FragmentRecipeAuthorProfileFragmentBindi
 import com.example.cookspot.feature.profile.ProfileCollectionAdapter
 import com.example.cookspot.feature.profile.ProfileFragment
 import com.example.cookspot.loadProfilePhoto
-import com.example.cookspot.loadRecipePhoto
 import com.example.cookspot.model.Recipe
 import com.example.cookspot.model.User
 import com.example.cookspot.showFollowerAlerter
@@ -21,12 +20,12 @@ import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
-class FragmentRecipeAuthorProfile : Fragment(R.layout.fragment_recipe_author_profile_fragment) {
+class RecipeAuthorProfileFragment : Fragment(R.layout.fragment_recipe_author_profile_fragment) {
     private val binding by viewBinding(FragmentRecipeAuthorProfileFragmentBinding::bind)
     private val authenticationViewModel: AuthenticationViewModel by activityViewModel()
     private val recipeViewModel: RecipeViewModel by activityViewModel()
     private lateinit var profileListAdapter: ProfileCollectionAdapter
-    private val recipeAuthorProfileFragmentArgs: FragmentRecipeAuthorProfileArgs by navArgs()
+    private val recipeAuthorProfileFragmentArgs: RecipeAuthorProfileFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,11 +41,11 @@ class FragmentRecipeAuthorProfile : Fragment(R.layout.fragment_recipe_author_pro
         binding.profilePictureCIV.loadProfilePhoto(recipeAuthorProfileFragmentArgs.userId)
 
         requireActivity().onBackPressedDispatcher.addCallback {
-            findNavController().navigate(FragmentRecipeAuthorProfileDirections.actionRecipeAuthorProfileFragmentToFeedFragment())
+            findNavController().navigate(RecipeAuthorProfileFragmentDirections.actionRecipeAuthorProfileFragmentToFeedFragment())
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(FragmentRecipeAuthorProfileDirections.actionRecipeAuthorProfileFragmentToFeedFragment())
+            findNavController().navigate(RecipeAuthorProfileFragmentDirections.actionRecipeAuthorProfileFragmentToFeedFragment())
         }
 
         binding.followUserProfile.setOnClickListener {
@@ -87,7 +86,7 @@ class FragmentRecipeAuthorProfile : Fragment(R.layout.fragment_recipe_author_pro
 
     private fun onItemClickListener(recipe: Recipe) {
         findNavController().navigate(
-            FragmentRecipeAuthorProfileDirections.actionRecipeAuthorProfileFragmentToFragmentViewFullRecipe(
+            RecipeAuthorProfileFragmentDirections.actionRecipeAuthorProfileFragmentToFragmentViewFullRecipe(
                 recipe
             )
         )
