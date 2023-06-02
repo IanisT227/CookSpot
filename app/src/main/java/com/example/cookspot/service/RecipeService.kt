@@ -236,8 +236,27 @@ class RecipeService {
         return size.toInt()
     }
 
-    suspend fun likeRecipe(recipeId: String, userId: String) {
+    suspend fun isRecipeInSaved(recipeId: String, userId: String): Boolean {
+        var isInSaved = false
+        firebaseUserReference.child(userId).child("savedRecipes").child(recipeId).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (task.result.exists()) {
+                        logTag("existInLiked", "true")
+                        isInSaved = true
+                    } else {
+                        logTag("existInLiked", "false")
 
+                    }
+                    logTag("recipecountt", task.result.childrenCount.toString())
+                } else {
+                    isErrorMessage = task.exception !!.message
+                }
+            }.await()
+        return isInSaved
+    }
+
+    suspend fun likeRecipe(recipeId: String, userId: String) {
         val likes = getLikesForRecipe(recipeId) + 1
         logTag("likesnumber", likes.toString())
         firebaseRecipeReference.child(recipeId).child("likes").setValue(likes)
@@ -258,10 +277,16 @@ class RecipeService {
         firebaseUserReference.child(userId).child("likedRecipes").child(recipeId).get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    if (task.result.childrenCount > 0) {
+                    if (task.result.exists()) {
+                        logTag("existInLiked", "true")
                         isInLiked = true
-                        logTag("recipecountt", task.result.childrenCount.toString())
+                    } else {
+                        logTag("existInLiked", "false")
+
                     }
+                    logTag("recipecountt", task.result.childrenCount.toString())
+                } else {
+                    isErrorMessage = task.exception !!.message
                 }
             }.await()
         return isInLiked

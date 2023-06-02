@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.android.imagecompressor.ImageCompressUtils.compressImage
 import com.example.awesomedialog.AwesomeDialog
 import com.example.awesomedialog.body
 import com.example.awesomedialog.onNegative
@@ -20,6 +21,7 @@ import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import java.io.File
 
 class RecipeSummaryFragment : Fragment(R.layout.fragment_recipe_summary) {
     private val binding by viewBinding(FragmentRecipeSummaryBinding::bind)
@@ -57,6 +59,7 @@ class RecipeSummaryFragment : Fragment(R.layout.fragment_recipe_summary) {
         }
 
         binding.postRecipeBtn.setOnClickListener {
+            compressImage(requireContext(), recipeArgs.finalRecipe.imageUri, recipeArgs.finalRecipe.imageUri, 50)
             recipeViewModel.uploadRecipe(recipeArgs.finalRecipe)
         }
     }

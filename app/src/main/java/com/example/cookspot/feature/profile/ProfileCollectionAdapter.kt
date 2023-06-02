@@ -26,11 +26,7 @@ class ProfileCollectionAdapter(
         )
 
     override fun onBindViewHolder(holder: ProfileCollectionItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
-    fun updateDataset(newDataset: MutableList<Recipe>) {
-        recipeList = newDataset
-        notifyDataSetChanged()
+        if (getItem(position) != null)
+            holder.bind(getItem(position))
     }
 }

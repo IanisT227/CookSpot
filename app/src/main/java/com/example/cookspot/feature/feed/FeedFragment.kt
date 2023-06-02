@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cookspot.LIKE_RECIPE
 import com.example.cookspot.R
 import com.example.cookspot.SAVE_RECIPE
+import com.example.cookspot.SHARE_RECIPE
 import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentFeedBinding
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.shareRecipe
 import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.AuthenticationViewModel
 import com.example.cookspot.viewmodel.RecipeViewModel
@@ -125,7 +127,10 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
                 recipeViewModel.handleLike(pair.first.imageUri)
             }
             SAVE_RECIPE -> {
-                recipeViewModel.addToSaved(pair.first.imageUri)
+                recipeViewModel.handleSave(pair.first.imageUri)
+            }
+            SHARE_RECIPE -> {
+                shareRecipe(pair.first, requireContext())
             }
         }
     }

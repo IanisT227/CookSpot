@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cookspot.LIKE_RECIPE
 import com.example.cookspot.R
 import com.example.cookspot.SAVE_RECIPE
+import com.example.cookspot.SHARE_RECIPE
 import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.FragmentSearchBinding
 import com.example.cookspot.feature.feed.FeedFragmentDirections
@@ -22,6 +23,7 @@ import com.example.cookspot.feature.feed.FeedListAdapter
 import com.example.cookspot.hideKeyboard
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.shareRecipe
 import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -151,10 +153,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 )
             }
             LIKE_RECIPE -> {
-                recipeViewModel.likeRecipe(pair.first.imageUri)
+                recipeViewModel.handleLike(pair.first.imageUri)
             }
             SAVE_RECIPE -> {
-                recipeViewModel.addToSaved(pair.first.imageUri)
+                recipeViewModel.handleSave(pair.first.imageUri)
+            }
+            SHARE_RECIPE -> {
+                shareRecipe(pair.first, requireContext())
             }
         }
     }

@@ -101,7 +101,7 @@ class CreateRecipeStepOneFragment : Fragment(R.layout.fragment_create_new_recipe
         }
 
         binding.nextStepBtn.setOnClickListener {
-            if (checkRecipe())
+            if (checkRecipe()) {
                 findNavController().navigate(
                     CreateRecipeStepOneFragmentDirections.actionFragmentCreateRecipeStepOneToFragmentCreateRecipeStepTwo(
                         Recipe(
@@ -114,8 +114,10 @@ class CreateRecipeStepOneFragment : Fragment(R.layout.fragment_create_new_recipe
                         )
                     )
                 )
-            else
+            }
+            else {
                 showError("All fields must be completed", requireActivity())
+            }
         }
 
         binding.uploadPhotoIV.setOnClickListener {

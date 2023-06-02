@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.cookspot.R
 import com.example.cookspot.databinding.FragmentViewFullRecipeBinding
 import com.example.cookspot.loadRecipePhoto
+import com.example.cookspot.shareRecipe
 import com.example.cookspot.showRecipeAlerter
 import com.example.cookspot.viewmodel.RecipeViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -105,6 +106,11 @@ class ViewFullRecipeFragment : Fragment(R.layout.fragment_view_full_recipe) {
                 binding.likeBtn.setImageResource(R.drawable.ic_heart)
                 isLiked = false
             }
+        }
+
+        binding.shareBtn.setOnClickListener {
+            shareRecipe(args.recipe, requireContext())
+
         }
     }
 

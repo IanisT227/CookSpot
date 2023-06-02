@@ -2,11 +2,15 @@ package com.example.cookspot
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.example.cookspot.model.Recipe
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.storage.FirebaseStorage
 import com.tapadoo.alerter.Alerter
@@ -83,10 +87,27 @@ fun ImageView.loadProfilePhoto(url: String?) {
     }
 }
 
-fun View.hideKeyboard(focusedView: View, activity: Activity){
+fun View.hideKeyboard(focusedView: View, activity: Activity) {
     val imm =
         activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     imm?.hideSoftInputFromWindow(focusedView.windowToken, 0)
+}
+
+fun shareRecipe(recipe: Recipe, context: Context) {
+    val text = "Check out this recipe I found on CookSpot:\n" +
+            "Title: ${recipe.name}\n" +
+            "Tags: ${recipe.tags[0]}, ${recipe.tags[1]}, ${recipe.tags[2]}\n" +
+            "Ingredients: \n${recipe.ingredients}\n" +
+            "Instructions: \n${recipe.cookingProcess}"
+
+    val sendIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, text)
+        type = "text/plain"
+    }
+
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    startActivity(context, shareIntent, null)
 }
 
 const val ERROR_DURATION = 2500L
@@ -94,3 +115,4 @@ const val DATABASE_URL = "https://cookspot-a1a8c-default-rtdb.europe-west1.fireb
 const val LIKE_RECIPE = "like"
 const val SAVE_RECIPE = "save"
 const val VIEW_RECIPE = "view"
+const val SHARE_RECIPE = "share"

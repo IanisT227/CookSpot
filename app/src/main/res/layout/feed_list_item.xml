@@ -187,20 +187,6 @@
         app:layout_constraintTop_toBottomOf="@id/recipeTagOneBtn"
         app:tint="@color/primary_orange" />
 
-    <TextView
-        android:textAlignment="center"
-        android:textColor="@color/dark_grey"
-        android:id="@+id/likesNumberTV"
-        style="@style/RegularText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="@id/likeBtn"
-        app:layout_constraintStart_toStartOf="@id/likeBtn"
-        app:layout_constraintTop_toBottomOf="@id/likeBtn"
-        tools:text="55.5k" />
-
     <ImageButton
         android:id="@+id/shareBtn"
         android:layout_width="0dp"
@@ -220,8 +206,8 @@
         app:dividerColor="@color/neutral_grey"
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/likesNumberTV" />
+        app:layout_constraintTop_toBottomOf="@id/likeBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

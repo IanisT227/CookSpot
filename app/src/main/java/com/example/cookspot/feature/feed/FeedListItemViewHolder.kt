@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cookspot.LIKE_RECIPE
 import com.example.cookspot.R
 import com.example.cookspot.SAVE_RECIPE
+import com.example.cookspot.SHARE_RECIPE
 import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.FeedListItemBinding
 import com.example.cookspot.loadRecipePhoto
@@ -21,13 +22,17 @@ class FeedListItemViewHolder(
     init {
         binding.recipePictureIV.setOnClickListener {
             clickedRecipe.let {
-                onRecipeClickListener(Pair(clickedRecipe, VIEW_RECIPE))
+                onRecipeClickListener(
+                    Pair(clickedRecipe, VIEW_RECIPE)
+                )
             }
         }
 
         binding.likeBtn.setOnClickListener {
             clickedRecipe.let {
-                onRecipeClickListener(Pair(clickedRecipe, LIKE_RECIPE))
+                onRecipeClickListener(
+                    Pair(clickedRecipe, LIKE_RECIPE)
+                )
                 isLiked = if (! isLiked) {
                     binding.likeBtn.setImageResource(R.drawable.ic_heart_full)
                     true
@@ -40,7 +45,8 @@ class FeedListItemViewHolder(
 
         binding.saveRecipeIBtn.setOnClickListener {
             clickedRecipe.let {
-                onRecipeClickListener(Pair(clickedRecipe, SAVE_RECIPE))
+                onRecipeClickListener(
+                    Pair(clickedRecipe, SAVE_RECIPE))
                 isSaved = if (! isSaved) {
                     binding.saveRecipeIBtn.setImageResource(R.drawable.ic_saved_full)
                     true
@@ -51,6 +57,9 @@ class FeedListItemViewHolder(
             }
         }
 
+        binding.shareBtn.setOnClickListener {
+            onRecipeClickListener(Pair(clickedRecipe, SHARE_RECIPE))
+        }
     }
 
     fun bind(recipe: Recipe) {
@@ -64,7 +73,5 @@ class FeedListItemViewHolder(
         binding.recipeTagOneBtn.text = recipe.tags[0]
         binding.recipeTagTwoBtn.text = recipe.tags[1]
         binding.recipeTagThreeBtn.text = recipe.tags[2]
-        logTag("likenumbers", recipe.likes.toString())
-        binding.likesNumberTV.text = recipe.likes.toString()
     }
 }
