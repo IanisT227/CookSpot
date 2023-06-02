@@ -28,6 +28,8 @@ class ViewFullRecipeFragment : Fragment(R.layout.fragment_view_full_recipe) {
 
         initViews()
         initButtons()
+        initObservers()
+        recipeViewModel.isRecipeLiked(args.recipe.imageUri)
     }
 
     private fun initViews() {
@@ -110,7 +112,26 @@ class ViewFullRecipeFragment : Fragment(R.layout.fragment_view_full_recipe) {
 
         binding.shareBtn.setOnClickListener {
             shareRecipe(args.recipe, requireContext())
+        }
+    }
 
+    private fun initObservers() {
+        recipeViewModel.isLiked.observe(viewLifecycleOwner) { isLikedVar ->
+            isLiked = isLikedVar
+            if (isLikedVar == true) {
+                binding.likeBtn.setImageResource(R.drawable.ic_heart_full)
+            } else {
+                binding.likeBtn.setImageResource(R.drawable.ic_heart)
+            }
+        }
+
+        recipeViewModel.isSaved.observe(viewLifecycleOwner) { isSavedVar ->
+            isSaved = isSavedVar
+            if (isSavedVar == true) {
+                binding.saveRecipeIBtn.setImageResource(R.drawable.ic_saved_full)
+            } else {
+                binding.saveRecipeIBtn.setImageResource(R.drawable.ic_save)
+            }
         }
     }
 

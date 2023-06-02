@@ -56,6 +56,14 @@ class RecipeViewModel(
     val searchedRecipes: LiveData<MutableList<Recipe?>>
         get() = _searchedRecipes
 
+    private val _isSaved: MutableLiveData<Boolean> = MutableLiveData()
+    val isSaved: LiveData<Boolean>
+        get() = _isSaved
+
+    private val _isLiked: MutableLiveData<Boolean> = MutableLiveData()
+    val isLiked: LiveData<Boolean>
+        get() = _isLiked
+
     fun initFirebase() {
         viewModelScope.launch {
             recipeService.initFirebase()
@@ -234,11 +242,18 @@ class RecipeViewModel(
 
     fun handleSave(recipeId: String) {
         viewModelScope.launch {
-            if (recipeService.isRecipeInSaved(recipeId, getUserId() !!)) {
+            isRecipeSaved(recipeId)
+            if (_isSaved.value == true) {
                 removeFromSaved(recipeId)
             } else {
                 addToSaved(recipeId)
             }
+        }
+    }
+
+    fun isRecipeSaved(recipeId: String) {
+        viewModelScope.launch {
+            _isSaved.value = recipeService.isRecipeInSaved(recipeId, getUserId() !!)
         }
     }
 
@@ -272,11 +287,18 @@ class RecipeViewModel(
 
     fun handleLike(recipeId: String) {
         viewModelScope.launch {
-            if (recipeService.isRecipeInLiked(recipeId, getUserId() !!)) {
+            isRecipeLiked(recipeId)
+            if (isLiked.value == true) {
                 unlikeRecipe(recipeId)
             } else {
                 likeRecipe(recipeId)
             }
+        }
+    }
+
+    fun isRecipeLiked(recipeId: String) {
+        viewModelScope.launch {
+            _isLiked.value = recipeService.isRecipeInLiked(recipeId, getUserId() !!)
         }
     }
 
