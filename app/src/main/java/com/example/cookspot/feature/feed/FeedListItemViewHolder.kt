@@ -8,7 +8,6 @@ import com.example.cookspot.SHARE_RECIPE
 import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.FeedListItemBinding
 import com.example.cookspot.loadRecipePhoto
-import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
 
 class FeedListItemViewHolder(
