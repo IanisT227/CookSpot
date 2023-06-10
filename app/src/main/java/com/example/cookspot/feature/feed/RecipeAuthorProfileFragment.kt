@@ -13,6 +13,7 @@ import com.example.cookspot.feature.profile.ProfileCollectionAdapter
 import com.example.cookspot.feature.profile.ProfileFragment
 import com.example.cookspot.loadProfilePhoto
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.model.RecipeStatus
 import com.example.cookspot.model.User
 import com.example.cookspot.showFollowerAlerter
 import com.example.cookspot.viewmodel.AuthenticationViewModel
@@ -66,7 +67,7 @@ class RecipeAuthorProfileFragment : Fragment(R.layout.fragment_recipe_author_pro
                         GridLayoutManager(
                             requireContext(),
                             ProfileFragment.GALLERY_SPAN_COUNT
-                        ), recipeList
+                        ), recipeList.map { it.first }
                     )
                 }
             }
@@ -76,9 +77,9 @@ class RecipeAuthorProfileFragment : Fragment(R.layout.fragment_recipe_author_pro
 
     private fun initRecyclerView(
         layoutManager: GridLayoutManager,
-        recipeList: MutableList<Recipe>
+        recipeList: List<Recipe>
     ) {
-        profileListAdapter = ProfileCollectionAdapter(::onItemClickListener, recipeList)
+        profileListAdapter = ProfileCollectionAdapter(::onItemClickListener)
         binding.recipeListRV.adapter = profileListAdapter
         profileListAdapter.submitList(recipeList)
         binding.recipeListRV.layoutManager = layoutManager

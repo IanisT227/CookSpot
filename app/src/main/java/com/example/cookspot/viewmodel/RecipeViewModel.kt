@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.model.RecipeStatus
 import com.example.cookspot.repository.UserDataInternalStorageManager
 import com.example.cookspot.service.RecipeService
 import kotlinx.coroutines.launch
@@ -32,8 +33,9 @@ class RecipeViewModel(
     val recipeTags: LiveData<HashMap<String, Boolean>?>
         get() = _recipeTags
 
-    private val _postedRecipesList: MutableLiveData<MutableList<Recipe>?> = MutableLiveData()
-    val postedRecipesList: LiveData<MutableList<Recipe>?>
+    private val _postedRecipesList: MutableLiveData<MutableList<Pair<Recipe, RecipeStatus>>?> =
+        MutableLiveData()
+    val postedRecipesList: LiveData<MutableList<Pair<Recipe, RecipeStatus>>?>
         get() = _postedRecipesList
 
     private val _cookedRecipesList: MutableLiveData<MutableList<Recipe?>> = MutableLiveData()
@@ -52,8 +54,8 @@ class RecipeViewModel(
     val savedRecipesSize: LiveData<Int>
         get() = _savedRecipesSize
 
-    private val _searchedRecipes: MutableLiveData<MutableList<Recipe?>> = MutableLiveData()
-    val searchedRecipes: LiveData<MutableList<Recipe?>>
+    private val _searchedRecipes: MutableLiveData<MutableList<Pair<Recipe, RecipeStatus>>?> = MutableLiveData()
+    val searchedRecipes: LiveData<MutableList<Pair<Recipe, RecipeStatus>>?>
         get() = _searchedRecipes
 
     private val _isSaved: MutableLiveData<Boolean> = MutableLiveData()
@@ -93,8 +95,26 @@ class RecipeViewModel(
                 _isLoading.value = true
                 val receivedRecipes = recipeService.getPostedRecipes(userId).receive()
                 if (receivedRecipes != null) {
+                    var recipeList = mutableListOf<Pair<Recipe, RecipeStatus>>()
+                    for (recipe in receivedRecipes) {
+                        recipeList.add(
+                            Pair(
+                                recipe.value,
+                                RecipeStatus(
+                                    recipeService.isRecipeInLiked(
+                                        recipeId = recipe.value.imageUri,
+                                        userId
+                                    ),
+                                    recipeService.isRecipeInSaved(
+                                        recipeId = recipe.value.imageUri,
+                                        userId
+                                    )
+                                )
+                            )
+                        )
+                    }
                     _postedRecipesList.value =
-                        receivedRecipes.values.sortedByDescending { it.createdAt }.toMutableList()
+                        recipeList.sortedByDescending { it.first.createdAt }.toMutableList()
                 } else
                     _postedRecipesList.value = null
                 _isError.value = recipeService.getIsErrorMessage()
@@ -306,8 +326,29 @@ class RecipeViewModel(
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                _searchedRecipes.value = recipeService.searchRecipes(searchTerm)
-                logTag("searchResults", _searchedRecipes.value.toString())
+                val recipeList = recipeService.searchRecipes(searchTerm)
+                if (recipeList != null) {
+                    val recipeListStatus = mutableListOf<Pair<Recipe, RecipeStatus>>()
+                    for (recipe in recipeList) {
+                        recipeListStatus.add(
+                            Pair(
+                                recipe !!,
+                                RecipeStatus(
+                                    recipeService.isRecipeInLiked(
+                                        recipeId = recipe.imageUri,
+                                        internalStorageManager.getUserId() !!
+                                    ),
+                                    recipeService.isRecipeInSaved(
+                                        recipeId = recipe.imageUri,
+                                        internalStorageManager.getUserId() !!
+                                    )
+                                )
+                            )
+                        )
+                    }
+                    _searchedRecipes.value = recipeListStatus
+                        logTag("searchResults", _searchedRecipes.value.toString())
+                }
                 _isError.value = recipeService.getIsErrorMessage()
                 _isPosted.value = true
             } catch (e: Exception) {

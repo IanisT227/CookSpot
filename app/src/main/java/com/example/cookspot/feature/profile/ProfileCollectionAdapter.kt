@@ -11,10 +11,9 @@ typealias OnRecipeClickListener = (recipe: Recipe) -> Unit
 
 
 class ProfileCollectionAdapter(
-    private val onRecipeClickListener: OnRecipeClickListener,
-    private var recipeList: MutableList<Recipe>
+    private val onRecipeClickListener: OnRecipeClickListener
 ) :
-    ListAdapter<Recipe, ProfileCollectionItemViewHolder>(RecipeItemDiffUtilItemCallback()) {
+    ListAdapter<Recipe, ProfileCollectionItemViewHolder>(ProfileRecipeItemDiffUtilItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ProfileCollectionItemViewHolder(
             RecipeCollectionGridItemBinding.inflate(

@@ -23,6 +23,7 @@ import com.example.cookspot.feature.feed.FeedListAdapter
 import com.example.cookspot.hideKeyboard
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.model.RecipeStatus
 import com.example.cookspot.shareRecipe
 import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.RecipeViewModel
@@ -135,7 +136,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun initRecyclerView(
-        layoutManager: LinearLayoutManager, recipeList: MutableList<Recipe?>
+        layoutManager: LinearLayoutManager, recipeList: MutableList<Pair<Recipe, RecipeStatus>>
     ) {
         val feedListAdapter = FeedListAdapter(::onItemClickListener)
         binding.feedRecipesRV.adapter = feedListAdapter

@@ -17,6 +17,7 @@ import com.example.cookspot.databinding.BottomNavigationLayoutBinding
 import com.example.cookspot.databinding.FragmentFeedBinding
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.model.RecipeStatus
 import com.example.cookspot.shareRecipe
 import com.example.cookspot.showError
 import com.example.cookspot.viewmodel.AuthenticationViewModel
@@ -43,7 +44,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
     private fun initViews() {
         bottomNavigationBarBinding = binding.bottomNavigationBarCL
 
-        bottomNavigationBarBinding!!.homeBtn.setColorFilter(
+        bottomNavigationBarBinding !!.homeBtn.setColorFilter(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.primary_orange
@@ -95,7 +96,7 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
                 )
         }
 
-        authenticationViewModel.userId.observe(viewLifecycleOwner){ userId ->
+        authenticationViewModel.userId.observe(viewLifecycleOwner) { userId ->
             logTag("userId=", userId)
             if (userId != null) {
                 authenticationViewModel.setCurrentUserId(userId)
@@ -106,11 +107,11 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
 
     private fun initRecyclerView(
         layoutManager: LinearLayoutManager,
-        recipeList: List<Recipe>
+        recipeList: MutableList<Pair<Recipe, RecipeStatus>>
     ) {
         val feedListAdapter = FeedListAdapter(::onItemClickListener)
         binding.feedRecipesRV.adapter = feedListAdapter
-        feedListAdapter.submitList(recipeList.toMutableList())
+        feedListAdapter.submitList(recipeList)
         binding.feedRecipesRV.layoutManager = layoutManager
     }
 
@@ -123,12 +124,15 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
                     )
                 )
             }
+
             LIKE_RECIPE -> {
                 recipeViewModel.handleLike(pair.first.imageUri)
             }
+
             SAVE_RECIPE -> {
                 recipeViewModel.handleSave(pair.first.imageUri)
             }
+
             SHARE_RECIPE -> {
                 shareRecipe(pair.first, requireContext())
             }

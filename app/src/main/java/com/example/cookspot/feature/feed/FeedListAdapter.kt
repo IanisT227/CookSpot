@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.cookspot.databinding.FeedListItemBinding
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.model.RecipeStatus
 
 
 typealias OnRecipeClickListener = (recipe: Pair<Recipe, String>) -> Unit
 
 class FeedListAdapter(private val onRecipeClickListener: OnRecipeClickListener) :
-    ListAdapter<Recipe, FeedListItemViewHolder>(RecipeItemDiffUtilItemCallback()) {
+    ListAdapter<Pair<Recipe, RecipeStatus>, FeedListItemViewHolder>(RecipeItemDiffUtilItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FeedListItemViewHolder(
         FeedListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onRecipeClickListener

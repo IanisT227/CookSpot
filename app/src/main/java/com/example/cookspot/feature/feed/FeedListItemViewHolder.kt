@@ -9,6 +9,7 @@ import com.example.cookspot.VIEW_RECIPE
 import com.example.cookspot.databinding.FeedListItemBinding
 import com.example.cookspot.loadRecipePhoto
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.model.RecipeStatus
 
 class FeedListItemViewHolder(
     private val binding: FeedListItemBinding,
@@ -45,7 +46,8 @@ class FeedListItemViewHolder(
         binding.saveRecipeIBtn.setOnClickListener {
             clickedRecipe.let {
                 onRecipeClickListener(
-                    Pair(clickedRecipe, SAVE_RECIPE))
+                    Pair(clickedRecipe, SAVE_RECIPE)
+                )
                 isSaved = if (! isSaved) {
                     binding.saveRecipeIBtn.setImageResource(R.drawable.ic_saved_full)
                     true
@@ -61,16 +63,26 @@ class FeedListItemViewHolder(
         }
     }
 
-    fun bind(recipe: Recipe) {
-        clickedRecipe = recipe
-        binding.recipePictureIV.loadRecipePhoto(recipe.imageUri)
-        binding.recipeNameTV.text = recipe.name
-        binding.recipeAuthorTV.text = "@${recipe.publisherName}"
-        binding.recipeDifficultyTV.text = recipe.difficulty
-        binding.recipeMakesTV.text = recipe.makes
-        binding.recipeDurationTV.text = recipe.duration
-        binding.recipeTagOneBtn.text = recipe.tags[0]
-        binding.recipeTagTwoBtn.text = recipe.tags[1]
-        binding.recipeTagThreeBtn.text = recipe.tags[2]
+    fun bind(recipe: Pair<Recipe, RecipeStatus>) {
+        clickedRecipe = recipe.first
+        val recipeData = recipe.first
+        binding.recipePictureIV.loadRecipePhoto(recipeData.imageUri)
+        binding.recipeNameTV.text = recipeData.name
+        binding.recipeAuthorTV.text = "@${recipeData.publisherName}"
+        binding.recipeDifficultyTV.text = recipeData.difficulty
+        binding.recipeMakesTV.text = recipeData.makes
+        binding.recipeDurationTV.text = recipeData.duration
+        binding.recipeTagOneBtn.text = recipeData.tags[0]
+        binding.recipeTagTwoBtn.text = recipeData.tags[1]
+        binding.recipeTagThreeBtn.text = recipeData.tags[2]
+        if (recipe.second.isLiked) {
+            binding.likeBtn.setImageResource(R.drawable.ic_heart_full)
+            isLiked = true
+        }
+
+        if (recipe.second.isSaved) {
+            binding.saveRecipeIBtn.setImageResource(R.drawable.ic_saved_full)
+            isSaved = true
+        }
     }
 }

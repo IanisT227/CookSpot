@@ -42,7 +42,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun initViews() {
         bottomNavigationBarBinding = binding.bottomNavigationBarCL
 
-        bottomNavigationBarBinding!!.profileBtn.setColorFilter(
+        bottomNavigationBarBinding !!.profileBtn.setColorFilter(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.primary_orange
@@ -140,7 +140,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             if (recipeList != null) {
                 initRecyclerView(
                     GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
-                    recipeList,
+                    recipeList.map { it.first }
                 )
                 binding.postedNumberTV.text = recipeList.size.toString()
             }
@@ -180,9 +180,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun initRecyclerView(
         layoutManager: GridLayoutManager,
-        recipeList: MutableList<Recipe>
+        recipeList: List<Recipe>
     ) {
-        profileListAdapter = ProfileCollectionAdapter(::onItemClickListener, recipeList)
+        profileListAdapter = ProfileCollectionAdapter(::onItemClickListener)
         binding.collectionRV.adapter = profileListAdapter
         profileListAdapter.submitList(recipeList)
         binding.collectionRV.layoutManager = layoutManager
