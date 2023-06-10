@@ -54,7 +54,8 @@ class RecipeViewModel(
     val savedRecipesSize: LiveData<Int>
         get() = _savedRecipesSize
 
-    private val _searchedRecipes: MutableLiveData<MutableList<Pair<Recipe, RecipeStatus>>?> = MutableLiveData()
+    private val _searchedRecipes: MutableLiveData<MutableList<Pair<Recipe, RecipeStatus>>?> =
+        MutableLiveData()
     val searchedRecipes: LiveData<MutableList<Pair<Recipe, RecipeStatus>>?>
         get() = _searchedRecipes
 
@@ -347,7 +348,7 @@ class RecipeViewModel(
                         )
                     }
                     _searchedRecipes.value = recipeListStatus
-                        logTag("searchResults", _searchedRecipes.value.toString())
+                    logTag("searchResults", _searchedRecipes.value.toString())
                 }
                 _isError.value = recipeService.getIsErrorMessage()
                 _isPosted.value = true
