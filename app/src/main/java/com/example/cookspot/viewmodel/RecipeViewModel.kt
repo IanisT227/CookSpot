@@ -361,7 +361,7 @@ class RecipeViewModel(
         }
     }
 
-    fun getUserId() = internalStorageManager.getUserId()
+    private fun getUserId() = internalStorageManager.getUserId()
 
     companion object {
         const val VIEWMODEL_TAG = "RECIPE_VIEWMODEL"

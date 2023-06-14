@@ -57,6 +57,13 @@ fun showFollowerAlerter(activity: Activity) = Alerter.create(activity)
     .setDuration(ERROR_DURATION)
     .show()
 
+fun showMailSent(emailAddress: String, activity: Activity) = Alerter.create(activity)
+    .setTitle("Mail sent")
+    .setText("Password reset mail sent to ${emailAddress}")
+    .setBackgroundColorRes(R.color.primary_orange)
+    .setDuration(ERROR_DURATION)
+    .show()
+
 fun ImageView.loadRecipePhoto(url: String?) {
     val firebaseStorage = FirebaseStorage.getInstance().getReference("recipes_pictures/$url")
 

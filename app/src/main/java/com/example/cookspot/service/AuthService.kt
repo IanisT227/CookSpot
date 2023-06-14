@@ -138,18 +138,29 @@ class AuthService {
     }
 
     suspend fun updateUser(username: String, fullName: String) {
-        firebaseReference.child(firebaseAuth.currentUser !!.uid).child("username")
+        firebaseReference.child(firebaseAuth.currentUser!!.uid).child("username")
             .setValue(username).await()
-        firebaseReference.child(firebaseAuth.currentUser !!.uid).child("fullName")
+        firebaseReference.child(firebaseAuth.currentUser!!.uid).child("fullName")
             .setValue(fullName).await()
     }
 
     suspend fun followUser(userId: String) {
-        firebaseReference.child(firebaseAuth.currentUser !!.uid).child("followedUsers")
+        firebaseReference.child(firebaseAuth.currentUser!!.uid).child("followedUsers")
             .child(userId).setValue(true).await()
     }
 
     fun getIsErrorMessage() = isErrorMessage
+    suspend fun resetPassword(email: String): Boolean {
+        var result: Boolean = false
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                result = true
+            } else {
+                isErrorMessage = task.exception?.message
+            }
+        }.await()
+        return result
+    }
 
     companion object {
         const val SERVICE_TAG = "AuthService"

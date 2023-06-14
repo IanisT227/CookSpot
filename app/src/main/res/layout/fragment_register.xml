@@ -190,21 +190,9 @@
                     android:layout_marginHorizontal="60dp"
                     android:layout_marginBottom="12dp"
                     android:text="Sign up"
-                    app:layout_constraintBottom_toTopOf="@id/forgotPasswordTV"
+                    app:layout_constraintBottom_toTopOf="@id/alreadyExistingAccountTV"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/forgotPasswordTV"
-                    style="@style/SmallText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/forgot_password"
-                    android:textColor="@color/smallText_color"
-                    app:layout_constraintBottom_toTopOf="@id/alreadyExistingAccountTV"
-                    app:layout_constraintEnd_toEndOf="@id/signUpBtn"
-                    app:layout_constraintStart_toStartOf="@id/signUpBtn" />
 
                 <TextView
                     android:id="@+id/alreadyExistingAccountTV"

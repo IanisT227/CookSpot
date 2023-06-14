@@ -156,6 +156,12 @@
             <action
                 android:id="@+id/action_loginFragment_to_feedFragment"
                 app:destination="@id/feedFragment" />
+            <action
+                    android:id="@+id/action_loginFragment_to_passwordResetFragment2"
+                    app:destination="@id/passwordResetFragment2" />
+            <action
+                    android:id="@+id/action_loginFragment_to_registerFragment"
+                    app:destination="@id/registerFragment" />
         </fragment>
         <fragment
             android:id="@+id/registerFragment"
@@ -164,6 +170,17 @@
             <action
                 android:id="@+id/action_registerFragment_to_feedFragment"
                 app:destination="@id/feedFragment" />
+            <action
+                    android:id="@+id/action_registerFragment_to_loginFragment"
+                    app:destination="@id/loginFragment" />
+        </fragment>
+        <fragment
+                android:id="@+id/passwordResetFragment2"
+                android:name="com.example.cookspot.feature.authentication.PasswordResetFragment"
+                android:label="PasswordResetFragment">
+            <action
+                    android:id="@+id/action_passwordResetFragment2_to_loginFragment"
+                    app:destination="@id/loginFragment" />
         </fragment>
     </navigation>
     <fragment

@@ -58,6 +58,10 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             binding.usernameTIEE.text!!.clear()
             binding.passwordTIEE.text!!.clear()
         }
+
+        binding.signInTV.setOnClickListener {
+            findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+        }
     }
 
     private fun initObservers() {

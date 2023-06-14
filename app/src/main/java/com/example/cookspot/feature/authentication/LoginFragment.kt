@@ -50,6 +50,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.emailTIEE.text!!.clear()
             binding.passwordTIEE.text!!.clear()
         }
+
+        binding.signUpTV.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+        }
+
+        binding.resetPasswordTV.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPasswordResetFragment2())
+        }
     }
 
     private fun initObservers() {

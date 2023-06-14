@@ -28,6 +28,10 @@ class AuthenticationViewModel(
     val isLogged: LiveData<Boolean>
         get() = _isLogged
 
+    private val _isMailSent: MutableLiveData<Boolean> = MutableLiveData()
+    val isMailSent: LiveData<Boolean>
+        get() = _isLogged
+
     private val _userId: MutableLiveData<String> = MutableLiveData()
     val userId: LiveData<String>
         get() = _userId
@@ -166,11 +170,11 @@ class AuthenticationViewModel(
         }
     }
 
-    fun uploadProfilePicture(imageUri: Uri){
+    fun uploadProfilePicture(imageUri: Uri) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                authService.uploadPicture(imageUri, _userId.value !!)
+                authService.uploadPicture(imageUri, _userId.value!!)
                 _isError.value = authService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
@@ -201,4 +205,18 @@ class AuthenticationViewModel(
     fun getCurrentUserUsername() = internalStorageManager.getUserUsername()
 
     fun setCurrentUserId(userId: String) = internalStorageManager.setUserUserId(userId)
+    fun resetPassword(email: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _isMailSent.value = authService.resetPassword(email)
+                _isError.value = authService.getIsErrorMessage()
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
 }
