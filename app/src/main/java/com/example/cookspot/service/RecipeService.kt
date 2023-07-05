@@ -6,6 +6,7 @@ import androidx.core.net.toUri
 import com.example.cookspot.DATABASE_URL
 import com.example.cookspot.logTag
 import com.example.cookspot.model.Recipe
+import com.example.cookspot.model.RecipeStatus
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -20,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.tasks.await
 import java.util.*
+import kotlin.collections.HashMap
 
 class RecipeService {
     private lateinit var firebaseAuth: FirebaseAuth
@@ -94,13 +96,14 @@ class RecipeService {
 
     fun getPostedRecipes(userId: String): Channel<HashMap<String, Recipe>?> {
         val channel = Channel<HashMap<String, Recipe>?>()
-        firebaseDatabase.getReference("recipes").orderByChild("publisherId").equalTo(userId)
+        firebaseRecipeReference.orderByChild("createdAt")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val value = snapshot.getValue<HashMap<String, Recipe>?>()
                     channel.trySend(value).isSuccess
                     channel.close()
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Log.w(SERVICE_TAG, "Failed to read value.", error.toException())
                     channel.trySend(null).isSuccess
@@ -110,9 +113,11 @@ class RecipeService {
         return channel
     }
 
-    suspend fun addPostToCooked(userId: String, recipeId: String){
+    suspend fun addPostToCooked(userId: String, recipeId: String) {
         try {
             firebaseUserReference.child(userId).child("cookedRecipes").child(recipeId)
+                .setValue(true).await()
+            firebaseUserReference.child(userId).child("interactedRecipes").child(recipeId)
                 .setValue(true).await()
         } catch (e: Exception) {
             isErrorMessage = e.message
@@ -131,6 +136,8 @@ class RecipeService {
     suspend fun addPostToSaved(userId: String, recipeId: String) {
         try {
             firebaseUserReference.child(userId).child("savedRecipes").child(recipeId)
+                .setValue(true).await()
+            firebaseUserReference.child(userId).child("interactedRecipes").child(recipeId)
                 .setValue(true).await()
         } catch (e: Exception) {
             isErrorMessage = e.message
@@ -250,7 +257,7 @@ class RecipeService {
                     }
                     logTag("recipecountt", task.result.childrenCount.toString())
                 } else {
-                    isErrorMessage = task.exception !!.message
+                    isErrorMessage = task.exception!!.message
                 }
             }.await()
         return isInSaved
@@ -261,6 +268,8 @@ class RecipeService {
         logTag("likesnumber", likes.toString())
         firebaseRecipeReference.child(recipeId).child("likes").setValue(likes)
         firebaseUserReference.child(userId).child("likedRecipes").child(recipeId)
+            .setValue(true).await()
+        firebaseUserReference.child(userId).child("interactedRecipes").child(recipeId)
             .setValue(true).await()
     }
 
@@ -286,7 +295,7 @@ class RecipeService {
                     }
                     logTag("recipecountt", task.result.childrenCount.toString())
                 } else {
-                    isErrorMessage = task.exception !!.message
+                    isErrorMessage = task.exception!!.message
                 }
             }.await()
         return isInLiked
@@ -297,7 +306,7 @@ class RecipeService {
         firebaseRecipeReference.child(recipeId).child("likes").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val result = task.result
-                likesNumber = result.getValue(Long::class.java) !!
+                likesNumber = result.getValue(Long::class.java)!!
             } else {
                 isErrorMessage = task.exception?.message
             }
@@ -321,6 +330,70 @@ class RecipeService {
                 }
             }.await()
         return cookedRecipesList
+    }
+
+    suspend fun getRecommendedRecipes(userId: String): MutableList<Recipe?> {
+        val receivedIdList: MutableList<String> = mutableListOf()
+        val interactedTags: HashMap<String, Int> = hashMapOf()
+        val recommendedRecipeList: MutableList<Recipe?> = mutableListOf()
+        firebaseUserReference.child(userId).child("interactedRecipes").limitToFirst(10)
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    for (receivedPair in result.children) {
+                        receivedIdList.add(receivedPair.key.toString())
+                    }
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+
+        for (recipeId in receivedIdList) {
+            firebaseRecipeReference.child(recipeId).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    result?.let {
+                        val receivedRecipe = result.getValue(Recipe::class.java)
+                        for (tag in receivedRecipe!!.tags) {
+                            if (interactedTags.get(tag) == null) {
+                                interactedTags.put(tag, 1)
+                            } else {
+                                interactedTags.set(tag, interactedTags.get(tag)!! + 1)
+                            }
+                        }
+                    }
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+        }
+
+        val sortedInteractedTags =
+            interactedTags.toList().sortedByDescending { (_, value) -> value }.take(4).toMap()
+        logTag("taglISTT", sortedInteractedTags.toString())
+
+        firebaseDatabase.getReference("recipes").orderByChild("likes").get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    result?.let {
+                        for (receivedPair in result.children) {
+                            val receivedRecipe = receivedPair.getValue(Recipe::class.java)
+                            for (tag in receivedRecipe!!.tags)
+                                if (sortedInteractedTags.containsKey(tag) && !recommendedRecipeList.contains(
+                                        receivedRecipe
+                                    )
+                                ) {
+                                    recommendedRecipeList.add(receivedRecipe)
+                                }
+                        }
+                    }
+
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+        return recommendedRecipeList
     }
 
     fun getIsErrorMessage() = isErrorMessage

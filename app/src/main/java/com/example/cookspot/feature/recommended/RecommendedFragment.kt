@@ -54,20 +54,29 @@ class RecommendedFragment : Fragment(R.layout.fragment_feed) {
             }
         }
 
-        recipeViewModel.postedRecipesList.observe(viewLifecycleOwner) { recipeList ->
+        recipeViewModel.recommendedRecipesList.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
-            if (recipeList != null)
+            if (recipeList != null) {
+                val updatedRecipeList: MutableList<Pair<Recipe, RecipeStatus>> = mutableListOf()
+                for (recipe in recipeList) {
+                    updatedRecipeList.add(Pair(recipe!!, RecipeStatus(
+                        isLiked = false,
+                        isSaved = false
+                    )))
+                }
+
                 initRecyclerView(
                     LinearLayoutManager(requireContext()),
-                    recipeList
+                    updatedRecipeList
                 )
+            }
         }
 
         authenticationViewModel.userId.observe(viewLifecycleOwner) { userId ->
             logTag("userId=", userId)
             if (userId != null) {
                 authenticationViewModel.setCurrentUserId(userId)
-                recipeViewModel.getPostedRecipes(userId)
+                recipeViewModel.getRecommendedRecipeList()
             }
         }
     }
@@ -86,7 +95,7 @@ class RecommendedFragment : Fragment(R.layout.fragment_feed) {
         when (pair.second) {
             VIEW_RECIPE -> {
                 findNavController().navigate(
-                    FeedFragmentDirections.actionFeedFragmentToFragmentViewFullRecipe(
+                    RecommendedFragmentDirections.actionRecommendedFragmentToFragmentViewFullRecipe(
                         pair.first
                     )
                 )
@@ -105,6 +114,7 @@ class RecommendedFragment : Fragment(R.layout.fragment_feed) {
             }
         }
     }
+
     private fun initViews() {
         binding.bottomNavigationBarCL.recommendedBtn.setColorFilter(
             ContextCompat.getColor(

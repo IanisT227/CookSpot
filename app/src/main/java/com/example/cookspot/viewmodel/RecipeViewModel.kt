@@ -38,6 +38,10 @@ class RecipeViewModel(
     val postedRecipesList: LiveData<MutableList<Pair<Recipe, RecipeStatus>>?>
         get() = _postedRecipesList
 
+    private val _recommendedRecipesList: MutableLiveData<MutableList<Recipe?>> = MutableLiveData()
+    val recommendedRecipesList: LiveData<MutableList<Recipe?>>
+        get() = _recommendedRecipesList
+
     private val _cookedRecipesList: MutableLiveData<MutableList<Recipe?>> = MutableLiveData()
     val cookedRecipesList: LiveData<MutableList<Recipe?>>
         get() = _cookedRecipesList
@@ -352,6 +356,23 @@ class RecipeViewModel(
                 }
                 _isError.value = recipeService.getIsErrorMessage()
                 _isPosted.value = true
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun getRecommendedRecipeList(){
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _recommendedRecipesList.value =
+                    recipeService.getRecommendedRecipes(internalStorageManager.getUserId() !!)
+                logTag("recommendedList", _recommendedRecipesList.value.toString())
+                _isError.value = recipeService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
             } finally {

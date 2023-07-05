@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/neutral_white">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/neutral_white">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/searchTIL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/primary_orange"
-        app:layout_constraintBottom_toTopOf="@id/feedRecipesRV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/searchTIL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_orange"
+            app:layout_constraintBottom_toTopOf="@id/feedRecipesRV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:imeOptions="actionDone"
-            android:id="@+id/searchTIET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary_orange"
-            android:lines="1"
-            android:inputType="text"
-            android:paddingVertical="16dp"
-            android:paddingBottom="6dp"
-            android:paddingHorizontal="12dp"
-            android:textColor="@color/neutral_white"
-            android:ellipsize="end"
-            android:maxLength="25"
-            android:textStyle="bold" />
+                android:imeOptions="actionDone"
+                android:id="@+id/searchTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primary_orange"
+                android:lines="1"
+                android:inputType="textCapSentences"
+                android:paddingVertical="16dp"
+                android:paddingBottom="6dp"
+                android:paddingHorizontal="12dp"
+                android:textColor="@color/neutral_white"
+                android:ellipsize="end"
+                android:maxLength="25"
+                android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
-        android:paddingHorizontal="8dp"
-        android:id="@+id/searchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@null"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/searchTIL"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/searchTIL" />
+            android:paddingHorizontal="8dp"
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@null"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="@id/searchTIL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/searchTIL" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/feedRecipesRV"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationBarCL"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchTIL"
-        tools:listitem="@layout/feed_list_item" />
+            android:id="@+id/feedRecipesRV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigationBarCL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchTIL"
+            tools:listitem="@layout/feed_list_item" />
 
     <include
-        android:id="@+id/bottomNavigationBarCL"
-        layout="@layout/bottom_navigation_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/bottomNavigationBarCL"
+            layout="@layout/bottom_navigation_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/isLoadingCIP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:indicatorColor="@color/dark_orange"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+            android:id="@+id/isLoadingCIP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/dark_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
