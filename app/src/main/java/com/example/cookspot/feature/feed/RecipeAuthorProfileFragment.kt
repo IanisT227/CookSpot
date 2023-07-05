@@ -32,7 +32,7 @@ class RecipeAuthorProfileFragment : Fragment(R.layout.fragment_recipe_author_pro
         super.onViewCreated(view, savedInstanceState)
         initObservers()
         authenticationViewModel.getUserById(recipeAuthorProfileFragmentArgs.userId)
-        recipeViewModel.getPostedRecipes(recipeAuthorProfileFragmentArgs.userId)
+        recipeViewModel.getPublishedRecipeList(recipeAuthorProfileFragmentArgs.userId)
 
     }
 
@@ -61,13 +61,14 @@ class RecipeAuthorProfileFragment : Fragment(R.layout.fragment_recipe_author_pro
                 initViews(userData)
             }
 
-            recipeViewModel.postedRecipesList.observe(viewLifecycleOwner) { recipeList ->
+            recipeViewModel.publishedRecipesForUser.observe(viewLifecycleOwner) { recipeList ->
                 if (recipeList != null) {
+                    binding.postedNumberTV.text = recipeList.size.toString()
                     initRecyclerView(
                         GridLayoutManager(
                             requireContext(),
                             ProfileFragment.GALLERY_SPAN_COUNT
-                        ), recipeList.map { it.first }
+                        ), recipeList.toList() as List<Recipe>
                     )
                 }
             }

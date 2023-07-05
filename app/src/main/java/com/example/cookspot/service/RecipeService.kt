@@ -153,6 +153,37 @@ class RecipeService {
         }
     }
 
+    suspend fun getPostedRecipesForUser(userId: String): MutableList<Recipe?> {
+        val receivedIdList: MutableList<String> = mutableListOf()
+        val cookedRecipesList = mutableListOf<Recipe?>()
+        firebaseUserReference.child(userId).child("publishedRecipes")
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    for (receivedPair in result.children) {
+                        receivedIdList.add(receivedPair.key.toString())
+                    }
+                } else {
+                    isErrorMessage = task.exception?.message
+                }
+            }.await()
+
+        for (recipeId in receivedIdList) {
+            firebaseRecipeReference.child(recipeId).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val result = task.result
+                        result?.let {
+                            cookedRecipesList.add(result.getValue(Recipe::class.java))
+                        }
+                    } else {
+                        isErrorMessage = task.exception?.message
+                    }
+                }.await()
+        }
+        return cookedRecipesList
+    }
+
     suspend fun getCookedRecipesList(userId: String): MutableList<Recipe?> {
         val receivedIdList: MutableList<String> = mutableListOf()
         val cookedRecipesList = mutableListOf<Recipe?>()
@@ -329,6 +360,7 @@ class RecipeService {
                     isErrorMessage = task.exception?.message
                 }
             }.await()
+        logTag("searchedRecipes", cookedRecipesList.toString())
         return cookedRecipesList
     }
 
@@ -382,7 +414,7 @@ class RecipeService {
                             for (tag in receivedRecipe!!.tags)
                                 if (sortedInteractedTags.containsKey(tag) && !recommendedRecipeList.contains(
                                         receivedRecipe
-                                    )
+                                    ) && !receivedIdList.contains(receivedRecipe.imageUri)
                                 ) {
                                     recommendedRecipeList.add(receivedRecipe)
                                 }

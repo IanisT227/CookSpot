@@ -35,14 +35,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         initButtons()
         initObservers()
         authenticationViewModel.getCurrentUser()
-        recipeViewModel.getPostedRecipes(authenticationViewModel.userId.value !!)
+        recipeViewModel.getPublishedRecipeList(authenticationViewModel.userId.value!!)
         recipeViewModel.getRecipesListSize()
     }
 
     private fun initViews() {
         bottomNavigationBarBinding = binding.bottomNavigationBarCL
 
-        bottomNavigationBarBinding !!.profileBtn.setColorFilter(
+        bottomNavigationBarBinding!!.profileBtn.setColorFilter(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.primary_orange
@@ -96,7 +96,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.postedTV.setOnClickListener {
-            recipeViewModel.getPostedRecipes(authenticationViewModel.userId.value !!)
+            recipeViewModel.getPublishedRecipeList(authenticationViewModel.userId.value!!)
         }
 
         binding.cookedTV.setOnClickListener {
@@ -120,8 +120,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         authenticationViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.isLoadingCIP.isVisible = isLoading
-            binding.editProfileBtn.isEnabled = ! isLoading
-            binding.logOutBtn.isEnabled = ! isLoading
+            binding.editProfileBtn.isEnabled = !isLoading
+            binding.logOutBtn.isEnabled = !isLoading
             logTag("isLoadingValue", isLoading.toString())
         }
 
@@ -130,17 +130,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     .isNullOrEmpty() || authenticationViewModel.getCurrentUserUsername()
                     .isNullOrEmpty()
             ) {
-                binding.userFullNameTV.text = user !!.fullName
+                binding.userFullNameTV.text = user!!.fullName
                 binding.usernameTV.text = "@${user.username}"
+                recipeViewModel.getPublishedRecipeList(authenticationViewModel.userId.value!!)
             }
         }
 
-        recipeViewModel.postedRecipesList.observe(viewLifecycleOwner) { recipeList ->
+        recipeViewModel.publishedRecipesForUser.observe(viewLifecycleOwner) { recipeList ->
             logTag("recipelist", recipeList.toString())
             if (recipeList != null) {
+                binding.postedNumberTV.text = recipeList.size.toString()
                 initRecyclerView(
                     GridLayoutManager(requireContext(), GALLERY_SPAN_COUNT),
-                    recipeList.map { it.first }
+                    recipeList.toList() as List<Recipe>
                 )
                 binding.postedNumberTV.text = recipeList.size.toString()
             }

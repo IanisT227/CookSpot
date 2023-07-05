@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/bg_rounded_edit_text"
-            android:maxLength="250"
+            android:maxLength="500"
             android:gravity="top|start"
             android:inputType="textMultiLine"
             android:maxLines="25" />

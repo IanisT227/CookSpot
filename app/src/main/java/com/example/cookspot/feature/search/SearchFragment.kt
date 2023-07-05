@@ -148,7 +148,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         when (pair.second) {
             VIEW_RECIPE -> {
                 findNavController().navigate(
-                    FeedFragmentDirections.actionFeedFragmentToFragmentViewFullRecipe(
+                    SearchFragmentDirections.actionFragmentSearchToFragmentViewFullRecipe(
                         pair.first
                     )
                 )

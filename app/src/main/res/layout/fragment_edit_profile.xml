@@ -30,7 +30,7 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="100dp"
         android:layout_marginTop="80dp"
-        android:src="@drawable/cat_profile"
+        android:src="@drawable/cooking_cat"
         app:civ_border_width="2dp"
         app:civ_shadow="true"
         app:civ_shadow_color="#3A3B42"

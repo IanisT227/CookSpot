@@ -71,6 +71,10 @@ class RecipeViewModel(
     val isLiked: LiveData<Boolean>
         get() = _isLiked
 
+    private val _publishedRecipesForUser: MutableLiveData<MutableList<Recipe?>> = MutableLiveData()
+    val publishedRecipesForUser: LiveData<MutableList<Recipe?>>
+        get() = _publishedRecipesForUser
+
     fun initFirebase() {
         viewModelScope.launch {
             recipeService.initFirebase()
@@ -372,6 +376,23 @@ class RecipeViewModel(
                 _recommendedRecipesList.value =
                     recipeService.getRecommendedRecipes(internalStorageManager.getUserId() !!)
                 logTag("recommendedList", _recommendedRecipesList.value.toString())
+                _isError.value = recipeService.getIsErrorMessage()
+            } catch (e: Exception) {
+                _isError.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isError.value = null
+            }
+        }
+    }
+
+    fun getPublishedRecipeList(userId: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _publishedRecipesForUser.value =
+                    recipeService.getPostedRecipesForUser(userId !!)
+                logTag("publishedList", _publishedRecipesForUser.value.toString())
                 _isError.value = recipeService.getIsErrorMessage()
             } catch (e: Exception) {
                 _isError.value = e.message
